@@ -32,6 +32,6 @@ pg.connect(process.env.DATABASE_URL, function(err, client) {
     });
 
     console.log("3");
-    client.query('INSERT INTO users(uname,upw) VALUES($1,$2)', ["danb", "secret"]);
-    console.log("4");
+//    client.query('INSERT INTO users(uname,upw) VALUES($1,$2)', ["danb", "secret"]);
+//    console.log("4");
 });
