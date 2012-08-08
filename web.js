@@ -24,10 +24,10 @@ pg.connect(process.env.DATABASE_URL, function(err, client) {
 //    });
 
 
-    var query = client.query('CREATE TABLE users (id SERIAL PRIMARY KEY name varchar(20) pw varchar(20))');
+    var query = client.query('CREATE TABLE users (id SERIAL PRIMARY KEY uname varchar(20) upw varchar(20))');
     query.on('end', function() {
         // table created OR failed
     });
 
-    client.query('INSERT INTO users(name,pw) VALUES($1,$2)', "danb", "secret");
+    client.query('INSERT INTO users(uname,upw) VALUES($1,$2)', "danb", "secret");
 });
