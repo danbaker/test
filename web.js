@@ -17,9 +17,9 @@ app.listen(port, function() {
 
 // DEBUG DATABASE
 pg.connect(process.env.DATABASE_URL, function(err, client) {
-    var query = client.query('SELECT * FROM your_table');
-
-    query.on('row', function(row) {
-        console.log(JSON.stringify(row));
-    });
+//    var query = client.query('SELECT * FROM your_table');
+//
+//    query.on('row', function(row) {
+//        console.log(JSON.stringify(row));
+//    });
 });
