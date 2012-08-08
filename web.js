@@ -45,7 +45,7 @@ pg.connect(process.env.DATABASE_URL, function(err, client) {
         });
         console.log("4");
         query = client.query('SELECT * FROM users');
-        query.on('end', function(result) {
+        query.on('row', function(result) {
             if (!result) {
                 console.log("nothing selected.  boo hoo");
             } else {
