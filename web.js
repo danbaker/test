@@ -18,23 +18,25 @@ app.listen(port, function() {
 // DEBUG DATABASE
 
 pg.connect(process.env.DATABASE_URL, function(err, client) {
-    console.log("Connected.  err="+err);
-    console.log("... client="+client);
-//    var query = client.query('SELECT * FROM your_table');
-//
-//    query.on('row', function(row) {
-//        console.log(JSON.stringify(row));
-//    });
+    if (err) {
+        console.log("ERROR: "+err);
+    } else {
+    //    var query = client.query('SELECT * FROM your_table');
+    //
+    //    query.on('row', function(row) {
+    //        console.log(JSON.stringify(row));
+    //    });
 
 
-//    console.log("1");
-//    var query = client.query('CREATE TABLE users (id SERIAL PRIMARY KEY uname varchar(20) upw varchar(20))');
-//    query.on('end', function() {
-//        // table created OR failed
-//        console.log("2");
-//    });
-//
-//    console.log("3");
-//    client.query('INSERT INTO users(uname,upw) VALUES($1,$2)', ["danb", "secret"]);
-//    console.log("4");
+        console.log("1");
+        var query = client.query('CREATE TABLE users (uname varchar(20) upw varchar(20))');
+        query.on('end', function() {
+            // table created OR failed
+            console.log("2");
+        });
+    //
+    //    console.log("3");
+    //    client.query('INSERT INTO users(uname,upw) VALUES($1,$2)', ["danb", "secret"]);
+    //    console.log("4");
+    }
 });
