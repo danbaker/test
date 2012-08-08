@@ -16,7 +16,10 @@ app.listen(port, function() {
 
 
 // DEBUG DATABASE
+
 pg.connect(process.env.DATABASE_URL, function(err, client) {
+    console.log("Connected.  err="+err);
+    console.log("... client="+client);
 //    var query = client.query('SELECT * FROM your_table');
 //
 //    query.on('row', function(row) {
