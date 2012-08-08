@@ -1,3 +1,6 @@
+console.log("- - - - - - - - - - - - - - - - - - -");
+console.log("-");
+
 var express = require('express');
 var pg = require('pg');
 
@@ -19,7 +22,7 @@ app.listen(port, function() {
 
 pg.connect(process.env.DATABASE_URL, function(err, client) {
     if (err) {
-        console.log("ERROR: "+err);
+        console.log("database connection error: "+err);
     } else {
     //    var query = client.query('SELECT * FROM your_table');
     //
@@ -28,8 +31,8 @@ pg.connect(process.env.DATABASE_URL, function(err, client) {
     //    });
 
 
-        console.log("1");
-        var query = client.query('CREATE TABLE users (uname varchar(20) upw varchar(20))');
+    //    console.log("1");
+        var query = client.query('CREATE TABLE users (id SERIAL PRIMARY KEY, uname varchar(20), upw varchar(20))');
         query.on('end', function() {
             // table created OR failed
             console.log("2");
