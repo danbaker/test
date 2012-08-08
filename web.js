@@ -6,8 +6,11 @@ var pg = require('pg');
 
 var app = express.createServer(express.logger());
 
+
+var debug_text = '';
+
 app.get('/', function(request, response) {
-    response.send('The UtahJS World is AMAZING -- Hello planet -- 2');
+    response.send('The UtahJS World is AMAZING -- Hello planet -- 2<br>' + debug_text);
 });
 
 var port = process.env.PORT || 5000;
@@ -49,6 +52,7 @@ pg.connect(process.env.DATABASE_URL, function(err, client) {
             if (!result) {
                 console.log("nothing selected.  boo hoo");
             } else {
+                debug_text += "id:"+result.id+" uname:"+result.uname+" upw:"+result.upw+"<br>";
                 console.log("%j", result);
             }
         });
