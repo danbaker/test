@@ -107,12 +107,16 @@ exports.findUser = function(name,pw,fnc) {
 
     var query = theClient.query("SELECT id FROM users WHERE uname='danb' AND upw='QWE'");
     query.on('row', function(result) {
-        if (!result) {
-            console.log("nothing selected.  boo hoo");
-        } else {
-            console.log("%j", result);
-        }
-    });
+            if (!result) {
+                console.log("nothing selected.  boo hoo");
+            } else {
+                console.log("%j", result);
+            }
+        }).on('end', function() {
+            console.log("on END");
+        }).on('error', function(err) {
+            console.log("ERROR %j", err);
+        });
 
 
 
