@@ -45,10 +45,12 @@ pg.connect(process.env.DATABASE_URL, function(err, client) {
         theClient = client;
 
         // call all "onReady" functions
-        for(var i=0; i<onReadyFncs.length; i++) {
-            onReadyFncs[i]();
-        }
-        onReadyFncs = [];
+        process.nextTick(function() {
+            for(var i=0; i<onReadyFncs.length; i++) {
+                onReadyFncs[i]();
+            }
+            onReadyFncs = [];
+        });
     }
 });
 
