@@ -3,7 +3,7 @@ var pg = require('pg');
 var nhash = require('node_hash');
 
 var theClient = undefined;              // the database-client-connection object
-
+var onReadyFncs = [];
 
 
 // establish THE connection to THE database
@@ -43,6 +43,12 @@ pg.connect(process.env.DATABASE_URL, function(err, client) {
 
         // save the client-connection-object (allowing others to operate on the database)
         theClient = client;
+
+        // call all "onReady" functions
+        for(var i=0; i<onReadyFncs.length; i++) {
+            onReadyFncs[i]();
+        }
+        onReadyFncs = [];
     }
 });
 
@@ -93,18 +99,17 @@ exports.getClient = function() {
 };
 
 // find a user in the user table
-exports.findUser = function(name,pw) {
+exports.findUser = function(name,pw,fnc) {
     if (theClient) {
         pw = encryptPW(pw, name);
         var query = theClient.query("SELECT id FROM users WHERE uname='$1' AND upw='$2')", [name,pw]);
         query.on('row', function(result) {
             if (result) {
-                return result;
+                fnc(result);
             }
         });
     }
-
-    return undefined;
+    fnc(undefined);
 };
 
 // add a new user to the system
@@ -113,8 +118,7 @@ exports.addUser = function(name, pw) {
         pw = encryptPW(pw, name);
         var query = theClient.query('INSERT INTO users(uname,upw) VALUES($1,$2)', [name,pw]);
         query.on('end', function() {
-            // table created OR failed
-            console.log("2");
+            // user inserted OR failed
         });
     }
 };
@@ -123,7 +127,7 @@ exports.onReady = function(fnc) {
     if (exports.isReady()) {
         process.nextTick(fnc);
     } else {
-
+        onReadyFncs.push(fnc);
     }
 };
 

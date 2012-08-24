@@ -23,9 +23,17 @@ app.listen(port, function() {
 
 
 // DEBUG DATABASE
+utdb.onReady(function() {
+    var u = "dan";
+    var p = "secretpw";
+    utdb.findUser(u,p,function(result) {
+        if (result === undefined) {
+            utdb.addUser(u,p);
+        }
+    });
+});
 
-
-
+/*
 pg.connect(process.env.DATABASE_URL, function(err, client) {
     if (err) {
         console.log("database connection error: "+err);
@@ -61,3 +69,4 @@ pg.connect(process.env.DATABASE_URL, function(err, client) {
         });
     }
 });
+*/
