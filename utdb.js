@@ -36,7 +36,7 @@ pg.connect(process.env.DATABASE_URL, function(err, client) {
             if (!result) {
                 console.log("nothing selected.  boo hoo");
             } else {
-                debug_text += "id:"+result.id+" uname:"+result.uname+" upw:"+result.upw+"<br>";
+//                debug_text += "id:"+result.id+" uname:"+result.uname+" upw:"+result.upw+"<br>";
                 console.log("%j", result);
             }
         });
