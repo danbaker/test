@@ -3,6 +3,7 @@ console.log("-");
 
 var express = require('express');
 var pg = require('pg');
+var utdb = require('./utdb');
 
 var app = express.createServer(express.logger());
 
@@ -19,6 +20,7 @@ app.listen(port, function() {
 });
 
 
+utdb.testencryptPW("username", "password");
 
 
 // DEBUG DATABASE
