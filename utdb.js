@@ -115,6 +115,7 @@ exports.findUser = function(name,pw,fnc) {
             }
         }).on('error', function(err) {
             console.log("ERROR %j", err);
+            fnc(undefined);
         });
         console.log("findUser 4");
     } else {
