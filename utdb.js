@@ -46,6 +46,18 @@ pg.connect(process.env.DATABASE_URL, function(err, client) {
 
         // call all "onReady" functions
         process.nextTick(function() {
+
+
+        query = theClient.query('SELECT * FROM users');
+        query.on('row', function(result) {
+            if (!result) {
+                console.log("nothing selected.  boo hoo");
+            } else {
+                console.log("%j", result);
+            }
+        });
+
+
             for(var i=0; i<onReadyFncs.length; i++) {
                 onReadyFncs[i]();
             }
