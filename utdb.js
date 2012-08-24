@@ -113,9 +113,9 @@ exports.findUser = function(name,pw,fnc) {
                 console.log("%j", result);
             }
         }).on('end', function() {
-            console.log("on END");
+            console.log("on END - select id");
         }).on('error', function(err) {
-            console.log("ERROR %j", err);
+            console.log("select id ERROR %j", err);
         });
 
 
@@ -128,15 +128,18 @@ exports.findUser = function(name,pw,fnc) {
         var query = theClient.query("SELECT id FROM users WHERE uname='$1' AND upw='$2')", [name,pw]);
         console.log("findUser 3");
         query.on('row', function(result) {
-            console.log("got a row");
-            console.log(result);
-            if (result) {
-                fnc(result);
-            }
-        }).on('error', function(err) {
-            console.log("ERROR %j", err);
-            fnc(undefined);
-        });
+                console.log("got a row");
+                console.log(result);
+                if (result) {
+                    fnc(result);
+                }
+            }).on('end', function() {
+                console.log("on END - find user");
+                fnc(undefined);
+            }).on('error', function(err) {
+                console.log("findUser ERROR %j", err);
+                fnc(undefined);
+            });
         console.log("findUser 4");
     } else {
         fnc(undefined);
@@ -152,8 +155,9 @@ exports.addUser = function(name, pw) {
         var query = theClient.query('INSERT INTO users(uname,upw) VALUES($1,$2)', [name,pw]);
         query.on('end', function() {
                 // user inserted
+                console.log("on END - addUser");
             }).on('error', function(err) {
-                console.log("ERROR %j", err);
+                console.log("addUser ERROR %j", err);
             });
     }
 };
