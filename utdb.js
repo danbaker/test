@@ -102,8 +102,11 @@ exports.getClient = function() {
 exports.findUser = function(name,pw,fnc) {
     console.log("findUser u="+name+" pw="+pw);
     if (theClient) {
+        console.log("findUser 1");
         pw = encryptPW(pw, name);
+        console.log("findUser 2");
         var query = theClient.query("SELECT id FROM users WHERE uname='$1' AND upw='$2')", [name,pw]);
+        console.log("findUser 3");
         query.on('row', function(result) {
             console.log("got a row");
             console.log(result);
@@ -111,6 +114,7 @@ exports.findUser = function(name,pw,fnc) {
                 fnc(result);
             }
         });
+        console.log("findUser 4");
     } else {
         fnc(undefined);
     }
