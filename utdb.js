@@ -24,22 +24,22 @@ pg.connect(process.env.DATABASE_URL, function(err, client) {
 //            // table created OR failed
 //            console.log("2");
 //        });
-        console.log("3");
-        query = client.query('INSERT INTO users(uname,upw) VALUES($1,$2)', ["danb", "secret"]);
-        query.on('end', function() {
-            // table created OR failed
-            console.log("2");
-        });
-        console.log("4");
-        query = client.query('SELECT * FROM users');
-        query.on('row', function(result) {
-            if (!result) {
-                console.log("nothing selected.  boo hoo");
-            } else {
-//                debug_text += "id:"+result.id+" uname:"+result.uname+" upw:"+result.upw+"<br>";
-                console.log("%j", result);
-            }
-        });
+//        console.log("3");
+//        query = client.query('INSERT INTO users(uname,upw) VALUES($1,$2)', ["danb", "secret"]);
+//        query.on('end', function() {
+//            // table created OR failed
+//            console.log("2");
+//        });
+//        console.log("4");
+//        query = client.query('SELECT * FROM users');
+//        query.on('row', function(result) {
+//            if (!result) {
+//                console.log("nothing selected.  boo hoo");
+//            } else {
+////                debug_text += "id:"+result.id+" uname:"+result.uname+" upw:"+result.upw+"<br>";
+//                console.log("%j", result);
+//            }
+//        });
 
         // save the client-connection-object (allowing others to operate on the database)
         theClient = client;
@@ -100,16 +100,20 @@ exports.getClient = function() {
 
 // find a user in the user table
 exports.findUser = function(name,pw,fnc) {
+    console.log("findUser u="+name+" pw="+pw);
     if (theClient) {
         pw = encryptPW(pw, name);
         var query = theClient.query("SELECT id FROM users WHERE uname='$1' AND upw='$2')", [name,pw]);
         query.on('row', function(result) {
+            console.log("got a row");
+            console.log(result);
             if (result) {
                 fnc(result);
             }
         });
+    } else {
+        fnc(undefined);
     }
-    fnc(undefined);
 };
 
 // add a new user to the system
