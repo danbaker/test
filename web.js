@@ -28,6 +28,7 @@ utdb.onReady(function() {
     var u = "dan";
     var p = "secretpw";
     utdb.findUser(u,p,function(result) {
+        console.log("Back in onReady, returned from findUser");
         if (result === undefined) {
             utdb.addUser(u,p);
         }

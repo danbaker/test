@@ -113,11 +113,14 @@ exports.findUser = function(name,pw,fnc) {
             if (result) {
                 fnc(result);
             }
+        }).on('error', function(err) {
+            console.log("ERROR %j", err);
         });
         console.log("findUser 4");
     } else {
         fnc(undefined);
     }
+    console.log("findUser END");
 };
 
 // add a new user to the system
