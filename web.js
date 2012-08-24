@@ -20,10 +20,11 @@ app.listen(port, function() {
 });
 
 
-utdb.testencryptPW("username", "password");
 
 
 // DEBUG DATABASE
+
+
 
 pg.connect(process.env.DATABASE_URL, function(err, client) {
     if (err) {

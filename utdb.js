@@ -119,4 +119,12 @@ exports.addUser = function(name, pw) {
     }
 };
 
+exports.onReady = function(fnc) {
+    if (exports.isReady()) {
+        process.nextTick(fnc);
+    } else {
+
+    }
+};
+
 exports.testencryptPW = encryptPW;
