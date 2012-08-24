@@ -105,7 +105,7 @@ exports.findUser = function(name,pw,fnc) {
     console.log("findUser u="+name+" pw="+pw);
 
 
-    var query = theClient.query("SELECT id FROM users WHERE uname='danb'");
+    var query = theClient.query("SELECT id FROM users WHERE uname='danb' AND upw='QWE'");
     query.on('row', function(result) {
         if (!result) {
             console.log("nothing selected.  boo hoo");
