@@ -126,12 +126,15 @@ exports.findUser = function(name,pw,fnc) {
 
 // add a new user to the system
 exports.addUser = function(name, pw) {
+    console.log("addUser u="+name+"  pw="+pw);
     if (theClient) {
         pw = encryptPW(pw, name);
         var query = theClient.query('INSERT INTO users(uname,upw) VALUES($1,$2)', [name,pw]);
         query.on('end', function() {
-            // user inserted OR failed
-        });
+                // user inserted
+            }).on('error', function(err) {
+                console.log("ERROR %j", err);
+            });
     }
 };
 
