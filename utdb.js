@@ -4,8 +4,18 @@ var nhash = require('node_hash');
 
 var theClient = undefined;              // the database-client-connection object
 var onReadyFncs = [];
+var trace = nillFunction;
 
 
+// function to call to log console messages
+var traceFunction = function(msg) {
+    console.log(msg);
+};
+// function to call to NOT log message to console
+var nillFunction = function() {
+};
+
+// function to run when database is ready to use
 var doOnReadyNow = function() {
     if (theClient) {
         process.nextTick(function() {
@@ -20,46 +30,46 @@ var doOnReadyNow = function() {
 // establish THE connection to THE database
 pg.connect(process.env.DATABASE_URL, function(err, client) {
     if (err) {
-        console.log("database connection error: "+err);
+        trace("database connection error: "+err);
     } else {
         var query;
         //    var query = client.query('SELECT * FROM your_table');
         //
         //    query.on('row', function(row) {
-        //        console.log(JSON.stringify(row));
+        //        trace(JSON.stringify(row));
         //    });
 
 //        query = client.query("DROP TABLE users");
 //        query.on('end', function() {
 //            // table created OR failed
-//            console.log("connect: 2");
+//            trace("connect: 2");
 //            query = client.query('CREATE TABLE users (id SERIAL PRIMARY KEY, uname varchar(20) NOT NULL UNIQUE, upw varchar(40) NOT NULL)');
 //            query.on('end', function() {
 //                // table created OR failed
-//                console.log("connect: 3");
+//                trace("connect: 3");
                 theClient = client;
                 doOnReadyNow();
 //            }).on('error', function(err) {
-//                    console.log("connect: create table error: %j", err);
+//                    trace("connect: create table error: %j", err);
 //                });
 //        }).on('error', function(err) {
-//                console.log("connect: drop table error: %j", err);
+//                trace("connect: drop table error: %j", err);
 //        });
 
-//        console.log("3");
+//        trace("3");
 //        query = client.query('INSERT INTO users(uname,upw) VALUES($1,$2)', ["danb", "secret"]);
 //        query.on('end', function() {
 //            // table created OR failed
-//            console.log("2");
+//            trace("2");
 //        });
 //        console.log("4");
 //        query = client.query('SELECT * FROM users');
 //        query.on('row', function(result) {
 //            if (!result) {
-//                console.log("nothing selected.  boo hoo");
+//                trace("nothing selected.  boo hoo");
 //            } else {
 ////                debug_text += "id:"+result.id+" uname:"+result.uname+" upw:"+result.upw+"<br>";
-//                console.log("%j", result);
+//                trace("%j", result);
 //            }
 //        });
 
@@ -116,58 +126,58 @@ exports.getClient = function() {
 
 // find a user in the user table
 exports.findUser = function(name,pw,fnc) {
-    console.log("findUser u="+name+" pw="+pw);
+    trace("findUser u="+name+" pw="+pw);
 
     if (theClient) {
-        console.log("findUser 1");
+        trace("findUser 1");
         pw = encryptPW(pw, name);
-        console.log("findUser 2:  name="+name+"  epw="+pw);
+        trace("findUser 2:  name="+name+"  epw="+pw);
         var fncCalled = false;
         var query = theClient.query("SELECT id FROM users WHERE uname=$1 AND upw=$2", [name,pw]);
-        console.log("findUser 3: query=%j",query);
+        trace("findUser 3: query=%j",query);
         query.on('row', function(result) {
-                console.log("findUser: got a row:  %j",result);
+                trace("findUser: got a row:  %j",result);
                 if (result) {
                     fncCalled = true;
                     fnc(result);
                 }
             }).on('end', function() {
-                console.log("findUser: on END");
+                trace("findUser: on END");
                 if (!fncCalled) {
                     fncCalled = true;
                     fnc(undefined);
                 }
             }).on('error', function(err) {
-                console.log("findUser: ERROR %j", err);
+                trace("findUser: ERROR %j", err);
                 if (!fncCalled) {
                     fncCalled = true;
                     fnc(undefined);
                 }
             });
-        console.log("findUser: 4");
+        trace("findUser: 4");
     } else {
         if (!fncCalled) {
             fncCalled = true;
             fnc(undefined);
         }
     }
-    console.log("findUser: 5");
+    trace("findUser: 5");
 };
 
 // add a new user to the system
 exports.addUser = function(name, pw, fnc) {
-    console.log("addUser: u="+name+"  pw="+pw);
+    trace("addUser: u="+name+"  pw="+pw);
     if (theClient) {
         pw = encryptPW(pw, name);
         var query = theClient.query('INSERT INTO users(uname,upw) VALUES($1,$2)', [name,pw]);
-        console.log("addUser: query=%j", query);
+        trace("addUser: query=%j", query);
         query.on('end', function() {
                 // user inserted OK
-                console.log("addUser: on END");
+                trace("addUser: on END");
                 if (fnc) fnc(true);
                 fnc = undefined;
             }).on('error', function(err) {
-                console.log("addUser: ERROR %j", err);
+                trace("addUser: ERROR %j", err);
                 if (fnc) fnc();
             });
     }
@@ -181,4 +191,5 @@ exports.onReady = function(fnc) {
     }
 };
 
+// allow testing of the encrypt function
 exports.testencryptPW = encryptPW;
