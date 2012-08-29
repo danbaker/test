@@ -6,14 +6,10 @@ var theClient = undefined;              // the database-client-connection object
 var onReadyFncs = [];
 
 
-// function to call to log console messages
-var traceFunction = function(msg,a,b,c) {
-    console.log(msg,a,b,c);
-};
 // function to call to NOT log message to console
 var nillFunction = function() {
 };
-var trace = nillFunction;
+var trace = console.log;
 
 // function to run when database is ready to use
 var doOnReadyNow = function() {
