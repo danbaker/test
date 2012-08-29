@@ -104,28 +104,12 @@ exports.getClient = function() {
 exports.findUser = function(name,pw,fnc) {
     console.log("findUser u="+name+" pw="+pw);
 
-
-    var query = theClient.query("SELECT id FROM users WHERE uname='danb' AND upw='QWE'");
-    query.on('row', function(result) {
-            if (!result) {
-                console.log("nothing selected.  boo hoo");
-            } else {
-                console.log("%j", result);
-            }
-        }).on('end', function() {
-            console.log("on END - select id");
-        }).on('error', function(err) {
-            console.log("select id ERROR %j", err);
-        });
-
-
-
-
     if (theClient) {
         console.log("findUser 1");
         pw = encryptPW(pw, name);
-        console.log("findUser 2");
+        console.log("findUser 2:  name="+name+"  epw="+pw);
         var query = theClient.query("SELECT id FROM users WHERE uname=$1 AND upw=$2)", [name,pw]);
+        console.log("query=%j",query);
         console.log("findUser 3");
         query.on('row', function(result) {
                 console.log("got a row");
@@ -155,7 +139,7 @@ exports.addUser = function(name, pw) {
         var query = theClient.query('INSERT INTO users(uname,upw) VALUES($1,$2)', [name,pw]);
         query.on('end', function() {
                 // user inserted
-                console.log("on END - addUser");
+                console.log("addUser on END");
             }).on('error', function(err) {
                 console.log("addUser ERROR %j", err);
             });
