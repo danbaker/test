@@ -161,18 +161,18 @@ exports.findUser = function(name,pw,fnc) {
 };
 
 // add a new user to the system
-exports.addUser = function(name, pw, fnc) {
-    trace("addUser: u="+name+"  pw="+pw);
+exports.addUser = function(name, opw, fnc) {
+    trace("addUser: u="+name+"  pw="+opw);
     if (theClient) {
-        pw = encryptPW(pw, name);
-        var query = theClient.query('INSERT INTO users(uname,upw) VALUES($1,$2)', [name,pw]);
+        var epw = encryptPW(opw, name);
+        var query = theClient.query('INSERT INTO users(uname,upw) VALUES($1,$2)', [name,epw]);
         trace("addUser: query=%j", query);
         query.on('end', function() {
                 // user inserted OK
                 trace("addUser: on END");
                 if (fnc) {
                     // return the user's result (result.id)
-                    exports.findUser(name, pw, fnc);
+                    exports.findUser(name, opw, fnc);
                 }
                 fnc = undefined;
             }).on('error', function(err) {
