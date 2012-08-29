@@ -7,8 +7,8 @@ var onReadyFncs = [];
 
 
 // function to call to log console messages
-var traceFunction = function(msg) {
-    console.log(msg);
+var traceFunction = function(msg,a,b,c) {
+    console.log(msg,a,b,c);
 };
 // function to call to NOT log message to console
 var nillFunction = function() {
