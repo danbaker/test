@@ -21,7 +21,6 @@ app.listen(port, function() {
 
 
 
-
 // DEBUG DATABASE
 utdb.onReady(function() {
     console.log("onReady: db ready -- Yeah!");

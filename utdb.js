@@ -6,6 +6,17 @@ var theClient = undefined;              // the database-client-connection object
 var onReadyFncs = [];
 
 
+var onReadyNow = function() {
+    if (theClient) {
+        process.nextTick(function() {
+            for(var i=0; i<onReadyFncs.length; i++) {
+                onReadyFncs[i]();
+            }
+            onReadyFncs = [];
+        });
+    }
+};
+
 // establish THE connection to THE database
 pg.connect(process.env.DATABASE_URL, function(err, client) {
     if (err) {
@@ -18,12 +29,19 @@ pg.connect(process.env.DATABASE_URL, function(err, client) {
         //        console.log(JSON.stringify(row));
         //    });
 
+        query = client.query("DROP TABLE user");
+        query.on('end', function() {
+            // table created OR failed
+            console.log("connect: 2");
+            query = client.query('CREATE TABLE users (id SERIAL PRIMARY KEY, uname varchar(20), upw varchar(40))');
+            query.on('end', function() {
+                // table created OR failed
+                console.log("connect: 3");
+                theClient = client;
+                doOnReadyNow();
+            });
+        });
 
-//        var query = client.query('CREATE TABLE users (id SERIAL PRIMARY KEY, uname varchar(20), upw varchar(20))');
-//        query.on('end', function() {
-//            // table created OR failed
-//            console.log("2");
-//        });
 //        console.log("3");
 //        query = client.query('INSERT INTO users(uname,upw) VALUES($1,$2)', ["danb", "secret"]);
 //        query.on('end', function() {
@@ -42,15 +60,7 @@ pg.connect(process.env.DATABASE_URL, function(err, client) {
 //        });
 
         // save the client-connection-object (allowing others to operate on the database)
-        theClient = client;
-
         // call all "onReady" functions
-        process.nextTick(function() {
-            for(var i=0; i<onReadyFncs.length; i++) {
-                onReadyFncs[i]();
-            }
-            onReadyFncs = [];
-        });
     }
 });
 
