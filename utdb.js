@@ -13,7 +13,7 @@ var traceFunction = function(msg) {
 // function to call to NOT log message to console
 var nillFunction = function() {
 };
-var trace = nillFunction;
+var trace = traceFunction;
 
 // function to run when database is ready to use
 var doOnReadyNow = function() {
