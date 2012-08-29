@@ -174,7 +174,10 @@ exports.addUser = function(name, pw, fnc) {
         query.on('end', function() {
                 // user inserted OK
                 trace("addUser: on END");
-                if (fnc) fnc(true);
+                if (fnc) {
+                    // return the user's result (result.id)
+                    exports.findUser(name, pw, fnc);
+                }
                 fnc = undefined;
             }).on('error', function(err) {
                 trace("addUser: ERROR %j", err);
