@@ -108,23 +108,34 @@ exports.findUser = function(name,pw,fnc) {
         console.log("findUser 1");
         pw = encryptPW(pw, name);
         console.log("findUser 2:  name="+name+"  epw="+pw);
+        var fncCalled = false;
         var query = theClient.query("SELECT id FROM users WHERE uname=$1 AND upw=$2)", [name,pw]);
         console.log("findUser 3: query=%j",query);
         query.on('row', function(result) {
                 console.log("findUser: got a row:  %j",result);
                 if (result) {
+                    fncCalled = true;
                     fnc(result);
                 }
             }).on('end', function() {
                 console.log("findUser: on END");
-                fnc(undefined);
+                if (!fncCalled) {
+                    fncCalled = true;
+                    fnc(undefined);
+                }
             }).on('error', function(err) {
                 console.log("findUser: ERROR %j", err);
-                fnc(undefined);
+                if (!fncCalled) {
+                    fncCalled = true;
+                    fnc(undefined);
+                }
             });
         console.log("findUser: 4");
     } else {
-        fnc(undefined);
+        if (!fncCalled) {
+            fncCalled = true;
+            fnc(undefined);
+        }
     }
     console.log("findUser: 5");
 };
