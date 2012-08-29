@@ -146,6 +146,7 @@ exports.addUser = function(name, pw) {
     if (theClient) {
         pw = encryptPW(pw, name);
         var query = theClient.query('INSERT INTO users(uname,upw) VALUES($1,$2)', [name,pw]);
+        console.log("addUser: query=%j", query);
         query.on('end', function() {
                 // user inserted
                 console.log("addUser: on END");
