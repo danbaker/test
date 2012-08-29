@@ -39,7 +39,11 @@ pg.connect(process.env.DATABASE_URL, function(err, client) {
                 console.log("connect: 3");
                 theClient = client;
                 doOnReadyNow();
-            });
+            }).on('error', function(err) {
+                    console.log("connect: create table error: %j", err);
+                });
+        }).on('error', function(err) {
+                console.log("connect: drop table error: %j", err);
         });
 
 //        console.log("3");
