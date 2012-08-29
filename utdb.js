@@ -4,7 +4,6 @@ var nhash = require('node_hash');
 
 var theClient = undefined;              // the database-client-connection object
 var onReadyFncs = [];
-var trace = nillFunction;
 
 
 // function to call to log console messages
@@ -14,6 +13,7 @@ var traceFunction = function(msg) {
 // function to call to NOT log message to console
 var nillFunction = function() {
 };
+var trace = nillFunction;
 
 // function to run when database is ready to use
 var doOnReadyNow = function() {
