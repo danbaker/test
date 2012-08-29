@@ -51,14 +51,14 @@ utdb.onReady(function() {
 //        // FAILED TO LOGIN
 //    }
 //});
-// NOTE: To create a new user:
-utdb.addUser(username, password, function(result) {
-    if (result) {
-        // user added
-    } else {
-        // FAILED to add user
-    }
-});
+//// NOTE: To create a new user:
+//utdb.addUser(username, password, function(result) {
+//    if (result) {
+//        // user added AND logged in as result.id
+//    } else {
+//        // FAILED to add user
+//    }
+//});
 
 
 /*
