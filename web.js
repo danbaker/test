@@ -24,7 +24,7 @@ app.listen(port, function() {
 
 // DEBUG DATABASE
 utdb.onReady(function() {
-    console.log("db ready");
+    console.log("db ready -- Yeah!");
     var u = "dan";
     var p = "secretpw";
     utdb.findUser(u,p,function(result) {
