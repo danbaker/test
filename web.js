@@ -27,11 +27,19 @@ utdb.onReady(function() {
     var u = "dan2";
     var p = "secretpwWRONG";
     utdb.findUser(u,p,function(result) {
-        console.log("onReady: Back in onReady, returned from findUser");
-        if (result === undefined) {
-            console.log("onReady: about to call addUser...");
-            utdb.addUser(u,p);
+        console.log("onReady: Back in onReady, returned from findUser.");
+        if (!result) {
+            console.log("onReady: user NOT found. about to call addUser...");
+            utdb.addUser(u,p, function(result) {
+                if (result) {
+                    console.log("onReady: addUser OK");
+                } else {
+                    console.log("onReady: addUser FAILED.  maybe username already exists.")
+                }
+            });
             console.log("onReady: returned from addUser");
+        } else {
+            console.log("onReady: user found: id="+result.id);
         }
     });
 });

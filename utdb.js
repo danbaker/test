@@ -155,17 +155,20 @@ exports.findUser = function(name,pw,fnc) {
 };
 
 // add a new user to the system
-exports.addUser = function(name, pw) {
+exports.addUser = function(name, pw, fnc) {
     console.log("addUser: u="+name+"  pw="+pw);
     if (theClient) {
         pw = encryptPW(pw, name);
         var query = theClient.query('INSERT INTO users(uname,upw) VALUES($1,$2)', [name,pw]);
         console.log("addUser: query=%j", query);
         query.on('end', function() {
-                // user inserted
+                // user inserted OK
                 console.log("addUser: on END");
+                if (fnc) fnc(true);
+                fnc = undefined;
             }).on('error', function(err) {
                 console.log("addUser: ERROR %j", err);
+                if (fnc) fnc();
             });
     }
 };
