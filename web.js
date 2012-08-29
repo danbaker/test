@@ -11,7 +11,7 @@ var app = express.createServer(express.logger());
 var debug_text = '';
 
 app.get('/', function(request, response) {
-    response.send('The UtahJS World is AMAZING -- Hello planet -- 6<br>' + debug_text);
+    response.send('The UtahJS World is AMAZING -- Hello planet -- 7<br>' + debug_text);
 });
 
 var port = process.env.PORT || 5000;
@@ -25,7 +25,7 @@ app.listen(port, function() {
 // DEBUG DATABASE
 utdb.onReady(function() {
     console.log("onReady: db ready -- Yeah!");
-    var u = "dan";
+    var u = "dan2";
     var p = "secretpw";
     utdb.findUser(u,p,function(result) {
         console.log("onReady: Back in onReady, returned from findUser");
