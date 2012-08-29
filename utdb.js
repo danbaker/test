@@ -29,22 +29,22 @@ pg.connect(process.env.DATABASE_URL, function(err, client) {
         //        console.log(JSON.stringify(row));
         //    });
 
-//        query = client.query("DROP TABLE users");
-//        query.on('end', function() {
-//            // table created OR failed
-//            console.log("connect: 2");
-//            query = client.query('CREATE TABLE users (id SERIAL PRIMARY KEY, uname varchar(20), upw varchar(40))');
-//            query.on('end', function() {
-//                // table created OR failed
-//                console.log("connect: 3");
+        query = client.query("DROP TABLE users");
+        query.on('end', function() {
+            // table created OR failed
+            console.log("connect: 2");
+            query = client.query('CREATE TABLE users (id SERIAL PRIMARY KEY, uname varchar(20) NOT NULL UNIQUE, upw varchar(40) NOT NULL)');
+            query.on('end', function() {
+                // table created OR failed
+                console.log("connect: 3");
                 theClient = client;
                 doOnReadyNow();
-//            }).on('error', function(err) {
-//                    console.log("connect: create table error: %j", err);
-//                });
-//        }).on('error', function(err) {
-//                console.log("connect: drop table error: %j", err);
-//        });
+            }).on('error', function(err) {
+                    console.log("connect: create table error: %j", err);
+                });
+        }).on('error', function(err) {
+                console.log("connect: drop table error: %j", err);
+        });
 
 //        console.log("3");
 //        query = client.query('INSERT INTO users(uname,upw) VALUES($1,$2)', ["danb", "secret"]);
