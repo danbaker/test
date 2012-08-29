@@ -6,7 +6,7 @@ var theClient = undefined;              // the database-client-connection object
 var onReadyFncs = [];
 
 
-var onReadyNow = function() {
+var doOnReadyNow = function() {
     if (theClient) {
         process.nextTick(function() {
             for(var i=0; i<onReadyFncs.length; i++) {
@@ -29,7 +29,7 @@ pg.connect(process.env.DATABASE_URL, function(err, client) {
         //        console.log(JSON.stringify(row));
         //    });
 
-        query = client.query("DROP TABLE user");
+        query = client.query("DROP TABLE users");
         query.on('end', function() {
             // table created OR failed
             console.log("connect: 2");
