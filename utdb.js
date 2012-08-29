@@ -109,7 +109,7 @@ exports.findUser = function(name,pw,fnc) {
         pw = encryptPW(pw, name);
         console.log("findUser 2:  name="+name+"  epw="+pw);
         var fncCalled = false;
-        var query = theClient.query("SELECT id FROM users WHERE uname=$1 AND upw=$2)", [name,pw]);
+        var query = theClient.query("SELECT id FROM users WHERE uname=$1 AND upw=$2", [name,pw]);
         console.log("findUser 3: query=%j",query);
         query.on('row', function(result) {
                 console.log("findUser: got a row:  %j",result);
