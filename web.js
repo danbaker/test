@@ -24,13 +24,15 @@ app.listen(port, function() {
 
 // DEBUG DATABASE
 utdb.onReady(function() {
-    console.log("db ready -- Yeah!");
+    console.log("onReady: db ready -- Yeah!");
     var u = "dan";
     var p = "secretpw";
     utdb.findUser(u,p,function(result) {
-        console.log("Back in onReady, returned from findUser");
+        console.log("onReady: Back in onReady, returned from findUser");
         if (result === undefined) {
+            console.log("onReady: about to call addUser...");
             utdb.addUser(u,p);
+            console.log("onReady: returned from addUser");
         }
     });
 });

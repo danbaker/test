@@ -111,36 +111,35 @@ exports.findUser = function(name,pw,fnc) {
         var query = theClient.query("SELECT id FROM users WHERE uname=$1 AND upw=$2)", [name,pw]);
         console.log("findUser 3: query=%j",query);
         query.on('row', function(result) {
-                console.log("got a row");
-                console.log(result);
+                console.log("findUser: got a row:  %j",result);
                 if (result) {
                     fnc(result);
                 }
             }).on('end', function() {
-                console.log("on END - find user");
+                console.log("findUser: on END");
                 fnc(undefined);
             }).on('error', function(err) {
-                console.log("findUser ERROR %j", err);
+                console.log("findUser: ERROR %j", err);
                 fnc(undefined);
             });
-        console.log("findUser 4");
+        console.log("findUser: 4");
     } else {
         fnc(undefined);
     }
-    console.log("findUser END");
+    console.log("findUser: 5");
 };
 
 // add a new user to the system
 exports.addUser = function(name, pw) {
-    console.log("addUser u="+name+"  pw="+pw);
+    console.log("addUser: u="+name+"  pw="+pw);
     if (theClient) {
         pw = encryptPW(pw, name);
         var query = theClient.query('INSERT INTO users(uname,upw) VALUES($1,$2)', [name,pw]);
         query.on('end', function() {
                 // user inserted
-                console.log("addUser on END");
+                console.log("addUser: on END");
             }).on('error', function(err) {
-                console.log("addUser ERROR %j", err);
+                console.log("addUser: ERROR %j", err);
             });
     }
 };
