@@ -15,8 +15,8 @@ var onReadyFncs = [];
 var nillFunction = function() {
 };
 var trace;
-trace = console.log;
-trace = nillFunction;
+trace = console.log;                // report all trace messages to console
+//trace = nillFunction;             // ignore all trace messages
 
 // function to run when database is ready to use
 var doOnReadyNow = function() {
@@ -45,7 +45,7 @@ if (isLocal) {
 // establish THE connection to THE database
 pg.connect(process.env.DATABASE_URL, function(err, client) {
     if (err) {
-        trace("database connection error: "+err);
+        console.log("database connection error: "+err);
     } else {
         // NOTE: DO HERE: Handle database migration here ...
         var query;
@@ -137,9 +137,23 @@ exports.isReady = function() {
 };
 
 // return the database-client-connection object
-exports.getClient = function() {
+getClient = function() {
+    if (theClient) {
+        if (theClient.connection && theClient.connection.stream && theClient.connection.stream.destroyed) {
+            // NOTE: Playing with this is confusing.  destroyed is set to true sometimes, but magically re-connects
+//            theClient = undefined;
+//            pg.connect(process.env.DATABASE_URL, function(err, client) {
+//                if (err) {
+//                    console.log("database connection error: "+err);
+//                } else {
+//                    theClient = client;
+//                }
+//            });
+        }
+    }
     return theClient;
 };
+exports.getClient = getClient;
 
 // find a user in the user table
 exports.findUser = function(name,pw,fnc) {
@@ -150,7 +164,7 @@ exports.findUser = function(name,pw,fnc) {
         pw = encryptPW(pw, name);
         trace("findUser 2:  name="+name+"  epw="+pw);
         var fncCalled = false;
-        var query = theClient.query("SELECT id FROM users WHERE uname=$1 AND upw=$2", [name,pw]);
+        var query = getClient().query("SELECT id FROM users WHERE uname=$1 AND upw=$2", [name,pw]);
         trace("findUser 3: query=%j",query);
         query.on('row', function(result) {
                 trace("findUser: got a row:  %j",result);
@@ -186,7 +200,7 @@ exports.addUser = function(name, opw, fnc) {
     trace("addUser: u="+name+"  pw="+opw);
     if (theClient) {
         var epw = encryptPW(opw, name);
-        var query = theClient.query('INSERT INTO users(uname,upw) VALUES($1,$2)', [name,epw]);
+        var query = getClient().query('INSERT INTO users(uname,upw) VALUES($1,$2)', [name,epw]);
         trace("addUser: query=%j", query);
         query.on('end', function() {
                 // user inserted OK
@@ -206,9 +220,10 @@ exports.addUser = function(name, opw, fnc) {
 exports.dumpAllUsers = function() {
     if (theClient) {
         console.log("_handle="+theClient.connection.stream._handle);
+        console.log("destroyed="+theClient.connection.stream.destroyed);
         console.log("theClient: v v v v v v v v v v v v v v v v v v v v");
         console.log(theClient);
-        var query = theClient.query('SELECT * FROM users LIMIT 10');
+        var query = getClient().query('SELECT * FROM users LIMIT 10');
         query.on('row', function(row) {
             console.log("id:"+row.id+" name="+row.uname);
         }).on('error', function(err) {
