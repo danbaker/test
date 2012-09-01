@@ -1,5 +1,10 @@
 
-var pg = require('pg');
+var dbURL = process.env.DATABASE_URL;   // URL to THE database (on Heroku)
+var isLocal = (dbURL? false : true);
+
+
+var pg;
+if (!isLocal) pg = require('pg');
 var nhash = require('node_hash');
 
 var theClient = undefined;              // the database-client-connection object
@@ -23,6 +28,13 @@ var doOnReadyNow = function() {
     }
 };
 
+if (isLocal) {
+    // SIMULATE like we have a database
+    console.log("LOCAL TESTING.  NO DATABASE.");
+    process.nextTick(function() {
+        doOnReadyNow();
+    });
+} else {
 // establish THE connection to THE database
 pg.connect(process.env.DATABASE_URL, function(err, client) {
     if (err) {
@@ -73,6 +85,7 @@ pg.connect(process.env.DATABASE_URL, function(err, client) {
         // call all "onReady" functions
     }
 });
+}
 
 
 // encrypt (hash) a password

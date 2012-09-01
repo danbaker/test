@@ -1,29 +1,28 @@
+console.log(" ");
+console.log(" ");
+console.log(" ");
 console.log("- - - - - - - - - - - - - - - - - - -");
 console.log("-");
 
+var port = process.env.PORT || 5000;
 var express = require('express');
 var pg = require('pg');
 var utdb = require('./utdb');
-
 var app = express.createServer(express.logger());
+var routes = require('./routes')(app);
 
-
-var debug_text = '';
-
-app.get('/', function(request, response) {
-    response.send('The UtahJS World is AMAZING -- Hello planet -- 15<br>' + debug_text);
-});
-
-var port = process.env.PORT || 5000;
+// start the server
 app.listen(port, function() {
     console.log("Listening on " + port);
 });
 
 
-
-// DEBUG DATABASE
 utdb.onReady(function() {
     console.log("onReady: db ready -- Yeah!");
+
+
+
+    // DEBUG JUNK
     var u = "dan5";
     var p = "secretpw5";
     utdb.findUser(u,p,function(result) {
