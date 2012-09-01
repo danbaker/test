@@ -16,7 +16,7 @@ var nillFunction = function() {
 };
 var trace;
 trace = console.log;
-//trace = nillFunction;
+trace = nillFunction;
 
 // function to run when database is ready to use
 var doOnReadyNow = function() {
