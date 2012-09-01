@@ -14,7 +14,9 @@ var onReadyFncs = [];
 // function to call to NOT log message to console
 var nillFunction = function() {
 };
-var trace = nillFunction; //console.log;
+var trace;
+trace = console.log;
+//trace = nillFunction;
 
 // function to run when database is ready to use
 var doOnReadyNow = function() {
