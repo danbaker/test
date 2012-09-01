@@ -205,14 +205,16 @@ exports.addUser = function(name, opw, fnc) {
 
 exports.dumpAllUsers = function() {
     if (theClient) {
-        console.log("_handle="+theClient.connection._handle);
+        console.log("_handle="+theClient.connection.stream._handle);
         console.log("theClient: v v v v v v v v v v v v v v v v v v v v");
         console.log(theClient);
-        var query = theClient.query('SELECT * FROM users');
+        var query = theClient.query('SELECT * FROM users LIMIT 10');
         query.on('row', function(row) {
             console.log("id:"+row.id+" name="+row.uname);
         }).on('error', function(err) {
             console.log("dumpAllUsers: ERROR %j", err);
+        }).on('end', function() {
+            console.log("dumpAllUsers: END");
         });
     }
 };
@@ -227,4 +229,4 @@ exports.onReady = function(fnc) {
 
 // allow testing of the encrypt function
 exports.testencryptPW = encryptPW;
-//exports.testTheClient = theClient;
+exports.testTheClient = theClient;
