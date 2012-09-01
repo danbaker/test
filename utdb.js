@@ -205,6 +205,7 @@ exports.addUser = function(name, opw, fnc) {
 
 exports.dumpAllUsers = function() {
     if (theClient) {
+        console.log("_handle="+theClient.connection._handle);
         console.log("theClient: v v v v v v v v v v v v v v v v v v v v");
         console.log(theClient);
         var query = theClient.query('SELECT * FROM users');
