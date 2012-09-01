@@ -16,7 +16,7 @@ var nillFunction = function() {
 };
 var trace;
 trace = console.log;                // report all trace messages to console
-//trace = nillFunction;             // ignore all trace messages
+trace = nillFunction;             // ignore all trace messages
 
 // function to run when database is ready to use
 var doOnReadyNow = function() {
@@ -221,8 +221,8 @@ exports.dumpAllUsers = function() {
     if (theClient) {
         console.log("_handle="+theClient.connection.stream._handle);
         console.log("destroyed="+theClient.connection.stream.destroyed);
-        console.log("theClient: v v v v v v v v v v v v v v v v v v v v");
-        console.log(theClient);
+//        console.log("theClient: v v v v v v v v v v v v v v v v v v v v");
+//        console.log(theClient);
         var query = getClient().query('SELECT * FROM users LIMIT 10');
         query.on('row', function(row) {
             console.log("id:"+row.id+" name="+row.uname);
