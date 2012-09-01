@@ -8,10 +8,19 @@ var port = process.env.PORT || 5000;
 var express = require('express');
 var pg = require('pg');
 var utdb = require('./utdb');
-var app = express.createServer(express.logger());
-var routes = require('./routes')(app);
+var app = express.createServer();
 
-// start the server
+
+var store  = new express.session.MemoryStore;
+app.configure( function() {
+    app.use(express.logger());
+    app.use(express.bodyParser());
+    app.use(express.cookieParser());
+    app.use(express.session({ secret: 'UtahJavaScriptHash', store:store }));
+});
+
+// setup routes and start the server
+var routes = require('./routes')(app);
 app.listen(port, function() {
     console.log("Listening on " + port);
 });

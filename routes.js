@@ -24,6 +24,7 @@ module.exports = function(app){
     // define routes
     app.get('/', function(req, res) {
         res.send('The UtahJS World is AMAZING -- Hello planet -- 15<br>');
+        console.log(req.session);
     });
 
     app.get('/apis/:version/', function(req, res) {
@@ -32,18 +33,25 @@ module.exports = function(app){
     });
     app.get('/apis/:version/login/:username/:password', function(req, res) {
         // apis/<version>/api
-        res.send("login "+req.params.username+" "+req.params.password);
         utdb.findUser(req.params.username, req.params.password, function(result) {
             if (!result) {
                 // return "FAILED LOGIN"
-                console.log("login "+req.params.username+" FAILED");
+                console.log("login "+req.params.username+" FAILED "+req.session.test1);
+                res.send("login "+req.params.username+" FAILED");;
+
             } else {
                 // return "LOGIN OK"
                 // set result.id into the session
                 console.log("login "+req.params.username+" OK: id="+result.id);
+                req.session.loginId = result.id;
+                req.session.loginUser = req.params.username;
+                res.send("login "+req.params.username+" OK");;
             }
         });
-
+    });
+    app.get('/apis/:version/logout', function(req, res) {
+        req.session.loginId = undefined;
+        res.send("logout");
     });
 
 
