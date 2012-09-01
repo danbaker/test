@@ -34,7 +34,12 @@ if (isLocal) {
     // SIMULATE like we have a database
     console.log("LOCAL TESTING.  NO DATABASE.");
     process.nextTick(function() {
-        doOnReadyNow();
+        process.nextTick(function() {
+            for(var i=0; i<onReadyFncs.length; i++) {
+                onReadyFncs[i]();
+            }
+            onReadyFncs = [];
+        });
     });
 } else {
 // establish THE connection to THE database
@@ -42,6 +47,7 @@ pg.connect(process.env.DATABASE_URL, function(err, client) {
     if (err) {
         trace("database connection error: "+err);
     } else {
+        // NOTE: DO HERE: Handle database migration here ...
         var query;
         //    var query = client.query('SELECT * FROM your_table');
         //
@@ -194,6 +200,17 @@ exports.addUser = function(name, opw, fnc) {
                 trace("addUser: ERROR %j", err);
                 if (fnc) fnc();
             });
+    }
+};
+
+exports.dumpAllUsers = function() {
+    if (theClient) {
+        var query = theClient.query('SELECT * FROM users');
+        query.on('row', function(row) {
+            console.log("id:"+row.id+" name="+row.uname);
+        }).on('error', function(err) {
+            console.log("dumpAllUsers: ERROR %j", err);
+        });
     }
 };
 

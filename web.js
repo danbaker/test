@@ -21,34 +21,12 @@ app.configure( function() {
 
 // setup routes and start the server
 var routes = require('./routes')(app);
-app.listen(port, function() {
-    console.log("Listening on " + port);
-});
 
 
 utdb.onReady(function() {
     console.log("onReady: db ready -- Yeah!");
-
-
-
-    // DEBUG JUNK
-    var u = "dan5";
-    var p = "secretpw5";
-    utdb.findUser(u,p,function(result) {
-        console.log("onReady: Back in onReady, returned from findUser.");
-        if (!result) {
-            console.log("onReady: user NOT found. about to call addUser...");
-            utdb.addUser(u,p, function(result) {
-                if (result) {
-                    console.log("onReady: addUser OK:  id="+result.id);
-                } else {
-                    console.log("onReady: addUser FAILED.  maybe username already exists.")
-                }
-            });
-            console.log("onReady: returned from addUser");
-        } else {
-            console.log("onReady: user found: id="+result.id);
-        }
+    app.listen(port, function() {
+        console.log("Listening on " + port);
     });
 });
 //// NOTE: To try to login:
@@ -68,41 +46,3 @@ utdb.onReady(function() {
 //    }
 //});
 
-
-/*
-pg.connect(process.env.DATABASE_URL, function(err, client) {
-    if (err) {
-        console.log("database connection error: "+err);
-    } else {
-        var query;
-    //    var query = client.query('SELECT * FROM your_table');
-    //
-    //    query.on('row', function(row) {
-    //        console.log(JSON.stringify(row));
-    //    });
-
-
-//        var query = client.query('CREATE TABLE users (id SERIAL PRIMARY KEY, uname varchar(20), upw varchar(20))');
-//        query.on('end', function() {
-//            // table created OR failed
-//            console.log("2");
-//        });
-        console.log("3");
-        query = client.query('INSERT INTO users(uname,upw) VALUES($1,$2)', ["danb", "secret"]);
-        query.on('end', function() {
-            // table created OR failed
-            console.log("2");
-        });
-        console.log("4");
-        query = client.query('SELECT * FROM users');
-        query.on('row', function(result) {
-            if (!result) {
-                console.log("nothing selected.  boo hoo");
-            } else {
-                debug_text += "id:"+result.id+" uname:"+result.uname+" upw:"+result.upw+"<br>";
-                console.log("%j", result);
-            }
-        });
-    }
-});
-*/

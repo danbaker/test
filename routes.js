@@ -41,6 +41,7 @@ module.exports = function(app){
     app.get('/apis/:version/status', function(req, res) {
         console.log("STATUS: %j", req.session);
         sendJson(res, {response:true, message:"status ok"});
+//        utdb.dumpAllUsers()();
     });
 
     app.get('/apis/:version/createuser/:username/:password', function(req, res) {
