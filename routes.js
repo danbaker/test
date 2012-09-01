@@ -2,9 +2,16 @@ module.exports = function(app){
 
     var utdb = require('./utdb');
 
+    // HELPER: send JSON to client
     var sendJson = function(res, json) {
         res.writeHead(200, {'Content-Type': 'application/json'});
         res.end(JSON.stringify(json));
+    };
+    // FUNCTION: perform login of user
+    var doLogin = function(req, res, result, msg) {
+        req.session.loginId = result.id;
+        req.session.loginUser = req.params.username;
+        sendJson(res, {response:true, message:msg});
     };
 
     // setup express to allow for parameter validation via a regex
@@ -31,12 +38,27 @@ module.exports = function(app){
         console.log(req.session);
     });
 
-    app.get('/apis/:version/', function(req, res) {
-        // apis/<version>/api
-        res.send("API version "+req.params.version);
+    app.get('/apis/:version/status', function(req, res) {
+        console.log("STATUS: %j", req.session);
+        sendJson(res, {response:true, message:"status ok"});
+    });
+
+    app.get('/apis/:version/createuser/:username/:password', function(req, res) {
+        // apis/<version>/create-a-user w/ password
+        utdb.addUser(req.params.username, req.params.password, function(result) {
+            if (!result) {
+                console.log("added new user "+req.params.username+" FAILED");
+                sendJson(res, {response:false, message:"createuser failed"});
+
+            } else {
+                // set result.id into the session
+                console.log("added new user "+req.params.username+" OK: id="+result.id);
+                doLogin(req, res, result, "createuser ok");
+            }
+        });
     });
     app.get('/apis/:version/login/:username/:password', function(req, res) {
-        // apis/<version>/api
+        // apis/<version>/login a username w/ password
         utdb.findUser(req.params.username, req.params.password, function(result) {
             if (!result) {
                 // return "FAILED LOGIN"
@@ -47,14 +69,13 @@ module.exports = function(app){
                 // return "LOGIN OK"
                 // set result.id into the session
                 console.log("login "+req.params.username+" OK: id="+result.id);
-                req.session.loginId = result.id;
-                req.session.loginUser = req.params.username;
-                sendJson(res, {response:true, message:"login ok"});
+                doLogin(req, res, result, "login ok");
             }
         });
     });
     app.get('/apis/:version/logout', function(req, res) {
         req.session.loginId = undefined;
+        req.session.loginUser = undefined;
         sendJson(res, {response:true, message:"logout ok"});
     });
 
