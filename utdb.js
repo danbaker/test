@@ -1,3 +1,24 @@
+/*
+    TABLE:  users
+    COLUMNS:
+        id      // auto assigned integer
+                // is used as the "id" for this user (stored in the session)
+        uname   // string -- the username (email adddress)
+        upw     // string -- the users password (encrypted)
+        auth    // int -- the authorization level for this user (set bits mean special authorizations)
+            0    = default auth. "normal" user (has no special authorization)
+            01   =
+            02   =
+            04   =
+            08   =
+            10   =
+            20   =
+            40   =
+            80   = can change auth values for all users
+            FF   = super-user (can do ANYTHING)
+ */
+
+
 
 var dbURL = process.env.DATABASE_URL;   // URL to THE database (on Heroku)
 var isLocal = (dbURL? false : true);
@@ -49,12 +70,20 @@ pg.connect(process.env.DATABASE_URL, function(err, client) {
     } else {
         // NOTE: DO HERE: Handle database migration here ...
         var query;
-        //    var query = client.query('SELECT * FROM your_table');
-        //
-        //    query.on('row', function(row) {
-        //        trace(JSON.stringify(row));
-        //    });
 
+        query = client.query('CREATE TABLE users (id SERIAL PRIMARY KEY, uname varchar(20) NOT NULL UNIQUE, upw varchar(40) NOT NULL, auth SMALLINT NOT NULL)');
+        query.on('end', function() {
+                // if didn't fail, then create happened
+
+            }).on('error', function(err) {
+                // failed to create table (already existed?)
+                query = client.query('ALTER TABLE users ADD COLUMN auth SMALLINT NOT NULL DEFAULT 0');
+                query.on('end', function() {
+
+                    }).on('error', function(err) {
+
+                    });
+            });
 //        query = client.query("DROP TABLE users");
 //        query.on('end', function() {
 //            // table created OR failed
@@ -223,9 +252,11 @@ exports.dumpAllUsers = function() {
         console.log("destroyed="+theClient.connection.stream.destroyed);
 //        console.log("theClient: v v v v v v v v v v v v v v v v v v v v");
 //        console.log(theClient);
-        var query = getClient().query('SELECT * FROM users LIMIT 10');
+        var n = 0;
+        var query = getClient().query('SELECT * FROM users LIMIT 20');
         query.on('row', function(row) {
-            console.log("id:"+row.id+" name="+row.uname);
+            n++;
+            console.log(""+n+": %j", row);
         }).on('error', function(err) {
             console.log("dumpAllUsers: ERROR %j", err);
         }).on('end', function() {
