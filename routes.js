@@ -76,6 +76,7 @@ module.exports = function(app){
     app.get('/apis/:version/logout', function(req, res) {
         req.session.loginId = undefined;
         req.session.loginUser = undefined;
+        req.session.destroy();
         sendJson(res, {response:true, message:"logout ok"});
     });
 
