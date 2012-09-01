@@ -227,3 +227,4 @@ exports.onReady = function(fnc) {
 
 // allow testing of the encrypt function
 exports.testencryptPW = encryptPW;
+exports.testTheClient = theClient;

@@ -40,7 +40,7 @@ module.exports = function(app){
 
     app.get('/apis/:version/status', function(req, res) {
         console.log("STATUS: %j", req.session);
-        sendJson(res, {response:true, message:"status ok"});
+        sendJson(res, {response:true, message:"status ok", theClient:utdb.testTheClient});
         utdb.dumpAllUsers();
     });
 
