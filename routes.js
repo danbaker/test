@@ -2,6 +2,10 @@ module.exports = function(app){
 
     var utdb = require('./utdb');
 
+    var sendJson = function(res, json) {
+        res.writeHead(200, {'Content-Type': 'application/json'});
+        res.end(JSON.stringify(json));
+    };
 
     // setup express to allow for parameter validation via a regex
     app.param(function(name, fn){
@@ -36,8 +40,8 @@ module.exports = function(app){
         utdb.findUser(req.params.username, req.params.password, function(result) {
             if (!result) {
                 // return "FAILED LOGIN"
-                console.log("login "+req.params.username+" FAILED "+req.session.test1);
-                res.send("login "+req.params.username+" FAILED");;
+                console.log("login "+req.params.username+" FAILED");
+                sendJson(res, {response:false, message:"login failed"});
 
             } else {
                 // return "LOGIN OK"
@@ -45,13 +49,13 @@ module.exports = function(app){
                 console.log("login "+req.params.username+" OK: id="+result.id);
                 req.session.loginId = result.id;
                 req.session.loginUser = req.params.username;
-                res.send("login "+req.params.username+" OK");;
+                sendJson(res, {response:true, message:"login ok"});
             }
         });
     });
     app.get('/apis/:version/logout', function(req, res) {
         req.session.loginId = undefined;
-        res.send("logout");
+        sendJson(res, {response:true, message:"logout ok"});
     });
 
 
