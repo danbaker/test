@@ -34,7 +34,7 @@ module.exports = function(app){
 
     // define routes
     app.get('/', function(req, res) {
-        res.send('The UtahJS World is AMAZING -- Hello planet -- 15<br>');
+        res.send('The UtahJS World is AMAZING -- Hello planet -- 16<br>');
         console.log(req.session);
     });
 
