@@ -1,1 +1,7 @@
-console.log("I'm alive!");
+require([], function() {
+
+    $(function() {
+        $('body').append('hello');
+    });
+
+});
