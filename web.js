@@ -16,6 +16,7 @@ app.configure( function() {
     app.use(express.logger());
     app.use(express.bodyParser());
     app.use(express.cookieParser());
+    app.use('/', express.static(__dirname + '/public'));
     app.use(express.session({ secret: 'UtahJavaScriptHash', store:store }));
 });
 

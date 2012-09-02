@@ -33,10 +33,11 @@ module.exports = function(app){
 
 
     // define routes
-    app.get('/', function(req, res) {
-        res.send('The UtahJS World is AMAZING -- Hello planet -- 16<br>');
-        console.log(req.session);
-    });
+//    app.get('/', function(req, res) {
+//        // send back the requirejs / jquery starter html that starts the client /clientjs/main.js file in the browser
+//        res.send('<!DOCTYPE html><html><head><title>UtahJS AI Competitions</title><script data-main="clientjs/main" src="clientjs/vendor/require-jquery.js"></script></head><body></body></html>');
+//        console.log(req.session);
+//    });
 
     app.get('/apis/:version/status', function(req, res) {
         console.log("STATUS: %j", req.session);
