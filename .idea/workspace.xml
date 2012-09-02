@@ -1,7 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b163e181-c391-49fa-b20a-b6034a2cbb74" name="Default" comment="" />
+    <list default="true" id="b163e181-c391-49fa-b20a-b6034a2cbb74" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/clientjs/vendor/img/glyphicons-halflings-white.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/clientjs/vendor/img/glyphicons-halflings.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/clientjs/js/LoginView.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/clientjs/vendor/css/bootstrap-responsive.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/clientjs/vendor/css/bootstrap-responsive.min.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/clientjs/vendor/css/bootstrap.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/clientjs/vendor/css/bootstrap.min.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/clientjs/vendor/js/backbone-min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/clientjs/vendor/js/bootstrap.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/clientjs/vendor/js/bootstrap.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/clientjs/vendor/js/jquery-1.8.1.min.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/clientjs/vendor/js/json2.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/clientjs/vendor/js/underscore-min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/clientjs/js/main.js" afterPath="$PROJECT_DIR$/public/clientjs/js/main.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/index.html" afterPath="$PROJECT_DIR$/public/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routes.js" afterPath="$PROJECT_DIR$/routes.js" />
+    </list>
     <ignored path="h1.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -34,10 +53,8 @@
       <file leaf-file-name="routes.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/routes.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="45" column="7" selection-start="1719" selection-end="1719" vertical-scroll-proportion="0.0">
-              <folding>
-                <marker date="1346553902000" expanded="true" signature="1272:1485" placeholder="{...}" />
-              </folding>
+            <state line="40" column="7" selection-start="1315" selection-end="1315" vertical-scroll-proportion="0.0">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -45,7 +62,7 @@
       <file leaf-file-name="utdb.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/utdb.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="255" column="0" selection-start="8629" selection-end="8629" vertical-scroll-proportion="0.7170036">
+            <state line="222" column="5" selection-start="7491" selection-end="7491" vertical-scroll-proportion="0.049940545">
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -160,6 +177,28 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="h1" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="h1" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="clientjs" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="vendor" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -323,10 +362,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/routes.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="45" column="7" selection-start="1719" selection-end="1719" vertical-scroll-proportion="0.0">
-          <folding>
-            <marker date="1346553902000" expanded="true" signature="1272:1485" placeholder="{...}" />
-          </folding>
+        <state line="40" column="7" selection-start="1315" selection-end="1315" vertical-scroll-proportion="0.0">
+          <folding />
         </state>
       </provider>
     </entry>
@@ -339,7 +376,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/utdb.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="255" column="0" selection-start="8629" selection-end="8629" vertical-scroll-proportion="0.7170036">
+        <state line="222" column="5" selection-start="7491" selection-end="7491" vertical-scroll-proportion="0.049940545">
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
