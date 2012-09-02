@@ -1,7 +1,17 @@
-require([], function() {
+requirejs.config({
+    baseUrl: 'clientjs/js',
+    paths: {
+        app: '../app'
+    }
+});
+
+require(['LoginView'], function(LoginView) {
 
     $(function() {
-        $('body').append('hello');
+
+        var loginView = new LoginView({el: '.login-slot'});
+        loginView.render();
+
     });
 
 });
