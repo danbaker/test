@@ -17,7 +17,17 @@ define([], function() {
         },
 
         _login: function() {
-            this.$el.html('Logged in as <a href="#" class="navbar-link">Dan Baker</a>');
+
+            var button = '<div class="dropdown">' +
+                '<a  data-toggle="dropdown" href="#"><i class="icon-user icon-white"></i> Dan Baker</a>' +
+                '<ul class="dropdown-menu">' +
+                '<li><a href="#">Profile</a></li>' +
+                '<li><a href="#">Recent Games</a></li>' +
+                '<li class="divider"></li>' +
+                '<li><a href="#">Sign Out</a></li>' +
+                '</ul>' +
+                '</div>';
+            this.$el.html(button);
         }
 
     });
