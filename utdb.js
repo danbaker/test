@@ -37,7 +37,7 @@ var nillFunction = function() {
 };
 var trace;
 trace = console.log;                // report all trace messages to console
-trace = nillFunction;             // ignore all trace messages
+//trace = nillFunction;             // ignore all trace messages
 
 // function to run when database is ready to use
 var doOnReadyNow = function() {
@@ -279,6 +279,11 @@ exports.setAuth = function(name, auth, fnc) {
                     fnc = undefined;
                 }
             });
+    } else {
+        if (fnc) {
+            fnc();
+            fnc = undefined;
+        }
     }
 };
 
