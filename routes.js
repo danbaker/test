@@ -26,13 +26,15 @@ module.exports = function(app){
         uobj.name = req.params.username;        // username the user supplied
         uobj.id = result.id;                    // id of the logged in user
         uobj.auth = result.auth;                // authorization level for the logged in user
-        uobj.isAuth = function(n) {
-            return uobj.auth & n;               // 1, 2, 4, 8 ...  (see utdb.js)
-        };
         // save this newly created user object in the session
         req.session.user = uobj;
 
         sendJson(res, {response:true, message:msg});        // return "logged in OK" or "created user OK"
+    };
+    var isAuth = function(req, n) {
+        if (req.session && req.session.user)
+            return req.session.user.auth & n;               // 1, 2, 4, 8 ...  (see utdb.js)
+        return false;
     };
 
     // setup express to allow for parameter validation via a regex
@@ -98,7 +100,7 @@ module.exports = function(app){
     });
     app.get('/apis/:version/setauth/:username/:auth', function(req, res) {
         // apis/<version>/set authorization level for a given user
-        if (req.session.user.isAuth(0x80)) {
+        if (isAuth(req, 0x80)) {
             // user ALLOWED to set auth
             utdb.setAuth(req.params.username, parseInt(req.params.auth), function(result) {
                 console.log("setauth by "+req.session.user.name+" for "+req.params.username+" to "+req.params.auth);
