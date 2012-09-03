@@ -253,7 +253,7 @@ exports.dumpAllUsers = function() {
 //        console.log("theClient: v v v v v v v v v v v v v v v v v v v v");
 //        console.log(theClient);
         var n = 0;
-        var query = getClient().query('SELECT * FROM users LIMIT 20');
+        var query = getClient().query('SELECT * FROM users WHERE 1 LIMIT 3');
         query.on('row', function(row) {
             n++;
             console.log(""+n+": %j", row);
