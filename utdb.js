@@ -193,7 +193,7 @@ exports.findUser = function(name,pw,fnc) {
         pw = encryptPW(pw, name);
         trace("findUser 2:  name="+name+"  epw="+pw);
         var fncCalled = false;
-        var query = getClient().query("SELECT id FROM users WHERE uname=$1 AND upw=$2", [name,pw]);
+        var query = getClient().query("SELECT id,auth FROM users WHERE uname=$1 AND upw=$2", [name,pw]);
         trace("findUser 3: query=%j",query);
         query.on('row', function(result) {
                 trace("findUser: got a row:  %j",result);
@@ -208,11 +208,7 @@ exports.findUser = function(name,pw,fnc) {
                     fnc(undefined);
                 }
             }).on('error', function(err) {
-                trace("findUser: ERROR %j", err);
-                if (!fncCalled) {
-                    fncCalled = true;
-                    fnc(undefined);
-                }
+                console.log("findUser: ERROR %j", err);
             });
         trace("findUser: 4");
     } else {
@@ -264,6 +260,29 @@ exports.dumpAllUsers = function() {
         });
     }
 };
+
+// set the authorization-level for a given username
+exports.setAuth = function(name, auth, fnc) {
+    trace("setAuth: u="+name+"  new auth="+auth);
+    if (theClient) {
+        var query = getClient().query('UPDATE users SET auth=$1 WHERE uname=$2', [auth,name]);
+        query.on('end', function() {
+                // user inserted OK
+                trace("setAuth: on END");
+                if (fnc) {
+                    fnc(true);
+                }
+            }).on('error', function(err) {
+                trace("setAuth: ERROR %j", err);
+                if (fnc) {
+                    fnc();
+                    fnc = undefined;
+                }
+            });
+    }
+};
+
+
 
 exports.onReady = function(fnc) {
     if (exports.isReady()) {

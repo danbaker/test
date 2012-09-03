@@ -1,3 +1,15 @@
+/*
+    ROUTES:
+
+    /apis/<api-version-number>/<api-name>/<arguments...>
+    /apis/1/status                              // show the system status in the heroku logs
+    /apis/1/createuser/<username>/<password>    // create a new user w/ username and password
+    /apis/1/login/<username>/<password>         // login an existing user w/ username and password
+    /apis/1/logout                              // logout currently logged in user (deletes session state)
+    /apis/1/setauth/<username>/<auth>           // set the authorization value for user (requires an auth level)
+ */
+
+
 module.exports = function(app){
 
     var utdb = require('./utdb');
@@ -9,9 +21,18 @@ module.exports = function(app){
     };
     // FUNCTION: perform login of user
     var doLogin = function(req, res, result, msg) {
-        req.session.loginId = result.id;
-        req.session.loginUser = req.params.username;
-        sendJson(res, {response:true, message:msg});
+        // create a new, empty, "user" object in the session
+        var uobj = {};
+        uobj.name = req.params.username;        // username the user supplied
+        uobj.id = result.id;                    // id of the logged in user
+        uobj.auth = result.auth;                // authorization level for the logged in user
+        uobj.isAuth = function(n) {
+            return uobj.auth & n;               // 1, 2, 4, 8 ...  (see utdb.js)
+        };
+        // save this newly created user object in the session
+        req.session.user = uobj;
+
+        sendJson(res, {response:true, message:msg});        // return "logged in OK" or "created user OK"
     };
 
     // setup express to allow for parameter validation via a regex
@@ -71,10 +92,26 @@ module.exports = function(app){
         });
     });
     app.get('/apis/:version/logout', function(req, res) {
-        req.session.loginId = undefined;
-        req.session.loginUser = undefined;
+        req.session.user = undefined;
         req.session.destroy();
         sendJson(res, {response:true, message:"logout ok"});
+    });
+    app.get('/apis/:version/setauth/:username/:auth', function(req, res) {
+        // apis/<version>/set authorization level for a given user
+        if (req.session.user.isAuth(0x80)) {
+            // user ALLOWED to set auth
+            utdb.setAuth(req.params.username, parseInt(req.params.auth), function(result) {
+                console.log("setauth by "+req.session.user.name+" for "+req.params.username+" to "+req.params.auth);
+                if (result) {
+                    sendJson(res, {response:true, message:"setauth ok"});
+                } else {
+                    sendJson(res, {response:false, message:"setauth failed. result="+result});
+                }
+            });
+        } else {
+            console.log("setauth FAILED: username:"+req.params.username);
+            sendJson(res, {response:false, message:"setauth failed. Not authorized."});
+        }
     });
 
 
