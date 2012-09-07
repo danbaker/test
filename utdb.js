@@ -7,14 +7,14 @@
         upw     // string -- the users password (encrypted)
         auth    // int -- the authorization level for this user (set bits mean special authorizations)
             0    = default auth. "normal" user (has no special authorization)
-            01   =
-            02   =
+            01   = logged in
+            02   = can change auth values for all users
             04   =
             08   =
             10   =
             20   =
             40   =
-            80   = can change auth values for all users
+            80   =
             FF   = super-user (can do ANYTHING)
  */
 
