@@ -169,6 +169,7 @@ exports.isReady = function() {
 getClient = function() {
     if (theClient) {
         if (theClient.connection && theClient.connection.stream && theClient.connection.stream.destroyed) {
+            console.log("utdb.getClient -- connection is destroyed");
             // NOTE: Playing with this is confusing.  destroyed is set to true sometimes, but magically re-connects
 //            theClient = undefined;
 //            pg.connect(process.env.DATABASE_URL, function(err, client) {
