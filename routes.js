@@ -46,15 +46,22 @@ module.exports = function(app){
     // check if user requested docs -- return docs (and return "true"
     var showDocs = function(req,res,docs) {
         if (req && req.query && (req.query["docs"] || req.query["doc"])) {
-//            console.log(req);
+            var i;
             var msg = "";
-            msg += "Documentation for route: "+req.url+"<br>";
-            msg += "..api "+docs.api+"<br>";
-            msg += "..version "+docs.version+"<br>";
+            msg += "Documentation for request: "+req.url+"<br>";
+            msg += ".. usage: /apis/"+docs.version+"/"+docs.api;
+            if (docs.params) {
+                for(i=0; i<docs.params.length; i++) {
+                    msg += "/"+docs.params[i].substr(0,docs.params[i].indexOf(" "));
+                }
+            }
+            msg += "<br>";
+            msg += ".. api "+docs.api+"<br>";
+            msg += ".. version "+docs.version+"<br>";
             msg += ".. "+docs.description+"<br>";
             if (docs.params) {
                 msg += ".. URL parameters:<br>"
-                for(var i=0; i<docs.params.length; i++) {
+                for(i=0; i<docs.params.length; i++) {
                     msg += ".. .. "+i+": "+docs.params[i]+"<br>";
                 }
             }
@@ -88,6 +95,7 @@ module.exports = function(app){
 
     // define routes
 
+    // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     app.get('/apis/:version/status', function(req, res) {
         // Note: anyone allowed to ask for status
         console.log("STATUS: %j", req.session);
@@ -95,44 +103,89 @@ module.exports = function(app){
         utdb.dumpAllUsers();
     });
 
+    // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     app.get('/apis/:version/createuser/:username/:password', function(req, res) {
-        // Note: anyone allowed to create a new user
-        // apis/<version>/create-a-user w/ password
-        utdb.addUser(req.params.username, req.params.password, function(result) {
-            if (!result) {
-                console.log("added new user "+req.params.username+" FAILED");
-                sendJson(res, {response:false, message:"createuser failed"});
+        if (!showDocs(req,res, {
+            version: 1,
+            api: "createuser",
+            description: "create a new user with initial password",
+            params: [
+                "username -- the user to create",
+                "password -- the cleartext password to be their password"
+            ],
+            longDesc: "If your username already exists, you will get a failure.<br>" +
+                "If the user is created, they are also auto-logged in.<br>" +
+                "Note: currently, you do not need to be logged in to create a new user.<br>" +
+                "Returns a json object that contains the exact same as login<br>"
+        })) {
+            // Note: anyone allowed to create a new user
+            // apis/<version>/create-a-user w/ password
+            utdb.addUser(req.params.username, req.params.password, function(result) {
+                if (!result) {
+                    console.log("added new user "+req.params.username+" FAILED");
+                    sendJson(res, {response:false, message:"createuser failed"});
 
-            } else {
-                // set result.id into the session
-                console.log("added new user "+req.params.username+" OK: id="+result.id);
-                doLogin(req, res, result, "createuser ok");
-            }
-        });
+                } else {
+                    // set result.id into the session
+                    console.log("added new user "+req.params.username+" OK: id="+result.id);
+                    doLogin(req, res, result, "createuser ok");
+                }
+            });
+        }
     });
+
+    // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     app.get('/apis/:version/login/:username/:password', function(req, res) {
-        // Note: anyone allowed to request to login
-        // apis/<version>/login a username w/ password
-        utdb.findUser(req.params.username, req.params.password, function(result) {
-            if (!result) {
-                // return "FAILED LOGIN"
-                console.log("login "+req.params.username+" FAILED");
-                sendJson(res, {response:false, message:"login failed"});
+        if (!showDocs(req,res, {
+            version: 1,
+            api: "login",
+            description: "login as a new user",
+            params: [
+                "username -- the user to login as",
+                "password -- the cleartext password"
+            ],
+            longDesc: "If your username is not valid or the password doesn't match, then the login will fail.<br>" +
+                "Returns a json object that contains:<br>"+
+                ".. auth = bit-fields (see setauth for meaning of each bit)<br>"+
+                ".. id = unique identifier for this user.  Some calls may use this id."
+        })) {
+            // Note: anyone allowed to request to login
+            // apis/<version>/login a username w/ password
+            utdb.findUser(req.params.username, req.params.password, function(result) {
+                if (!result) {
+                    // return "FAILED LOGIN"
+                    console.log("login "+req.params.username+" FAILED");
+                    sendJson(res, {response:false, message:"login failed"});
 
-            } else {
-                // return "LOGIN OK"
-                // set result.id into the session
-                console.log("login "+req.params.username+" OK: id="+result.id+"  auth="+result.auth);
-                doLogin(req, res, result, "login ok");
-            }
-        });
+                } else {
+                    // return "LOGIN OK"
+                    // set result.id into the session
+                    console.log("login "+req.params.username+" OK: id="+result.id+"  auth="+result.auth);
+                    doLogin(req, res, result, "login ok");
+                }
+            });
+        }
     });
+
+    // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     app.get('/apis/:version/logout', function(req, res) {
-        // Note: anyone allowed to logout
-        req.session.user = undefined;
-        req.session.destroy();
-        sendJson(res, {response:true, message:"logout ok"});
+        if (!showDocs(req,res, {
+            version: 1,
+            api: "logout",
+            description: "logout the current user. Delete their session.",
+            params: [
+            ],
+            longDesc: "This will delete the session data for the current logged in user.<br>" +
+                "This call should always succeed, even if you aren't logged in."
+        })) {
+            // Note: anyone allowed to logout
+            req.session.user = undefined;
+            req.session.destroy();
+            sendJson(res, {response:true, message:"logout ok"});
+        }
     });
+
+    // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     app.get('/apis/:version/setauth/:username/:auth', function(req, res) {
         console.log("docs="+req.query["docs"]);
         // apis/<version>/set authorization level for a given user
