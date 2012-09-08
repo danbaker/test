@@ -43,6 +43,30 @@ module.exports = function(app){
             return req.session.user.auth & n;               // 1, 2, 4, 8 ...  (see utdb.js)
         return false;
     };
+    // check if user requested docs -- return docs (and return "true"
+    var showDocs = function(req,res,docs) {
+        if (req && req.query && (req.query["docs"] || req.query["doc"])) {
+//            console.log(req);
+            var msg = "";
+            msg += "Documentation for route: "+req.url+"<br>";
+            msg += "..api "+docs.api+"<br>";
+            msg += "..version "+docs.version+"<br>";
+            msg += ".. "+docs.description+"<br>";
+            if (docs.params) {
+                msg += ".. URL parameters:<br>"
+                for(var i=0; i<docs.params.length; i++) {
+                    msg += ".. .. "+i+": "+docs.params[i]+"<br>";
+                }
+            }
+            msg += "<br><br>" + docs.longDesc;
+            res.writeHead(200, {'Content-Type': 'text/html'});
+            res.end(msg);
+            return true;
+        }
+        return false;
+    };
+
+
 
     // setup express to allow for parameter validation via a regex
     app.param(function(name, fn){
@@ -110,21 +134,41 @@ module.exports = function(app){
         sendJson(res, {response:true, message:"logout ok"});
     });
     app.get('/apis/:version/setauth/:username/:auth', function(req, res) {
+        console.log("docs="+req.query["docs"]);
         // apis/<version>/set authorization level for a given user
-        // Note: Must be authorized to set the authorization level for a user
-        if (isAuth(req, 0x02)) {
-            // user ALLOWED to set auth
-            utdb.setAuth(req.params.username, parseInt(req.params.auth), function(result) {
-                console.log("setauth by "+req.session.user.name+" for "+req.params.username+" to "+req.params.auth);
-                if (result) {
-                    sendJson(res, {response:true, message:"setauth ok"});
-                } else {
-                    sendJson(res, {response:false, message:"setauth failed. result="+result});
-                }
-            });
-        } else {
-            console.log("setauth FAILED: username:"+req.params.username);
-            sendJson(res, {response:false, message:"setauth failed. Not authorized."});
+        if (!showDocs(req,res, {
+            version: 1,
+            api: "setauth",
+            description: "Set the authorization level for a specified user",
+            params: [
+                "username -- the username to set",
+                "auth level -- the new authorization (number) for the user"
+            ],
+            longDesc: "authorization bits:<br>" +
+                "0x01 = normal logged in user<br>" +
+                "0x02 = can use setauth<br>" +
+                "0x04 = <br>" +
+                "0x08 = <br>" +
+                "0x10 = <br>" +
+                "0x20 = <br>" +
+                "0x40 = <br>" +
+                "0x80 = <br>"
+        })) {
+            // Note: Must be authorized to set the authorization level for a user
+            if (isAuth(req, 0x02)) {
+                // user ALLOWED to set auth
+                utdb.setAuth(req.params.username, parseInt(req.params.auth), function(result) {
+                    console.log("setauth by "+req.session.user.name+" for "+req.params.username+" to "+req.params.auth);
+                    if (result) {
+                        sendJson(res, {response:true, message:"setauth ok"});
+                    } else {
+                        sendJson(res, {response:false, message:"setauth failed. result="+result});
+                    }
+                });
+            } else {
+                console.log("setauth FAILED: username:"+req.params.username);
+                sendJson(res, {response:false, message:"setauth failed. Not authorized."});
+            }
         }
     });
 
