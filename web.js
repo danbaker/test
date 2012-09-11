@@ -67,7 +67,7 @@ if (!isLocal) {
                 var userCollection = collection;
                 userCollection.insert({uname:"dan", upw:"secret", auth: 1}, function(err, result) {
                     if (err) console.log("insert error: %j", err);
-                    console.log("Result from user collection insert: %j", result);
+                    console.log("..Result from user collection insert: %j", result);
                 })
             })
         });
