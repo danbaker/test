@@ -65,7 +65,9 @@ if (!isLocal) {
             db.collection('users', function(err, collection) {
                 if (err) console.log("collection error: %j", err);
                 var userCollection = collection;
-                userCollection.insert({uname:"dan", upw:"secret", auth: 1}, function(err, result) {
+                // force the "username" to be unique (can't have two users with the same username)
+                userCollection.ensureIndex({uname:1},{unique:true});
+                userCollection.insert({uname:"dan2", upw:"secret2", auth: 1}, function(err, result) {
                     if (err) console.log("insert error: %j", err);
                     console.log("..Result from user collection insert: %j", result);
                 })
