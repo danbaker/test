@@ -70,6 +70,13 @@ if (!isLocal) {
                 userCollection.insert({uname:"dan2", upw:"secret2", auth: 1}, function(err, result) {
                     if (err) console.log("insert error: %j", err);
                     console.log("...Result from user collection insert: %j", result);
+                    var id = result._id;
+                    console.log("About to check if actually inserted...look for "+id);
+                    if (id) {
+                        userCollection.find({id:id}).limit(3).forEach(function(x) {
+                            console.log(x)
+                        });
+                    }
                 })
             })
         });
