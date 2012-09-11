@@ -9,7 +9,7 @@ var express = require('express');
 var pg = require('pg');
 var utdb = require('./utdb');
 var app = express.createServer();
-
+var mongo = require('mongodb');
 
 var store  = new express.session.MemoryStore;
 app.configure( function() {
@@ -47,3 +47,53 @@ utdb.onReady(function() {
 //    }
 //});
 
+
+/// * * * DEBUG * * *
+var dbURL = process.env.MONGOLAB_URI;   // URL to THE database
+var isLocal = (dbURL? false : true);
+if (!isLocal) {
+    mongo.connect(dbURL, {}, function(error, db) {
+
+        // console.log will write to the heroku log which can be accessed via the
+        // command line as "heroku logs"
+        db.addListener("error", function(error){
+            console.log("Error connecting to MongoLab");
+        });
+
+        db.createCollection('users', function(err, collection) {
+            if (err) console.log("createCollection error: %j", err);
+            db.collection('users', function(err, collection) {
+                if (err) console.log("collection error: %j", err);
+                var userCollection = collection;
+                userCollection.insert({uname:"dan", upw:"secret", auth: 1}, function(err, result) {
+                    if (err) console.log("insert error: %j", err);
+                    console.log("Result from user collection insert: %j", result);
+                })
+            })
+        });
+
+    //    db.createCollection('requests', function(err, collection){
+    //        db.collection('requests', function(err, collection){
+    //            var requestCollection = collection;
+    //            connect(
+    //                connect.favicon(), // Return generic favicon
+    //                connect.query(), // populate req.query with query parameters
+    //                connect.bodyParser(), // Get JSON data from body
+    //                function(req, res, next){ // Handle the request
+    //                    res.setHeader("Content-Type", "application/json");
+    //                    if(req.query != null) {
+    //                        requestCollection.insert(req.query, function(error, result){
+    //                            // result will have the object written to the db so let's just
+    //                            // write it back out to the browser
+    //                            res.write(JSON.stringify(result));
+    //                        });
+    //                    }
+    //
+    //                    res.end();
+    //                }
+    //            ).listen(process.env.PORT || 8080);
+    //            // the PORT variable will be assigned by Heroku
+    //        });
+    //    });
+    });
+}
