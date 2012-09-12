@@ -126,6 +126,7 @@ if (isLocal) {
         //            // the PORT variable will be assigned by Heroku
         //        });
         //    });
+        doOnReadyNow();
     });
 }
 
