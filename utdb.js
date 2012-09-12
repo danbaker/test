@@ -82,21 +82,23 @@ if (isLocal) {
                 // force the "username" to be unique (can't have two users with the same username)
                 userCollection.ensureIndex({uname:1},{unique:true});
 
-                userCollection.insert({uname:"dan2", upw:"secret2", auth: 1}, function(err, result) {
-                    if (err) console.log("insert error: %j", err);
-                    console.log("...Result from user collection insert: %j", result);
-                    var id = result[0]._id;
-                    console.log("About to check if actually inserted...look for "+id);
-                    if (id) {
-                        console.log("find id: "+id);
-                        userCollection.find({id:id}).limit(3).forEach(function(x) {
-                            console.log(x)
-                        });
-                        console.log("NOT found");
-                    }
-                });
+//                userCollection.insert({uname:"dan2", upw:"secret2", auth: 1}, function(err, result) {
+//                    if (err) console.log("insert error: %j", err);
+//                    console.log("...Result from user collection insert: %j", result);
+//                    var id = result[0]._id;
+//                    console.log("About to check if actually inserted...look for "+id);
+//                    if (id) {
+//                        console.log("find id: "+id);
+//                        userCollection.find({id:id}).limit(3).forEach(function(x) {
+//                            console.log(x)
+//                        });
+//                        console.log("NOT found");
+//                    }
+//                });
             });
         });
+
+        // @TODO: create other collections here ...
 
         //    db.createCollection('requests', function(err, collection){
         //        db.collection('requests', function(err, collection){
