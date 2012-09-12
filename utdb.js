@@ -43,7 +43,7 @@ trace = console.log;                // report all trace messages to console
 
 // function to run when database is ready to use
 var doOnReadyNow = function() {
-    if (theClient) {
+    if (theClient || userCollection) {
         process.nextTick(function() {
             for(var i=0; i<onReadyFncs.length; i++) {
                 onReadyFncs[i]();
@@ -98,6 +98,7 @@ if (isLocal) {
 //                        console.log("NOT found");
 //                    }
 //                });
+                doOnReadyNow();
             });
         });
 
@@ -126,7 +127,6 @@ if (isLocal) {
         //            // the PORT variable will be assigned by Heroku
         //        });
         //    });
-        doOnReadyNow();
     });
 }
 
