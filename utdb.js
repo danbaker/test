@@ -67,7 +67,9 @@ if (isLocal) {
 } else {
 
     // establish THE connection to THE MongoLabs database
+    trace("About to connect to MongoLabs");
     mongo.connect(mdbURL, {}, function(error, db) {
+        trace("...connected to MongoLabs");
 
         db.addListener("error", function(error){
             console.log("Error connecting to MongoLab: %j", error);
