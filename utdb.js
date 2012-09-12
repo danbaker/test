@@ -253,11 +253,12 @@ exports.findUser = function(name, opw, fnc) {
 //    }
     if (userCollection) {
         var cur = userCollection.find({uname:name, upw:pw}).limit(1);
-        if (cur) cur.forEach(function(result) {
+        if (cur && cur.hasNext()) {
+            result = cur.next();
             var obj = {uname:result.uname, id:result._id, auth:result.auth};
             console.log("Returning found user: %j", obj)
             fnc(obj);
-        });
+        }
     }
 };
 
