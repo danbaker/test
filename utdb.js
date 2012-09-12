@@ -222,7 +222,7 @@ exports.getClient = getClient;
 
 // find a user in the user table
 exports.findUser = function(name, opw, fnc) {
-    var pw = encryptPW(pw, name);
+    var pw = encryptPW(opw, name);
     trace("findUser u="+name+" pw="+pw);
 
 //    if (theClient) {
