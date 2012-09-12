@@ -17,16 +17,18 @@
             80   =
             FF   = super-user (can do ANYTHING)
  */
-
-
-
-var dbURL = process.env.DATABASE_URL;   // URL to THE database (on Heroku)
-var isLocal = (dbURL? false : true);
-
-
-var pg;
-if (!isLocal) pg = require('pg');
+var mdbURL = process.env.MONGOLAB_URI;   // URL to THE database
+var isLocal = (mdbURL? false : true);
 var nhash = require('node_hash');
+var pg;
+var mongo;
+if (!isLocal) {
+    pg = require('pg');
+    mongo = require('mongodb');
+}
+
+var userCollection;             // the "users" collection
+
 
 var theClient = undefined;              // the database-client-connection object
 var onReadyFncs = [];
@@ -63,66 +65,93 @@ if (isLocal) {
         });
     });
 } else {
-// establish THE connection to THE database
-pg.connect(process.env.DATABASE_URL, function(err, client) {
-    if (err) {
-        console.log("database connection error: "+err);
-    } else {
-        // NOTE: DO HERE: Handle database migration here ...
-        var query;
 
-        query = client.query('CREATE TABLE users (id SERIAL PRIMARY KEY, uname varchar(20) NOT NULL UNIQUE, upw varchar(40) NOT NULL, auth SMALLINT NOT NULL)');
-        query.on('end', function() {
-                // if didn't fail, then create happened
+    // establish THE connection to THE MongoLabs database
+    mongo.connect(mdbURL, {}, function(error, db) {
 
-            }).on('error', function(err) {
-                // failed to create table (already existed?)
-                query = client.query('ALTER TABLE users ADD COLUMN auth SMALLINT NOT NULL DEFAULT 0');
-                query.on('end', function() {
+        db.addListener("error", function(error){
+            console.log("Error connecting to MongoLab: %j", error);
+        });
 
-                    }).on('error', function(err) {
+        // create each collection
+        db.createCollection('users', function(err, collection) {
+            if (err) console.log("createCollection error: %j", err);
+            db.collection('users', function(err, collection) {
+                if (err) console.log("collection error: %j", err);
+                userCollection = collection;
+                // force the "username" to be unique (can't have two users with the same username)
+                userCollection.ensureIndex({uname:1},{unique:true});
 
-                    });
+                userCollection.insert({uname:"dan2", upw:"secret2", auth: 1}, function(err, result) {
+                    if (err) console.log("insert error: %j", err);
+                    console.log("...Result from user collection insert: %j", result);
+                    var id = result[0]._id;
+                    console.log("About to check if actually inserted...look for "+id);
+                    if (id) {
+                        console.log("find id: "+id);
+                        userCollection.find({id:id}).limit(3).forEach(function(x) {
+                            console.log(x)
+                        });
+                        console.log("NOT found");
+                    }
+                });
             });
-//        query = client.query("DROP TABLE users");
+        });
+
+        //    db.createCollection('requests', function(err, collection){
+        //        db.collection('requests', function(err, collection){
+        //            var requestCollection = collection;
+        //            connect(
+        //                connect.favicon(), // Return generic favicon
+        //                connect.query(), // populate req.query with query parameters
+        //                connect.bodyParser(), // Get JSON data from body
+        //                function(req, res, next){ // Handle the request
+        //                    res.setHeader("Content-Type", "application/json");
+        //                    if(req.query != null) {
+        //                        requestCollection.insert(req.query, function(error, result){
+        //                            // result will have the object written to the db so let's just
+        //                            // write it back out to the browser
+        //                            res.write(JSON.stringify(result));
+        //                        });
+        //                    }
+        //
+        //                    res.end();
+        //                }
+        //            ).listen(process.env.PORT || 8080);
+        //            // the PORT variable will be assigned by Heroku
+        //        });
+        //    });
+    });
+
+
+
+
+// establish THE connection to THE database
+//pg.connect(process.env.DATABASE_URL, function(err, client) {
+//    if (err) {
+//        console.log("database connection error: "+err);
+//    } else {
+//        // NOTE: DO HERE: Handle database migration here ...
+//        var query;
+//
+//        query = client.query('CREATE TABLE users (id SERIAL PRIMARY KEY, uname varchar(20) NOT NULL UNIQUE, upw varchar(40) NOT NULL, auth SMALLINT NOT NULL)');
 //        query.on('end', function() {
-//            // table created OR failed
-//            trace("connect: 2");
-//            query = client.query('CREATE TABLE users (id SERIAL PRIMARY KEY, uname varchar(20) NOT NULL UNIQUE, upw varchar(40) NOT NULL)');
-//            query.on('end', function() {
-//                // table created OR failed
-//                trace("connect: 3");
-                theClient = client;
-                doOnReadyNow();
+//                // if didn't fail, then create happened
+//
 //            }).on('error', function(err) {
-//                    trace("connect: create table error: %j", err);
-//                });
-//        }).on('error', function(err) {
-//                trace("connect: drop table error: %j", err);
-//        });
-
-//        trace("3");
-//        query = client.query('INSERT INTO users(uname,upw) VALUES($1,$2)', ["danb", "secret"]);
-//        query.on('end', function() {
-//            // table created OR failed
-//            trace("2");
-//        });
-//        console.log("4");
-//        query = client.query('SELECT * FROM users');
-//        query.on('row', function(result) {
-//            if (!result) {
-//                trace("nothing selected.  boo hoo");
-//            } else {
-////                debug_text += "id:"+result.id+" uname:"+result.uname+" upw:"+result.upw+"<br>";
-//                trace("%j", result);
-//            }
-//        });
-
-        // save the client-connection-object (allowing others to operate on the database)
-        // call all "onReady" functions
-    }
-});
-}
+//                // failed to create table (already existed?)
+//                query = client.query('ALTER TABLE users ADD COLUMN auth SMALLINT NOT NULL DEFAULT 0');
+//                query.on('end', function() {
+//
+//                    }).on('error', function(err) {
+//
+//                    });
+//            });
+//        theClient = client;
+//        doOnReadyNow();
+//    }
+//});
+//}
 
 
 // encrypt (hash) a password
@@ -162,7 +191,7 @@ var encryptPW = function(pw, user) {
 // check if the database has been connected to, and is ready to use
 // return: true IF the database is ready to use
 exports.isReady = function() {
-    return !!theClient;
+    return !!theClient || !!userCollection;
 };
 
 // return the database-client-connection object
@@ -186,60 +215,77 @@ getClient = function() {
 exports.getClient = getClient;
 
 // find a user in the user table
-exports.findUser = function(name,pw,fnc) {
+exports.findUser = function(name, opw, fnc) {
+    var pw = encryptPW(pw, name);
     trace("findUser u="+name+" pw="+pw);
 
-    if (theClient) {
-        trace("findUser 1");
-        pw = encryptPW(pw, name);
-        trace("findUser 2:  name="+name+"  epw="+pw);
-        var fncCalled = false;
-        var query = getClient().query("SELECT id,auth FROM users WHERE uname=$1 AND upw=$2", [name,pw]);
-        trace("findUser 3: query=%j",query);
-        query.on('row', function(result) {
-                trace("findUser: got a row:  %j",result);
-                if (result) {
-                    fncCalled = true;
-                    fnc(result);
-                }
-            }).on('end', function() {
-                trace("findUser: on END");
-                if (!fncCalled) {
-                    fncCalled = true;
-                    fnc(undefined);
-                }
-            }).on('error', function(err) {
-                console.log("findUser: ERROR %j", err);
-            });
-        trace("findUser: 4");
-    } else {
-        if (!fncCalled) {
-            fncCalled = true;
-            fnc(undefined);
-        }
+//    if (theClient) {
+//        var fncCalled = false;
+//        var query = getClient().query("SELECT id,auth FROM users WHERE uname=$1 AND upw=$2", [name,pw]);
+//        trace("findUser 3: query=%j",query);
+//        query.on('row', function(result) {
+//                trace("findUser: got a row:  %j",result);
+//                if (result) {
+//                    fncCalled = true;
+//                    fnc(result);
+//                }
+//            }).on('end', function() {
+//                trace("findUser: on END");
+//                if (!fncCalled) {
+//                    fncCalled = true;
+//                    fnc(undefined);
+//                }
+//            }).on('error', function(err) {
+//                console.log("findUser: ERROR %j", err);
+//            });
+//        trace("findUser: 4");
+//    } else {
+//        if (!fncCalled) {
+//            fncCalled = true;
+//            fnc(undefined);
+//        }
+//    }
+    if (userCollection) {
+        var cur = userCollection.find({uname:name, upw:pw}).limit(1);
+        if (cur) cur.forEach(function(result) {
+            var obj = {uname:result.uname, id:result._id, auth:result.auth};
+            console.log("Returning found user: %j", obj)
+            fnc(obj);
+        });
     }
-    trace("findUser: 5");
 };
 
 // add a new user to the system
 exports.addUser = function(name, opw, fnc) {
-    trace("addUser: u="+name+"  pw="+opw);
-    if (theClient) {
-        var epw = encryptPW(opw, name);
-        var query = getClient().query('INSERT INTO users(uname,upw) VALUES($1,$2)', [name,epw]);
-        trace("addUser: query=%j", query);
-        query.on('end', function() {
-                // user inserted OK
-                trace("addUser: on END");
-                if (fnc) {
-                    // return the user's result (result.id)
-                    exports.findUser(name, opw, fnc);
-                }
-                fnc = undefined;
-            }).on('error', function(err) {
-                trace("addUser: ERROR %j", err);
+    var epw = encryptPW(opw, name);
+    trace("addUser: u="+name+"  pw="+epw);
+//    if (theClient) {
+//        var query = getClient().query('INSERT INTO users(uname,upw) VALUES($1,$2)', [name,epw]);
+//        trace("addUser: query=%j", query);
+//        query.on('end', function() {
+//                // user inserted OK
+//                trace("addUser: on END");
+//                if (fnc) {
+//                    // return the user's result (result.id)
+//                    exports.findUser(name, opw, fnc);
+//                }
+//                fnc = undefined;
+//            }).on('error', function(err) {
+//                trace("addUser: ERROR %j", err);
+//                if (fnc) fnc();
+//            });
+//    }
+    if (userCollection) {
+        userCollection.insert({uname:name, upw:epw, auth: 1}, function(err, result) {
+            if (err) console.log("addUser: insert error: %j", err);
+            if (result && result[0] && result[0]._id) {
+                var id = result[0]._id;
+                // try to log them in (which will return the correct json)
+                exports.findUser(name, opw, fnc);
+            } else {
                 if (fnc) fnc();
-            });
+            }
+        });
     }
 };
 

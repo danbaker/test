@@ -57,7 +57,7 @@ if (!isLocal) {
         // console.log will write to the heroku log which can be accessed via the
         // command line as "heroku logs"
         db.addListener("error", function(error){
-            console.log("Error connecting to MongoLab");
+            console.log("Error connecting to MongoLab: %j", error);
         });
 
         db.createCollection('users', function(err, collection) {
@@ -73,7 +73,7 @@ if (!isLocal) {
                     var id = result[0]._id;
                     console.log("About to check if actually inserted...look for "+id);
                     if (id) {
-                        console.log("find id");
+                        console.log("find id: "+id);
                         userCollection.find({id:id}).limit(3).forEach(function(x) {
                             console.log(x)
                         });
