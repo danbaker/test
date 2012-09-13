@@ -221,6 +221,10 @@ module.exports = function(app){
                         console.log("setauth by "+req.session.user.name+" for "+req.params.username+" to "+req.params.auth);
                     } else {
                         console.log("setauth ... req.session.user.name not valid --- WEIRD");
+                        console.log("... ... req = "+(!!req));
+                        console.log("... ... req.session = "+(!!req.session));
+                        console.log("... ... req.session.user = "+(!!req.session.user));
+                        console.log("... ... req.session.user.name = "+(!!req.session.user.name));
                     }
                 });
 //            } else {
