@@ -255,15 +255,20 @@ exports.findUser = function(name, opw, fnc) {
         if (fnc) {
             userCollection.find({uname:name, upw:pw}, function(err, result) {
                 if (err || !result) {
+                    // error
                     fnc(undefined);
                 } else {
                     result.nextObject(function(err, user) {
                         console.log("USER:");
                         console.log(user);
                         if (user) {
+                            // FOUND
                             var obj = {uname:user.uname, id:user._id, auth:user.auth};
                             console.log("Returning found user: %j", obj);
                             fnc(obj);
+                        } else {
+                            // NOT FOUND
+                            fnc(undefined);
                         }
                     });
                 }
