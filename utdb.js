@@ -330,27 +330,27 @@ exports.dumpAllUsers = function() {
 // set the authorization-level for a given username
 exports.setAuth = function(name, auth, fnc) {
     trace("setAuth: u="+name+"  new auth="+auth);
-    if (theClient) {
-        var query = getClient().query('UPDATE users SET auth=$1 WHERE uname=$2', [auth,name]);
-        query.on('end', function() {
-                // user inserted OK
-                trace("setAuth: on END");
-                if (fnc) {
-                    fnc(true);
-                }
-            }).on('error', function(err) {
-                trace("setAuth: ERROR %j", err);
-                if (fnc) {
-                    fnc();
-                    fnc = undefined;
-                }
-            });
-    } else {
-        if (fnc) {
-            fnc();
-            fnc = undefined;
-        }
-    }
+//    if (theClient) {
+//        var query = getClient().query('UPDATE users SET auth=$1 WHERE uname=$2', [auth,name]);
+//        query.on('end', function() {
+//                // user inserted OK
+//                trace("setAuth: on END");
+//                if (fnc) {
+//                    fnc(true);
+//                }
+//            }).on('error', function(err) {
+//                trace("setAuth: ERROR %j", err);
+//                if (fnc) {
+//                    fnc();
+//                    fnc = undefined;
+//                }
+//            });
+//    } else {
+//        if (fnc) {
+//            fnc();
+//            fnc = undefined;
+//        }
+//    }
     if (userCollection) {
         userCollection.find({uname:name}, function(err, result) {
             if (err || !result) {
