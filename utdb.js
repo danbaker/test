@@ -352,6 +352,24 @@ exports.setAuth = function(name, auth, fnc) {
         }
     }
     if (userCollection) {
+        userCollection.find({uname:name}, function(err, result) {
+            if (err || !result) {
+                // error
+                fnc();
+            } else {
+                result.nextObject(function(err, user) {
+                    if (user) {
+                        // FOUND
+                        user.auth = auth;
+                        userCollection.save(user);
+                        fnc(true);
+                    } else {
+                        // user NOT FOUND
+                        fnc();
+                    }
+                });
+            }
+        });
 
     }
 };
