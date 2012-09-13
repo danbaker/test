@@ -319,28 +319,11 @@ exports.addUser = function(name, opw, fnc) {
 };
 
 exports.dumpAllUsers = function() {
-    if (theClient) {
-        console.log("_handle="+theClient.connection.stream._handle);
-        console.log("destroyed="+theClient.connection.stream.destroyed);
-//        console.log("theClient: v v v v v v v v v v v v v v v v v v v v");
-//        console.log(theClient);
-        var n = 0;
-        var query = getClient().query('SELECT * FROM users LIMIT 3');
-        query.on('row', function(row) {
-            n++;
-            console.log(""+n+": %j", row);
-        }).on('error', function(err) {
-            console.log("dumpAllUsers: ERROR %j", err);
-        }).on('end', function() {
-            console.log("dumpAllUsers: END");
-        });
-    }
     if (userCollection) {
         var cur = userCollection.find({}).limit(100);
-        if (cur && cur.hasNext()) {
-            result = cur.next();
+        cur.each(function(err,result) {
             console.log(result);
-        }
+        });
     }
 };
 
