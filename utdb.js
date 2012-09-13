@@ -254,7 +254,7 @@ exports.findUser = function(name, opw, fnc) {
     if (userCollection) {
         if (fnc) {
             userCollection.find({uname:name, upw:pw}, function(err, result) {
-                if (err || !user) {
+                if (err || !result) {
                     fnc(undefined);
                 } else {
                     result.forEach(function(result) {
