@@ -209,7 +209,7 @@ module.exports = function(app){
                 "0x80 = <br>"
         })) {
             // Note: Must be authorized to set the authorization level for a user
-//            if (isAuth(req, 0x02)) {
+            if (isAuth(req, 0x02)) {
                 // user ALLOWED to set auth
                 utdb.setAuth(req.params.username, parseInt(req.params.auth), function(result) {
                     if (result) {
@@ -217,20 +217,12 @@ module.exports = function(app){
                     } else {
                         sendJson(res, {response:false, message:"setauth failed. result="+result});
                     }
-                    if (req && req.session && req.session.user && req.session.user.name) {
-                        console.log("setauth by "+req.session.user.name+" for "+req.params.username+" to "+req.params.auth);
-                    } else {
-                        console.log("setauth ... req.session.user.name not valid --- WEIRD");
-                        console.log("... ... req = "+(!!req));
-                        console.log("... ... req.session = "+(!!req.session));
-                        console.log("... ... req.session.user = "+(!!req.session.user));
-                        console.log("... ... req.session.user.name = "+(!!req.session.user.name));
-                    }
+                    console.log("setauth by "+req.session.user.name+" for "+req.params.username+" to "+req.params.auth);
                 });
-//            } else {
-//                console.log("setauth FAILED: username:"+req.params.username);
-//                sendJson(res, {response:false, message:"setauth failed. Not authorized."});
-//            }
+            } else {
+                console.log("setauth FAILED: username:"+req.params.username);
+                sendJson(res, {response:false, message:"setauth failed. Not authorized."});
+            }
         }
     });
 
