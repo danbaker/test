@@ -252,13 +252,29 @@ exports.findUser = function(name, opw, fnc) {
 //        }
 //    }
     if (userCollection) {
-        var cur = userCollection.find({uname:name, upw:pw}).limit(1);
-        if (cur && cur.hasNext()) {
-            result = cur.next();
-            var obj = {uname:result.uname, id:result._id, auth:result.auth};
-            console.log("Returning found user: %j", obj)
-            fnc(obj);
+        if (fnc) {
+            userCollection.find({uname:name, upw:pw}, function(err, result) {
+                if (err || !user) {
+                    fnc(undefined);
+                } else {
+                    result.forEach(function(result) {
+                        if (!fncCalled) {
+                            var obj = {uname:result.uname, id:result._id, auth:result.auth};
+                            console.log("Returning found user: %j", obj)
+                            fncCalled = true;
+                            fnc(obj);
+                        }
+                    });
+                }
+            });
         }
+//        var cur = userCollection.find({uname:name, upw:pw}).limit(1);
+//        if (cur && cur.hasNext()) {
+//            result = cur.next();
+//            var obj = {uname:result.uname, id:result._id, auth:result.auth};
+//            console.log("Returning found user: %j", obj)
+//            fnc(obj);
+//        }
     }
 };
 
@@ -313,6 +329,13 @@ exports.dumpAllUsers = function() {
             console.log("dumpAllUsers: END");
         });
     }
+    if (userCollection) {
+        var cur = userCollection.find({}).limit(100);
+        if (cur && cur.hasNext()) {
+            result = cur.next();
+            console.log(result);
+        }
+    }
 };
 
 // set the authorization-level for a given username
@@ -338,6 +361,9 @@ exports.setAuth = function(name, auth, fnc) {
             fnc();
             fnc = undefined;
         }
+    }
+    if (userCollection) {
+
     }
 };
 
