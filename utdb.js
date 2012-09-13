@@ -260,12 +260,9 @@ exports.findUser = function(name, opw, fnc) {
                     console.log("RESULT:");
                     console.log(result);
                     result.nextObject(function(err, result) {
-                        if (!fncCalled) {
-                            var obj = {uname:result.uname, id:result._id, auth:result.auth};
-                            console.log("Returning found user: %j", obj);
-                            fncCalled = true;
-                            fnc(obj);
-                        }
+                        var obj = {uname:result.uname, id:result._id, auth:result.auth};
+                        console.log("Returning found user: %j", obj);
+                        fnc(obj);
                     });
                 }
             });
