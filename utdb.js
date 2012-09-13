@@ -257,6 +257,8 @@ exports.findUser = function(name, opw, fnc) {
                 if (err || !result) {
                     fnc(undefined);
                 } else {
+                    console.log("RESULT:");
+                    console.log(result);
                     result.forEach(function(result) {
                         if (!fncCalled) {
                             var obj = {uname:result.uname, id:result._id, auth:result.auth};
