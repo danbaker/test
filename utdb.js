@@ -257,12 +257,14 @@ exports.findUser = function(name, opw, fnc) {
                 if (err || !result) {
                     fnc(undefined);
                 } else {
-                    console.log("RESULT:");
-                    console.log(result);
-                    result.nextObject(function(err, result) {
-                        var obj = {uname:result.uname, id:result._id, auth:result.auth};
-                        console.log("Returning found user: %j", obj);
-                        fnc(obj);
+                    result.nextObject(function(err, user) {
+                        console.log("USER:");
+                        console.log(user);
+                        if (user) {
+                            var obj = {uname:user.uname, id:user._id, auth:user.auth};
+                            console.log("Returning found user: %j", obj);
+                            fnc(obj);
+                        }
                     });
                 }
             });
