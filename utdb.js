@@ -354,12 +354,12 @@ exports.setAuth = function(name, auth, fnc) {
     if (userCollection) {
         trace("...about to find "+name);
         userCollection.find({uname:name}, function(err, result) {
-            trace("...found result %j", result);
+            trace("...found result");
             if (err || !result) {
                 // error
                 fnc();
             } else {
-                trace("...about to nextObject");
+                trace("...about to nextObject on result.  nextObject="+result.nextObject);
                 result.nextObject(function(err, user) {
                     trace("...got nextObject: %j", user);
                     if (user) {
@@ -376,7 +376,7 @@ exports.setAuth = function(name, auth, fnc) {
                 });
             }
         });
-
+        trace("...after the call to find");
     }
 };
 
