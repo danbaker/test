@@ -352,16 +352,22 @@ exports.setAuth = function(name, auth, fnc) {
 //        }
 //    }
     if (userCollection) {
+        trace("...about to find "+name);
         userCollection.find({uname:name}, function(err, result) {
+            trace("...found result %j", result);
             if (err || !result) {
                 // error
                 fnc();
             } else {
+                trace("...about to nextObject");
                 result.nextObject(function(err, user) {
+                    trace("...got nextObject: %j", user);
                     if (user) {
                         // FOUND
                         user.auth = auth;
+                        trace("...about to save user");
                         userCollection.save(user);
+                        trace("...back from save user");
                         fnc(true);
                     } else {
                         // user NOT FOUND
