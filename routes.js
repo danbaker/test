@@ -26,6 +26,7 @@ module.exports = function(app){
         uobj.name = req.params.username;        // username the user supplied
         uobj.id = result.id;                    // id of the logged in user
         uobj.auth = result.auth | 1;            // authorization level for the logged in user (ensure logged-in)
+        console.log("login: %j", uobj);
         // save this newly created user object in the session
         req.session.user = uobj;
 
@@ -211,11 +212,15 @@ module.exports = function(app){
 //            if (isAuth(req, 0x02)) {
                 // user ALLOWED to set auth
                 utdb.setAuth(req.params.username, parseInt(req.params.auth), function(result) {
-                    console.log("setauth by "+req.session.user.name+" for "+req.params.username+" to "+req.params.auth);
                     if (result) {
                         sendJson(res, {response:true, message:"setauth ok"});
                     } else {
                         sendJson(res, {response:false, message:"setauth failed. result="+result});
+                    }
+                    if (req && req.session && req.session.user && req.session.user.name) {
+                        console.log("setauth by "+req.session.user.name+" for "+req.params.username+" to "+req.params.auth);
+                    } else {
+                        console.log("setauth ... req.session.user.name not valid --- WEIRD");
                     }
                 });
 //            } else {

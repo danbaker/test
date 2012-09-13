@@ -359,7 +359,7 @@ exports.setAuth = function(name, auth, fnc) {
                 // error
                 fnc();
             } else {
-                trace("...about to nextObject on result.  nextObject="+result.nextObject);
+                trace("...about to nextObject on result");
                 result.nextObject(function(err, user) {
                     trace("...got nextObject: %j", user);
                     if (user) {
@@ -369,6 +369,7 @@ exports.setAuth = function(name, auth, fnc) {
                         userCollection.save(user);
                         trace("...back from save user");
                         fnc(true);
+                        trace("...back after call to fnc")
                     } else {
                         // user NOT FOUND
                         fnc();
