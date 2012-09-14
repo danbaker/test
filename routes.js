@@ -2,17 +2,15 @@
     ROUTES:
 
     /apis/<api-version-number>/<api-name>/<arguments...>
-    /apis/1/status                              // show the system status in the heroku logs
-    /apis/1/createuser/<username>/<password>    // create a new user w/ username and password
-    /apis/1/login/<username>/<password>         // login an existing user w/ username and password
-    /apis/1/logout                              // logout currently logged in user (deletes session state)
-    /apis/1/setauth/<username>/<auth>           // set the authorization value for user (requires an auth level)
+    /apis/doc
+
  */
 
 
 module.exports = function(app){
 
     var utdb = require('./utdb');
+    var contest = require('./contest');
 
     // HELPER: send JSON to client
     var sendJson = function(res, json) {
@@ -330,7 +328,9 @@ module.exports = function(app){
                     } else {
                         // p1_id == player1 ID
                         // p2_id == player2 ID
-                        sendJson(res, {response:true, message:"playnow not implemented yet."});
+                        contest.runContest(p1_id, p2_id, function(obj) {
+                            sendJson(res, {response:true, message:"playnow finished", data:obj});
+                        });
                     }
                 });
             } else {
