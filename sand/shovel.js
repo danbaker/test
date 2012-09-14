@@ -16,7 +16,7 @@ if ( ! ( Script = process.binding( 'evals').NodeScript ) )
 
 /* ------------------------------ Sandbox ------------------------------ */
 consoleA = ["Hello", "World"];
-
+consoleA.push("Dan");
 // Get code
 code = '';
 stdin = process.openStdin();
@@ -33,7 +33,8 @@ function getSafeRunner() {
     return Function('return eval('+JSON.stringify(str+'')+')');
   }
   // place with a closure that is not exposed thanks to strict mode
-    var consoleB = [];
+    var consoleB = consoleA;
+    consoleB.push("Baker");
   return function run(comm, src) {
     // stop argument / caller attacks
     "use strict";
