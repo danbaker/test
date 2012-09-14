@@ -27,8 +27,7 @@ stdin.on( 'end', run );
 
 function getSafeRunner() {
   var global = this;
-    var consoleB = [];
-    consoleB.push("Baker");
+  var api = require('../contest').api;          // API back to the contest
   // Keep it outside of strict mode
   function UserScript(str) {
     // We want a global scoped function that has implicit returns.
@@ -48,8 +47,8 @@ function getSafeRunner() {
     global.print = send.bind(global, 'stdout');
     global.console = {};
     global.console.log = send.bind(global, 'stdout');
-    global.contest = {};
-    global.contest.log = function(msg) { consoleB.push(msg); };
+    global.contest = api;
+//    global.contest.log = function(msg) { consoleB.push(msg); };
     var result = UserScript(src)();
     send('end', result);
   }
