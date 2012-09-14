@@ -36,6 +36,7 @@ function getSafeRunner() {
   return function run(comm, src) {
     // stop argument / caller attacks
     "use strict";
+    var consoleB = [];
     var send = function send(event) {
       "use strict";
       //
@@ -47,7 +48,7 @@ function getSafeRunner() {
     global.console = {};
     global.console.log = send.bind(global, 'stdout');
     global.contest = {};
-    global.contest.log = function(msg) { /*consoleA.push(msg);*/ };
+    global.contest.log = function(msg) { consoleB.push(msg); };
     var result = UserScript(src)();
     send('end', result);
   }
