@@ -1,7 +1,6 @@
 /*
-    TABLE:  users
-    COLUMNS:
-        id      // auto assigned integer
+    COLLECTION:  users
+        _id     // auto assigned integer
                 // is used as the "id" for this user (stored in the session)
         uname   // string -- the username (email adddress)
         upw     // string -- the users password (encrypted)
@@ -16,6 +15,14 @@
             40   =
             80   =
             FF   = super-user (can do ANYTHING)
+
+
+    COLLECTION:  code
+        _id         // auto assigned value
+        users_id    // user that "owns" this code-document
+        contest_id  // (FUTURE) which contest this code is for
+        code        // the actual code (one big string)
+
  */
 var mdbURL = process.env.MONGOLAB_URI;   // URL to THE database
 var isLocal = (mdbURL? false : true);
@@ -23,11 +30,15 @@ var nhash = require('node_hash');
 var pg;
 var mongo;
 if (!isLocal) {
-    pg = require('pg');
+//    pg = require('pg');
     mongo = require('mongodb');
 }
 
+
+// * * * * * * * * * * * * * * * *
 var userCollection;             // the "users" collection
+var codeCollection;             // the "code" collection (each code-document is related to a user-id)
+
 
 
 var theClient = undefined;              // the database-client-connection object
@@ -77,87 +88,33 @@ if (isLocal) {
 
         // create each collection
         db.createCollection('users', function(err, collection) {
-            if (err) console.log("createCollection error: %j", err);
+            if (err) console.log("createCollection users error: %j", err);
             db.collection('users', function(err, collection) {
-                if (err) console.log("collection error: %j", err);
+                if (err) console.log("collection users error: %j", err);
                 userCollection = collection;
                 // force the "username" to be unique (can't have two users with the same username)
                 userCollection.ensureIndex({uname:1},{unique:true});
-
-                //
-//                userCollection.insert({uname:"dan2", upw:"secret2", auth: 1}, function(err, result) {
-//                    if (err) console.log("insert error: %j", err);
-//                    console.log("...Result from user collection insert: %j", result);
-//                    var id = result[0]._id;
-//                    console.log("About to check if actually inserted...look for "+id);
-//                    if (id) {
-//                        console.log("find id: "+id);
-//                        userCollection.find({id:id}).limit(3).forEach(function(x) {
-//                            console.log(x)
-//                        });
-//                        console.log("NOT found");
-//                    }
-//                });
                 doOnReadyNow();
             });
         });
 
-        // @TODO: create other collections here ...
+        db.createCollection('code', function(err, collection) {
+            if (err) console.log("createCollection code error: %j", err);
+            db.collection('users', function(err, collection) {
+                if (err) console.log("collection code error: %j", err);
+                codeCollection = collection;
+            });
+        });
 
-        //    db.createCollection('requests', function(err, collection){
-        //        db.collection('requests', function(err, collection){
-        //            var requestCollection = collection;
-        //            connect(
-        //                connect.favicon(), // Return generic favicon
-        //                connect.query(), // populate req.query with query parameters
-        //                connect.bodyParser(), // Get JSON data from body
-        //                function(req, res, next){ // Handle the request
-        //                    res.setHeader("Content-Type", "application/json");
-        //                    if(req.query != null) {
-        //                        requestCollection.insert(req.query, function(error, result){
-        //                            // result will have the object written to the db so let's just
-        //                            // write it back out to the browser
-        //                            res.write(JSON.stringify(result));
-        //                        });
-        //                    }
-        //
-        //                    res.end();
-        //                }
-        //            ).listen(process.env.PORT || 8080);
-        //            // the PORT variable will be assigned by Heroku
-        //        });
-        //    });
+        // @TODO: create other collections here ...
     });
 }
 
 
-
-// establish THE connection to THE database
-//pg.connect(process.env.DATABASE_URL, function(err, client) {
-//    if (err) {
-//        console.log("database connection error: "+err);
-//    } else {
-//        // NOTE: DO HERE: Handle database migration here ...
-//        var query;
-//
-//        query = client.query('CREATE TABLE users (id SERIAL PRIMARY KEY, uname varchar(20) NOT NULL UNIQUE, upw varchar(40) NOT NULL, auth SMALLINT NOT NULL)');
-//        query.on('end', function() {
-//                // if didn't fail, then create happened
-//
-//            }).on('error', function(err) {
-//                // failed to create table (already existed?)
-//                query = client.query('ALTER TABLE users ADD COLUMN auth SMALLINT NOT NULL DEFAULT 0');
-//                query.on('end', function() {
-//
-//                    }).on('error', function(err) {
-//
-//                    });
-//            });
-//        theClient = client;
-//        doOnReadyNow();
-//    }
-//});
-//}
+// * * * * * * * * * * * * * * * * * * * * * * * * *
+// *
+// *            users collection
+// *
 
 
 // encrypt (hash) a password
@@ -201,56 +158,30 @@ exports.isReady = function() {
 };
 
 // return the database-client-connection object
-getClient = function() {
-    if (theClient) {
-        if (theClient.connection && theClient.connection.stream && theClient.connection.stream.destroyed) {
-            console.log("utdb.getClient -- connection is destroyed");
-            // NOTE: Playing with this is confusing.  destroyed is set to true sometimes, but magically re-connects
-//            theClient = undefined;
-//            pg.connect(process.env.DATABASE_URL, function(err, client) {
-//                if (err) {
-//                    console.log("database connection error: "+err);
-//                } else {
-//                    theClient = client;
-//                }
-//            });
-        }
-    }
-    return theClient;
-};
-exports.getClient = getClient;
+//getClient = function() {
+//    if (theClient) {
+//        if (theClient.connection && theClient.connection.stream && theClient.connection.stream.destroyed) {
+//            console.log("utdb.getClient -- connection is destroyed");
+//            // NOTE: Playing with this is confusing.  destroyed is set to true sometimes, but magically re-connects
+////            theClient = undefined;
+////            pg.connect(process.env.DATABASE_URL, function(err, client) {
+////                if (err) {
+////                    console.log("database connection error: "+err);
+////                } else {
+////                    theClient = client;
+////                }
+////            });
+//        }
+//    }
+//    return theClient;
+//};
+//exports.getClient = getClient;
 
 // find a user in the user table
 exports.findUser = function(name, opw, fnc) {
     var pw = encryptPW(opw, name);
     trace("findUser u="+name+" pw="+pw);
 
-//    if (theClient) {
-//        var fncCalled = false;
-//        var query = getClient().query("SELECT id,auth FROM users WHERE uname=$1 AND upw=$2", [name,pw]);
-//        trace("findUser 3: query=%j",query);
-//        query.on('row', function(result) {
-//                trace("findUser: got a row:  %j",result);
-//                if (result) {
-//                    fncCalled = true;
-//                    fnc(result);
-//                }
-//            }).on('end', function() {
-//                trace("findUser: on END");
-//                if (!fncCalled) {
-//                    fncCalled = true;
-//                    fnc(undefined);
-//                }
-//            }).on('error', function(err) {
-//                console.log("findUser: ERROR %j", err);
-//            });
-//        trace("findUser: 4");
-//    } else {
-//        if (!fncCalled) {
-//            fncCalled = true;
-//            fnc(undefined);
-//        }
-//    }
     if (userCollection) {
         if (fnc) {
             userCollection.find({uname:name, upw:pw}, function(err, result) {
@@ -274,13 +205,6 @@ exports.findUser = function(name, opw, fnc) {
                 }
             });
         }
-//        var cur = userCollection.find({uname:name, upw:pw}).limit(1);
-//        if (cur && cur.hasNext()) {
-//            result = cur.next();
-//            var obj = {uname:result.uname, id:result._id, auth:result.auth};
-//            console.log("Returning found user: %j", obj)
-//            fnc(obj);
-//        }
     }
 };
 
@@ -288,22 +212,6 @@ exports.findUser = function(name, opw, fnc) {
 exports.addUser = function(name, opw, fnc) {
     var epw = encryptPW(opw, name);
     trace("addUser: u="+name+"  pw="+epw);
-//    if (theClient) {
-//        var query = getClient().query('INSERT INTO users(uname,upw) VALUES($1,$2)', [name,epw]);
-//        trace("addUser: query=%j", query);
-//        query.on('end', function() {
-//                // user inserted OK
-//                trace("addUser: on END");
-//                if (fnc) {
-//                    // return the user's result (result.id)
-//                    exports.findUser(name, opw, fnc);
-//                }
-//                fnc = undefined;
-//            }).on('error', function(err) {
-//                trace("addUser: ERROR %j", err);
-//                if (fnc) fnc();
-//            });
-//    }
     if (userCollection) {
         userCollection.insert({uname:name, upw:epw, auth: 1}, function(err, result) {
             if (err) console.log("addUser: insert error: %j", err);
@@ -330,46 +238,18 @@ exports.dumpAllUsers = function() {
 // set the authorization-level for a given username
 exports.setAuth = function(name, auth, fnc) {
     trace("setAuth: u="+name+"  new auth="+auth);
-//    if (theClient) {
-//        var query = getClient().query('UPDATE users SET auth=$1 WHERE uname=$2', [auth,name]);
-//        query.on('end', function() {
-//                // user inserted OK
-//                trace("setAuth: on END");
-//                if (fnc) {
-//                    fnc(true);
-//                }
-//            }).on('error', function(err) {
-//                trace("setAuth: ERROR %j", err);
-//                if (fnc) {
-//                    fnc();
-//                    fnc = undefined;
-//                }
-//            });
-//    } else {
-//        if (fnc) {
-//            fnc();
-//            fnc = undefined;
-//        }
-//    }
     if (userCollection) {
-        trace("...about to find "+name);
         userCollection.find({uname:name}, function(err, result) {
-            trace("...found result");
             if (err || !result) {
                 // error
                 fnc();
             } else {
-                trace("...about to nextObject on result");
                 result.nextObject(function(err, user) {
-                    trace("...got nextObject: %j", user);
                     if (user) {
                         // FOUND
                         user.auth = auth;
-                        trace("...about to save user");
                         userCollection.save(user);
-                        trace("...back from save user");
                         fnc(true);
-                        trace("...back after call to fnc")
                     } else {
                         // user NOT FOUND
                         fnc();
@@ -377,9 +257,20 @@ exports.setAuth = function(name, auth, fnc) {
                 });
             }
         });
-        trace("...after the call to find");
     }
 };
+
+
+// * * * * * * * * * * * * * * * * * * * * * * * * *
+// *
+// *            code collection
+// *
+
+// set the code-document for a given user (uid)
+exports.addCode = function(uid, code) {
+
+};
+
 
 
 
