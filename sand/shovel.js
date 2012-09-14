@@ -15,7 +15,7 @@ if ( ! ( Script = process.binding( 'evals').NodeScript ) )
     Script = require( 'vm' );
 
 /* ------------------------------ Sandbox ------------------------------ */
-var consoleA = [];
+var consoleA = ["Hello", "World"];
 
 // Get code
 code = '';
