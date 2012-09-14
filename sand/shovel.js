@@ -30,8 +30,8 @@ var apiQWE = require('./api');          // API back to the contest
 
 function getSafeRunner() {
   var global = this;
-    var apiQQQQQ = require('./api');          // API back to the contest
-//  var api = apiQWE;          // API back to the contest
+//    var apiQQQQQ = require('./api');          // API back to the contest
+  var api = apiQWE;          // API back to the contest
 //  var test5 = api.get5();
   // Keep it outside of strict mode
   function UserScript(str) {
@@ -41,7 +41,7 @@ function getSafeRunner() {
   // place with a closure that is not exposed thanks to strict mode
   return function run(comm, src) {
     // stop argument / caller attacks
-    "use strict";
+//    "use strict";
     var send = function send(event) {
       "use strict";
       //
