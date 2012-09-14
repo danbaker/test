@@ -280,6 +280,7 @@ exports.setCode = function(uid, code, fnc) {
                 result.nextObject(function(err, doc) {
                     if (doc) {
                         // FOUND existing code ... update it
+                        console.log("saving code="+code);
                         doc.code = code;
                         codeCollection.save(doc);
                         fnc(true);
