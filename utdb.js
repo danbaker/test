@@ -156,35 +156,55 @@ exports.isReady = function() {
     return !!theClient || !!userCollection;
 };
 
-// find a user in the user table
-exports.findUser = function(name, opw, fnc) {
-    var pw = encryptPW(opw, name);
-    trace("findUser u="+name+" pw="+pw);
-
-    if (userCollection) {
-        if (fnc) {
-            userCollection.find({uname:name, upw:pw}, function(err, result) {
-                if (err || !result) {
-                    // error
-                    fnc(undefined);
-                } else {
-                    result.nextObject(function(err, user) {
-                        console.log("USER:");
-                        console.log(user);
-                        if (user) {
-                            // FOUND
-                            var obj = {uname:user.uname, id:user._id, auth:user.auth};
-                            console.log("Returning found user: %j", obj);
-                            fnc(obj);
-                        } else {
-                            // NOT FOUND
-                            fnc(undefined);
-                        }
-                    });
-                }
-            });
-        }
+// get a document from the "users" collection
+// in:  obj     = {uname:Dan}  --or--  {uname:Dan, upw:1ab50f2}
+// out: undefined
+//      {uname:Dan, id:156ffe3, auth:7}
+var getUserDoc = function(obj, fnc) {
+    if (userCollection && obj && fnc) {
+        userCollection.find(obj, function(err, result) {
+            if (err || !result) {
+                // error
+                fnc(undefined);
+            } else {
+                result.nextObject(function(err, user) {
+                    if (user) {
+                        // FOUND
+                        var obj = {uname:user.uname, id:user._id, auth:user.auth};
+                        fnc(obj);
+                    } else {
+                        // NOT FOUND
+                        fnc(undefined);
+                    }
+                });
+            }
+        });
     }
+};
+
+// find a user in the user table (given username AND password)
+// used for logging in
+exports.findUser = function(name, opw, fnc) {
+    var epw = encryptPW(opw, name);
+    getUserDoc({uname:name, upw:epw}, function(doc) {
+        if (!doc) {
+            fnc(undefined);
+        } else {
+            fnc(doc);
+        }
+    });
+};
+
+// get the id for a given username
+// used for internal use (battling two users in a contest)
+exports.getIdForUsername = function(name, fnc) {
+    getUserDoc({uname:name}, function(doc) {
+        if (!doc) {
+            fnc(undefined);
+        } else {
+            fnc(doc.id);
+        }
+    });
 };
 
 // add a new user to the system

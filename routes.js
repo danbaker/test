@@ -97,25 +97,6 @@ module.exports = function(app){
     // define routes
 
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-    app.get('/apis/doc', function(req, res) {
-        // Note: anyone allowed to ask for documentation
-        var msg = "";
-        msg += "Documentation of all known endpoint routes<br>";
-        msg += "Note: you can call any endpoint with ?doc=1 to get detailed information about the route";
-        msg += "endpoint --- description<br>";
-        msg += "/apis/1/status --- ask the server if it is running<br>";
-        msg += "/apis/1/doc --- this page<br>";
-        msg += "/apis/1/createuser/USERNAME/PASSWORD --- create a new user with password<br>";
-        msg += "/apis/1/login/USERNAME/PASSWORD --- login a user<br>";
-        msg += "/apis/1/logout --- logout the current user<br>";
-        msg += "/apis/1/setauth/USERNAME/AUTH --- force a users auth level<br>";
-        msg += "/apis/1/setcode?code=CODE --- set the code for the contest for current user<br>";
-        msg += "/apis/1/getcode --- get the code for the contest for current user<br>";
-        res.writeHead(200, {'Content-Type': 'text/html'});
-        res.end(msg);
-    });
-
-    // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     app.get('/apis/:version/status', function(req, res) {
         // Note: anyone allowed to ask for status
         console.log("STATUS: %j", req.session);
@@ -323,5 +304,64 @@ module.exports = function(app){
             }
         }
     };
-    //other routes..
+
+    // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+    app.get('/apis/:version/playnow/:username', function(req, res) {
+        playnow(req, res);
+    });
+    var playnow = function(req, res) {
+        // apis/<version>/play two users code against each other
+        if (!showDocs(req,res, {
+            version: 1,
+            api: "playnow",
+            description: "Run contest between me and another user",
+            params: [
+                "username --- name of user to play against"
+            ],
+            longDesc: "Runs logged in user against specified user, and returns the JSON"
+        })) {
+            // Note: Must be logged in
+            if (isAuth(req, 0x01)) {
+                var p2_name = req.params.username;
+                var p1_id = req.session.user.id;
+                utdb.getIdForUsername(p2_name, function(p2_id) {
+                    if (!p2_id) {
+                        sendJson(res, {response:false, message:"playnow failed.  user not found: "+p2_name});
+                    } else {
+                        // p1_id == player1 ID
+                        // p2_id == player2 ID
+                        sendJson(res, {response:true, message:"playnow not implemented yet."});
+                    }
+                });
+            } else {
+                sendJson(res, {response:false, message:"playnow failed.  not logged in."});
+            }
+        }
+    };
+
+        //other routes..
+
+
+
+    // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+    app.get('/apis/doc', function(req, res) {
+        // Note: anyone allowed to ask for documentation
+        var msg = "";
+        msg += "Documentation of all known endpoint routes<br>";
+        msg += "Note: you can call any endpoint with ?doc=1 to get detailed information about the route";
+        msg += "endpoint --- description<br>";
+        msg += "/apis/1/status --- ask the server if it is running<br>";
+        msg += "/apis/1/doc --- this page<br>";
+        msg += "/apis/1/createuser/USERNAME/PASSWORD --- create a new user with password<br>";
+        msg += "/apis/1/login/USERNAME/PASSWORD --- login a user<br>";
+        msg += "/apis/1/logout --- logout the current user<br>";
+        msg += "/apis/1/setauth/USERNAME/AUTH --- force a users auth level<br>";
+        msg += "/apis/1/setcode?code=CODE --- set the code for the contest for current user<br>";
+        msg += "/apis/1/getcode --- get the code for the contest for current user<br>";
+        msg += "/apis/1/playnow/USERNAME --- run contest between logged-in user and specified USER, and return json results<br>";
+        res.writeHead(200, {'Content-Type': 'text/html'});
+        res.end(msg);
+    });
+
+
 };
