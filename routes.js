@@ -272,7 +272,8 @@ module.exports = function(app){
             params: [
                 "code -- the code to set"
             ],
-            longDesc: "POST a variable called code with the string value for the code to set<br>"
+            longDesc: "POST/GET a variable called 'code' with the string value for the code to set<br>" +
+                        " Example:  /apis/1/setcode?code=var a=1;"
         })) {
             // Note: Must be logged in
             if (isAuth(req, 0x01)) {
@@ -281,7 +282,6 @@ module.exports = function(app){
                 var code = req.params.code;
                 if (!code) code = req.query.code;
                 if (!code) code = req.body.code;
-                console.log("setcode --- code="+code);
                 utdb.setCode(req.session.user.id, code, function(result) {
                     if (result) {
                         sendJson(res, {response:true, message:"setcode ok"});

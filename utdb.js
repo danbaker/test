@@ -30,7 +30,6 @@ var nhash = require('node_hash');
 var pg;
 var mongo;
 if (!isLocal) {
-//    pg = require('pg');
     mongo = require('mongodb');
 }
 
@@ -49,8 +48,8 @@ var onReadyFncs = [];
 var nillFunction = function() {
 };
 var trace;
-trace = console.log;                // report all trace messages to console
-//trace = nillFunction;             // ignore all trace messages
+//trace = console.log;                // report all trace messages to console
+trace = nillFunction;             // ignore all trace messages
 
 // function to run when database is ready to use
 var doOnReadyNow = function() {
@@ -157,26 +156,6 @@ exports.isReady = function() {
     return !!theClient || !!userCollection;
 };
 
-// return the database-client-connection object
-//getClient = function() {
-//    if (theClient) {
-//        if (theClient.connection && theClient.connection.stream && theClient.connection.stream.destroyed) {
-//            console.log("utdb.getClient -- connection is destroyed");
-//            // NOTE: Playing with this is confusing.  destroyed is set to true sometimes, but magically re-connects
-////            theClient = undefined;
-////            pg.connect(process.env.DATABASE_URL, function(err, client) {
-////                if (err) {
-////                    console.log("database connection error: "+err);
-////                } else {
-////                    theClient = client;
-////                }
-////            });
-//        }
-//    }
-//    return theClient;
-//};
-//exports.getClient = getClient;
-
 // find a user in the user table
 exports.findUser = function(name, opw, fnc) {
     var pw = encryptPW(opw, name);
@@ -280,7 +259,6 @@ exports.setCode = function(uid, code, fnc) {
                 result.nextObject(function(err, doc) {
                     if (doc) {
                         // FOUND existing code ... update it
-                        console.log("saving code="+code);
                         doc.code = code;
                         codeCollection.save(doc);
                         fnc(true);
@@ -317,7 +295,6 @@ exports.getCode = function(uid, fnc) {
                 result.nextObject(function(err, doc) {
                     if (doc) {
                         // FOUND existing code ... return it
-                        console.log("getCode: code="+doc.code);
                         fnc(doc.code);
                     } else {
                         // code NOT FOUND ... return empty
