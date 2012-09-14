@@ -29,7 +29,8 @@ var apiQWE = require('./api');          // API back to the contest
 
 function getSafeRunner() {
   var global = this;
-  var api = require('./api');          // API back to the contest
+  var api = apiQWE;          // API back to the contest
+  var test5 = api.get5();
   // Keep it outside of strict mode
   function UserScript(str) {
     // We want a global scoped function that has implicit returns.
