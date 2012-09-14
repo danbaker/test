@@ -309,6 +309,7 @@ exports.getCode = function(uid, fnc) {
     if (codeCollection && fnc) {
         codeCollection.find({uid:uid}, function(err, result) {
             if (err || !result) {
+                if (err) console.log("getcode: error: %j", err);
                 // error
                 fnc();
             } else {
