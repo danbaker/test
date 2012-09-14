@@ -277,7 +277,11 @@ module.exports = function(app){
             // Note: Must be logged in
             if (isAuth(req, 0x01)) {
                 // user ALLOWED to set the code
+                console.log(req.params);
                 var code = req.params.code;
+                if (!code) code = req.query.code;
+                if (!code) code = req.body.code;
+                console.log("setcode --- code="+code);
                 utdb.setCode(req.session.user.id, code, function(result) {
                     if (result) {
                         sendJson(res, {response:true, message:"setcode ok"});
