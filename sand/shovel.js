@@ -26,7 +26,7 @@ stdin.on( 'data', function( data ) {
 });
 stdin.on( 'end', run );
 
-//var apiQWE = require('./api');          // API back to the contest
+var apiQWE = require('./api');          // API back to the contest
 
 function getSafeRunner() {
   var global = this;
