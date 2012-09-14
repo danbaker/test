@@ -1,6 +1,6 @@
 /*
     COLLECTION:  users
-        _id     // auto assigned integer
+        _id     // auto assigned hex string
                 // is used as the "id" for this user (stored in the session)
         uname   // string -- the username (email adddress)
         upw     // string -- the users password (encrypted)
@@ -18,7 +18,7 @@
 
 
     COLLECTION:  code
-        _id         // auto assigned value
+        _id         // auto assigned hex-string value
         users_id    // user that "owns" this code-document
         contest_id  // (FUTURE) which contest this code is for
         code        // the actual code (one big string)
@@ -267,8 +267,63 @@ exports.setAuth = function(name, auth, fnc) {
 // *
 
 // set the code-document for a given user (uid)
-exports.addCode = function(uid, code) {
+// in:  uid     = user-id
+//      game-id = (FUTURE) game-id, which game the code is for
+//      code    = the actual javascript code (string)
+exports.setCode = function(uid, code, fnc) {
+    if (codeCollection && fnc) {
+        codeCollection.find({uid:uid}, function(err, result) {
+            if (err || !result) {
+                // error
+                fnc();
+            } else {
+                result.nextObject(function(err, doc) {
+                    if (doc) {
+                        // FOUND existing code ... update it
+                        doc.code = code;
+                        codeCollection.save(doc);
+                        fnc(true);
+                    } else {
+                        // code NOT FOUND ... insert it
+                        codeCollection.insert({uid:uid, code:code}, function(err, result) {
+                            if (err) console.log("setCode: insert error: %j", err);
+                            if (result) {
+                                fnc(true);
+                            } else {
+                                fnc();
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    }
+};
 
+// get the code-document for a given user
+// in:  uid     = user-id
+//      game-id = (FUTURE) game-id, which game the code is for
+//      fnc     = callback(string) --or-- callback(undefined)
+// out: code    = the actual javascript code (string)
+exports.getCode = function(uid, fnc) {
+    if (codeCollection && fnc) {
+        codeCollection.find({uid:uid}, function(err, result) {
+            if (err || !result) {
+                // error
+                fnc();
+            } else {
+                result.nextObject(function(err, doc) {
+                    if (doc) {
+                        // FOUND existing code ... return it
+                        fnc(doc.code);
+                    } else {
+                        // code NOT FOUND ... return empty
+                        fnc("");
+                    }
+                });
+            }
+        });
+    }
 };
 
 

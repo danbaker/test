@@ -97,12 +97,37 @@ module.exports = function(app){
     // define routes
 
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+    app.get('/apis/doc', function(req, res) {
+        // Note: anyone allowed to ask for documentation
+        var msg = "";
+        msg += "Documentation of all known endpoint routes<br>";
+        msg += "Note: you can call any endpoint with ?doc=1 to get detailed information about the route";
+        msg += "endpoint --- description<br>";
+        msg += "/apis/1/status --- ask the server if it is running<br>";
+        msg += "/apis/1/doc --- this page<br>";
+        msg += "/apis/1/createuser/USERNAME/PASSWORD --- create a new user with password<br>";
+        msg += "/apis/1/login/USERNAME/PASSWORD --- login a user<br>";
+        msg += "/apis/1/logout --- logout the current user<br>";
+        msg += "/apis/1/setauth/USERNAME/AUTH --- force a users auth level<br>";
+        msg += "/apis/1/setcode?code=CODE --- set the code for the contest for current user<br>";
+        msg += "/apis/1/getcode --- get the code for the contest for current user<br>";
+        res.writeHead(200, {'Content-Type': 'text/html'});
+        res.end(msg);
+    });
+
+    // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     app.get('/apis/:version/status', function(req, res) {
         // Note: anyone allowed to ask for status
         console.log("STATUS: %j", req.session);
         sendJson(res, {response:true, message:"status ok"});//, theClient:utdb.testTheClient});
         utdb.dumpAllUsers();
     });
+
+
+
+    // // // // // // // // //
+    //
+    //  user authentication
 
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     app.get('/apis/:version/createuser/:username/:password', function(req, res) {
@@ -188,7 +213,6 @@ module.exports = function(app){
 
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     app.get('/apis/:version/setauth/:username/:auth', function(req, res) {
-        console.log("docs="+req.query["docs"]);
         // apis/<version>/set authorization level for a given user
         if (!showDocs(req,res, {
             version: 1,
@@ -227,5 +251,73 @@ module.exports = function(app){
     });
 
 
+
+    // // // // // // // // //
+    //
+    //  user contest code
+
+    // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+    app.post('/apis/:version/setcode', function(req, res) {
+        setcode(req.res);
+    });
+    app.get('/apis/:version/setcode', function(req, res) {
+        setcode(req.res);
+    });
+    var setcode = function(req, res) {
+        // apis/<version>/set the code for the current logged-in user (later, we will need to know which contest)
+        if (!showDocs(req,res, {
+            version: 1,
+            api: "setcode",
+            description: "Set the code for the contest",
+            params: [
+                "code -- the code to set"
+            ],
+            longDesc: "POST a variable called code with the string value for the code to set<br>"
+        })) {
+            // Note: Must be logged in
+            if (isAuth(req, 0x01)) {
+                // user ALLOWED to set the code
+                var code = request.params.code;
+                utdb.setCode(req.session.user.id, code, function(result) {
+                    if (result) {
+                        sendJson(res, {response:true, message:"setcode ok"});
+                    } else {
+                        sendJson(res, {response:false, message:"setcode failed"});
+                    }
+                });
+            } else {
+                sendJson(res, {response:false, message:"setcode failed.  not logged in."});
+            }
+        }
+    };
+
+    app.get('/apis/:version/getcode', function(req, res) {
+        getcode(req.res);
+    });
+    var getcode = function(req, res) {
+        // apis/<version>/get the code for the current logged-in user (later, we will need to know which contest)
+        if (!showDocs(req,res, {
+            version: 1,
+            api: "getcode",
+            description: "Get the code for the contest",
+            params: [
+            ],
+            longDesc: "Returns the current contest code as {code:CODE}<br>"
+        })) {
+            // Note: Must be logged in
+            if (isAuth(req, 0x01)) {
+                // user ALLOWED to get the code
+                utdb.getCode(req.session.user.id, function(result) {
+                    if (result != undefined) {
+                        sendJson(res, {response:true, code:result});
+                    } else {
+                        sendJson(res, {response:false, message:"getcode failed"});
+                    }
+                });
+            } else {
+                sendJson(res, {response:false, message:"getcode failed.  not logged in."});
+            }
+        }
+    };
     //other routes..
 };
