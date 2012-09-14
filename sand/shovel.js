@@ -8,7 +8,8 @@ var util = require( 'util' )
   , consoleA
   , sandbox
   , Script
-  , stdin;
+  , stdin
+  , theapi = require('./api');
 
 if ( ! ( Script = process.binding( 'evals').NodeScript ) )
   if ( ! ( Script = process.binding('evals').Script ) )
