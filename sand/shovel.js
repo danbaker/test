@@ -62,7 +62,7 @@ function run() {
         "use strict";
         switch (event) {
           case 'stdout':
-            console.log("SAND CONSOLE LOG: "+value);
+//            console.log("SAND CONSOLE LOG: "+value);
             consoleA.push.apply(consoleA, JSON.parse(value).slice(1));
             break;
           case 'end':
