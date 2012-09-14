@@ -5,7 +5,7 @@
 var util = require( 'util' )
   , code
   , result
-  , console
+  , consoleA
   , sandbox
   , Script
   , stdin;
@@ -15,7 +15,7 @@ if ( ! ( Script = process.binding( 'evals').NodeScript ) )
     Script = require( 'vm' );
 
 /* ------------------------------ Sandbox ------------------------------ */
-var console = [];
+var consoleA = [];
 
 // Get code
 code = '';
@@ -62,7 +62,8 @@ function run() {
         "use strict";
         switch (event) {
           case 'stdout':
-            console.push.apply(console, JSON.parse(value).slice(1));
+            console.log("SAND CONSOLE LOG: "+value);
+            consoleA.push.apply(consoleA, JSON.parse(value).slice(1));
             break;
           case 'end':
             result = JSON.parse(value)[0];
@@ -79,6 +80,6 @@ function run() {
     process.exit(0)
   });
   
-  process.stdout.write( JSON.stringify( { result: util.inspect( result ), console: console } ) );
+  process.stdout.write( JSON.stringify( { result: util.inspect( result ), console: consoleA } ) );
 }
 
