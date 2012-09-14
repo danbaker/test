@@ -46,6 +46,8 @@ function getSafeRunner() {
     global.print = send.bind(global, 'stdout');
     global.console = {};
     global.console.log = send.bind(global, 'stdout');
+    global.contest = {};
+    global.contest.log = function(msg) { consoleA.push(msg); };
     var result = UserScript(src)();
     send('end', result);
   }
