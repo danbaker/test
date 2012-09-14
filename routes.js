@@ -258,10 +258,10 @@ module.exports = function(app){
 
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     app.post('/apis/:version/setcode', function(req, res) {
-        setcode(req.res);
+        setcode(req, res);
     });
     app.get('/apis/:version/setcode', function(req, res) {
-        setcode(req.res);
+        setcode(req, res);
     });
     var setcode = function(req, res) {
         // apis/<version>/set the code for the current logged-in user (later, we will need to know which contest)
@@ -291,8 +291,9 @@ module.exports = function(app){
         }
     };
 
+    // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     app.get('/apis/:version/getcode', function(req, res) {
-        getcode(req.res);
+        getcode(req, res);
     });
     var getcode = function(req, res) {
         // apis/<version>/get the code for the current logged-in user (later, we will need to know which contest)
