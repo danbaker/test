@@ -18,11 +18,3 @@ exports.runContest = function(id_p1, id_p2, fnc) {
     });
 //    fnc({note:"Not implemented yet"});
 };
-
-
-exports.api = {
-    get5: function() { return 17; },
-    log: function(msg) {
-
-    }
-};
