@@ -316,6 +316,7 @@ exports.getCode = function(uid, fnc) {
                 result.nextObject(function(err, doc) {
                     if (doc) {
                         // FOUND existing code ... return it
+                        console.log("getCode: code="+doc.code);
                         fnc(doc.code);
                     } else {
                         // code NOT FOUND ... return empty
