@@ -270,7 +270,6 @@ module.exports = function(app){
             api: "setcode",
             description: "Set the code for the contest",
             params: [
-                "code -- the code to set"
             ],
             longDesc: "POST/GET a variable called 'code' with the string value for the code to set<br>" +
                         " Example:  /apis/1/setcode?code=var a=1;"
