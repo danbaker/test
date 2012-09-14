@@ -33,10 +33,10 @@ function getSafeRunner() {
     return Function('return eval('+JSON.stringify(str+'')+')');
   }
   // place with a closure that is not exposed thanks to strict mode
+    var consoleB = [];
   return function run(comm, src) {
     // stop argument / caller attacks
     "use strict";
-    var consoleB = [];
     var send = function send(event) {
       "use strict";
       //
