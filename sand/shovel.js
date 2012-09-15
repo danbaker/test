@@ -12,6 +12,7 @@ var util = require( 'util' )
   , api = require('./api')          // API back to the contest
     ;
 
+api.trace("1: ! ! ! just loaded shovel.js");
 
 if ( ! ( Script = process.binding( 'evals').NodeScript ) )
   if ( ! ( Script = process.binding('evals').Script ) )
@@ -25,7 +26,9 @@ stdin = process.openStdin();
 stdin.on( 'data', function( data ) {
   code += data;
 });
-stdin.on( 'end', run );
+stdin.on( 'end', function() {
+    run();
+});
 
 
 function getSafeRunner() {
@@ -36,7 +39,7 @@ function getSafeRunner() {
     return Function('return eval('+JSON.stringify(str+'')+')');
   }
   // place with a closure that is not exposed thanks to strict mode
-  return function run(comm, src) {
+  return function run(commx, src) {
     // stop argument / caller attacks
     "use strict";
     var send = function send(event) {
@@ -44,7 +47,7 @@ function getSafeRunner() {
       //
       // All comm must be serialized properly to avoid attacks, JSON or XJSON
       //
-      comm.send(event, JSON.stringify([].slice.call(arguments,1)));
+      commx.send(event, JSON.stringify([].slice.call(arguments,1)));
     };
     global.print = send.bind(global, 'stdout');
     global.console = {};
@@ -59,6 +62,8 @@ function run() {
   var context = Script.createContext();
   // alter the context of the script ... add contest-api to it
   context.contestAPI = api;
+  context.contestAPI.debugLog = function(msg) { consoleA.push(msg); };
+
   var safeRunner = Script.runInContext('('+getSafeRunner.toString()+')()', context);
   var result;
   try {
@@ -84,7 +89,7 @@ function run() {
   process.stdout.on( 'drain', function() {
     process.exit(0)
   });
-  
+
   process.stdout.write( JSON.stringify( { result: util.inspect( result ), console: consoleA } ) );
 }
 

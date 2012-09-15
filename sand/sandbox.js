@@ -40,7 +40,7 @@ function Sandbox( options ) {
 
 // Options
 Sandbox.options =
-  { timeout: 10000           // allow player code to run N seconds
+  { timeout: 5000           // allow player code to run N seconds
   , node: 'node'
   , shovel: path.join( __dirname, 'shovel.js' )
   };
