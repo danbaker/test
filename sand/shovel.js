@@ -9,15 +9,16 @@ var util = require( 'util' )
   , sandbox
   , Script
   , stdin
-  , theapi = require('./api');
+  , api = require('./api')          // API back to the contest
+    ;
+
 
 if ( ! ( Script = process.binding( 'evals').NodeScript ) )
   if ( ! ( Script = process.binding('evals').Script ) )
     Script = require( 'vm' );
 
 /* ------------------------------ Sandbox ------------------------------ */
-consoleA = ["Hello", "World"];
-consoleA.push("Dan");
+consoleA = [];
 // Get code
 code = '';
 stdin = process.openStdin();
@@ -26,13 +27,9 @@ stdin.on( 'data', function( data ) {
 });
 stdin.on( 'end', run );
 
-var apiQWE = require('./api');          // API back to the contest
 
 function getSafeRunner() {
   var global = this;
-//    var apiQQQQQ = require('./api');          // API back to the contest
-  var api = apiQWE;          // API back to the contest
-  var test5 = api.get5();
   // Keep it outside of strict mode
   function UserScript(str) {
     // We want a global scoped function that has implicit returns.
@@ -41,7 +38,7 @@ function getSafeRunner() {
   // place with a closure that is not exposed thanks to strict mode
   return function run(comm, src) {
     // stop argument / caller attacks
-//    "use strict";
+    "use strict";
     var send = function send(event) {
       "use strict";
       //
@@ -52,8 +49,6 @@ function getSafeRunner() {
     global.print = send.bind(global, 'stdout');
     global.console = {};
     global.console.log = send.bind(global, 'stdout');
-//    global.contest = api;
-//    global.contest.log = function(msg) { consoleB.push(msg); };
     var result = UserScript(src)();
     send('end', result);
   }
@@ -62,6 +57,8 @@ function getSafeRunner() {
 // Run code
 function run() {
   var context = Script.createContext();
+  // alter the context of the script ... add contest-api to it
+  context.contestAPI = api;
   var safeRunner = Script.runInContext('('+getSafeRunner.toString()+')()', context);
   var result;
   try {
@@ -70,8 +67,8 @@ function run() {
         "use strict";
         switch (event) {
           case 'stdout':
-//            console.log("SAND CONSOLE LOG: "+value);
-            consoleA.push.apply(consoleA, JSON.parse(value).slice(1));
+              consoleA.push(value); // DANB NOTE: this works (I don't know if it is safe)
+//            consoleA.push.apply(consoleA, JSON.parse(value).slice(1));
             break;
           case 'end':
             result = JSON.parse(value)[0];
@@ -81,7 +78,7 @@ function run() {
     }, code);
   }
   catch (e) {
-    result = e.name + ': ' + e.message;
+    result = "EXCEPTION: " + e.name + ': ' + e.message;
   }
   
   process.stdout.on( 'drain', function() {

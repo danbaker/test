@@ -9,7 +9,7 @@ var Sandbox = require('./sand/sandbox');
 exports.runContest = function(id_p1, id_p2, fnc) {
     var s = new Sandbox();
     // contest = the API object
-    var js = "var x = 5; console.log(x * x); x; ";
+    var js = "var x = contestAPI.get17(); console.log(x * x); x; ";
     s.run( js, function( output ) {
         // output.result = returned value
         // output.console = returned console logs (doesn't seem to work on heroku)
