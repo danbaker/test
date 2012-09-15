@@ -44,6 +44,13 @@ module.exports = function(app){
     };
     // check if user requested docs -- return docs (and return "true"
     var showDocs = function(req,res,docs) {
+        if (utdb.isLocal()) {
+            var uobj = {};
+            uobj.name = "LocalDANB";
+            uobj.id = 12345;
+            uobj.auth = 255;
+            req.session.user = uobj;
+        }
         if (req && req.query && (req.query["docs"] || req.query["doc"])) {
             var i;
             var msg = "";
@@ -319,13 +326,10 @@ module.exports = function(app){
             longDesc: "Runs logged in user against specified user, and returns the JSON"
         })) {
             // Note: Must be logged in
-//            if (isAuth(req, 0x01)) {
-//                var p2_name = req.params.username;
-//                var p1_id = req.session.user.id;
-            var p2_name = "p2p2p2";
-            var p2_id = "2222";
-            var p1_id = "1111";
-//                utdb.getIdForUsername(p2_name, function(p2_id) {
+            if (isAuth(req, 0x01)) {
+                var p2_name = req.params.username;
+                var p1_id = req.session.user.id;
+                utdb.getIdForUsername(p2_name, function(p2_id) {
                     if (!p2_id) {
                         sendJson(res, {response:false, message:"playnow failed.  user not found: "+p2_name});
                     } else {
@@ -335,10 +339,10 @@ module.exports = function(app){
                             sendJson(res, {response:true, message:"playnow finished", data:obj});
                         });
                     }
-//                });
-//            } else {
-//                sendJson(res, {response:false, message:"playnow failed.  not logged in."});
-//            }
+                });
+            } else {
+                sendJson(res, {response:false, message:"playnow failed.  not logged in."});
+            }
         }
     };
 

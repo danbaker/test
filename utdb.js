@@ -161,24 +161,30 @@ exports.isReady = function() {
 // out: undefined
 //      {uname:Dan, id:156ffe3, auth:7}
 var getUserDoc = function(obj, fnc) {
-    if (userCollection && obj && fnc) {
-        userCollection.find(obj, function(err, result) {
-            if (err || !result) {
-                // error
-                fnc(undefined);
-            } else {
-                result.nextObject(function(err, user) {
-                    if (user) {
-                        // FOUND
-                        var obj = {uname:user.uname, id:user._id, auth:user.auth};
-                        fnc(obj);
-                    } else {
-                        // NOT FOUND
-                        fnc(undefined);
-                    }
-                });
-            }
+    if (isLocal) {
+        process.nextTick(function() {
+            fnc({uname:"LocalDan", id:"111", auth:255});
         });
+    } else {
+        if (userCollection && obj && fnc) {
+            userCollection.find(obj, function(err, result) {
+                if (err || !result) {
+                    // error
+                    fnc(undefined);
+                } else {
+                    result.nextObject(function(err, user) {
+                        if (user) {
+                            // FOUND
+                            var obj = {uname:user.uname, id:user._id, auth:user.auth};
+                            fnc(obj);
+                        } else {
+                            // NOT FOUND
+                            fnc(undefined);
+                        }
+                    });
+                }
+            });
+        }
     }
 };
 
@@ -328,13 +334,17 @@ exports.getCode = function(uid, fnc) {
 
 
 
-
+// add another function to be called with the database is ready to use
 exports.onReady = function(fnc) {
     if (exports.isReady()) {
         process.nextTick(fnc);
     } else {
         onReadyFncs.push(fnc);
     }
+};
+// public function to check if running a debug-local version
+exports.isLocal = function() {
+    return isLocal;
 };
 
 // allow testing of the encrypt function
