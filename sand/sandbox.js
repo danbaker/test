@@ -9,7 +9,7 @@ var fs = require( 'fs' )
 /*------------------------- Sandbox -------------------------*/
 function Sandbox( options ) {
   ( this.options = options || {} ).__proto__ = Sandbox.options;
-  
+
   this.run = function( code, hollaback ) {
     // Any vars in da house?
     var timer
@@ -40,7 +40,7 @@ function Sandbox( options ) {
 
 // Options
 Sandbox.options =
-  { timeout: 500
+  { timeout: 10000           // allow player code to run N seconds
   , node: 'node'
   , shovel: path.join( __dirname, 'shovel.js' )
   };
