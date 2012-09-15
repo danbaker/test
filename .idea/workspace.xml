@@ -76,9 +76,10 @@
       <file leaf-file-name="shovel.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/sand/shovel.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="45" column="0" selection-start="1373" selection-end="1373" vertical-scroll-proportion="0.63700235">
+            <state line="33" column="2" selection-start="892" selection-end="892" vertical-scroll-proportion="0.39812645">
               <folding>
                 <element signature="n#!!doc" expanded="true" />
+                <marker date="1347674182000" expanded="true" signature="921:1011" placeholder="//..." />
               </folding>
             </state>
           </provider>
@@ -398,9 +399,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/sand/shovel.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="45" column="0" selection-start="1373" selection-end="1373" vertical-scroll-proportion="0.63700235">
+        <state line="33" column="2" selection-start="892" selection-end="892" vertical-scroll-proportion="0.39812645">
           <folding>
             <element signature="n#!!doc" expanded="true" />
+            <marker date="1347674182000" expanded="true" signature="921:1011" placeholder="//..." />
           </folding>
         </state>
       </provider>

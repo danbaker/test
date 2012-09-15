@@ -31,7 +31,7 @@ var apiQWE = require('./api');          // API back to the contest
 function getSafeRunner() {
   var global = this;
 //    var apiQQQQQ = require('./api');          // API back to the contest
-  var api = apiQWE;          // API back to the contest
+//  var api = apiQWE;          // API back to the contest
 //  var test5 = api.get5();
   // Keep it outside of strict mode
   function UserScript(str) {
