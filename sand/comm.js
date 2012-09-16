@@ -40,25 +40,31 @@ var writeJson = function(json, fnc) {
     });
 };
 var readJson = function(fnc) {
-    fs.readFile(thefile, function(err,data) {
-        if (err) {
-            trace("readJson FAILED");
-            fnc();
-        } else {
-            trace("readJson: '"+data+"'");
-            if (data && data.length) {
-                try {
-                    var json = JSON.parse(data);
-                    fnc(json);
-                } catch (e) {
-                    trace("readJson: THREW EXCEPTION:"+e.toString());
+    trace("readJson...starting readFile");
+    try {
+        fs.readFile(thefile, function(err,data) {
+            trace("...readJson readFile finished");
+            if (err) {
+                trace("readJson FAILED");
+                fnc();
+            } else {
+                trace("readJson: '"+data+"'");
+                if (data && data.length) {
+                    try {
+                        var json = JSON.parse(data);
+                        fnc(json);
+                    } catch (e) {
+                        trace("readJson: THREW EXCEPTION:"+e.toString());
+                        fnc({});
+                    }
+                } else {
                     fnc({});
                 }
-            } else {
-                fnc({});
             }
-        }
-    });
+        });
+    } catch (e) {
+        trace("...readJson exception: "+e.toString());
+    }
 };
 
 
@@ -67,6 +73,7 @@ var watch = function(fnc) {
     fs.watchFile(thefile, { persistent: false, interval: 50 }, function(curr, prev) {
         // curr.mtime = file current time
         // prev.mtime = file previous time
+        trace("watch file changed");
         fnc();
     });
 };
@@ -79,7 +86,9 @@ var unwatch = function(fnc) {
 // check if "Player PN" is suppose to run now
 // callback with:  true means YES, false means NO
 var checkTurn = function(pn, fnc) {
+    trace("checkTurn...");
     readJson(function(json) {
+        trace("...checkTurn read json");
         if (json && (json.now === pn || json.done)) {
             // either players turn OR game over
             fnc(true);

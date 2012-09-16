@@ -35,13 +35,16 @@ var startPlayer = function(pn, fnc) {
     js += "console.log('HI');";
     js += "contestAPI.setPlayer(\""+pn+"\");";      // tell the API which player I am
     js += userjs;                                   // run player code
-    js += "runTurn();";
-//    js += "while(contestAPI.isRunning()) {";
-//    js +=   "contestAPI.waitForTurn(function() {";
-//    js +=       "runTurn();";
-//    js +=    "});";
-//    js += "}";
-    js += "'done'";     // return "done" (indicating nothing, really)
+    js += "var waitAndRun = function() {";
+    js +=   "if (contestAPI.isRunning()) {";                // check that the contest is still on
+    js +=       "contestAPI.waitForTurn(function() {";      // wait for my turn
+    js +=           "runTurn();";                           // run my turn
+    js +=           "waitAndRun();";                        // repeat
+    js +=       "});";
+    js +=   "}";
+    js += "};";
+  js +=   "contestAPI.submitTurn({a:1,b:2,c:3});";  // DEBUG TESTING ... can we even write to the disk ??
+    js += "waitAndRun();";
     s.run( js, function( output ) {
         // output.result = returned value
         // output.console = returned console logs (doesn't seem to work on heroku)
