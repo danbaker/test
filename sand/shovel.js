@@ -10,9 +10,10 @@ var util = require( 'util' )
   , Script
   , stdin
   , api = require('./api')          // API back to the contest
+  , path = require('path')
+  , fs = require('fs')
     ;
 
-api.trace("1: ! ! ! just loaded shovel.js");
 
 if ( ! ( Script = process.binding( 'evals').NodeScript ) )
   if ( ! ( Script = process.binding('evals').Script ) )
@@ -20,6 +21,7 @@ if ( ! ( Script = process.binding( 'evals').NodeScript ) )
 
 /* ------------------------------ Sandbox ------------------------------ */
 consoleA = [];
+
 // Get code
 code = '';
 stdin = process.openStdin();

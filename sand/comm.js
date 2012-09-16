@@ -80,7 +80,8 @@ var unwatch = function(fnc) {
 // callback with:  true means YES, false means NO
 var checkTurn = function(pn, fnc) {
     readJson(function(json) {
-        if (json && json.now === pn) {
+        if (json && (json.now === pn || json.done)) {
+            // either players turn OR game over
             fnc(true);
         } else {
             fnc(false);
@@ -88,6 +89,7 @@ var checkTurn = function(pn, fnc) {
     });
 };
 var waitForTurn = function(pn, fnc) {
+    // @TODO: add in a timeout (like N seconds) ... call fnc(false) on timeout
     watch(function() {
         unwatch();
         checkTurn(pn, function(yes) {

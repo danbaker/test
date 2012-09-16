@@ -2,10 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b163e181-c391-49fa-b20a-b6034a2cbb74" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/sand/comm.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/contest.js" afterPath="$PROJECT_DIR$/contest.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sand/api.js" afterPath="$PROJECT_DIR$/sand/api.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sand/comm.js" afterPath="$PROJECT_DIR$/sand/comm.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sand/sandbox.js" afterPath="$PROJECT_DIR$/sand/sandbox.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sand/shovel.js" afterPath="$PROJECT_DIR$/sand/shovel.js" />
     </list>
@@ -29,10 +28,30 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="contest.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/contest.js">
+      <file leaf-file-name="shovel.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sand/shovel.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="7" column="0" selection-start="94" selection-end="94" vertical-scroll-proportion="0.0">
+            <state line="71" column="0" selection-start="1945" selection-end="1945" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="log_P1.txt" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sand/log_P1.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="17" selection-start="17" selection-end="17" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="sandbox.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sand/sandbox.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="51" column="0" selection-start="1738" selection-end="1738" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -43,7 +62,27 @@
       <file leaf-file-name="comm.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sand/comm.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="34" column="17" selection-start="789" selection-end="789" vertical-scroll-proportion="0.0">
+            <state line="74" column="28" selection-start="1784" selection-end="1784" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="contest.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/contest.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="19" column="0" selection-start="631" selection-end="631" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="log_P2.txt" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sand/log_P2.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -52,41 +91,8 @@
       <file leaf-file-name="commlog.txt" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/sand/commlog.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="8" column="0" selection-start="527" selection-end="527" vertical-scroll-proportion="0.15925059">
+            <state line="8" column="55" selection-start="582" selection-end="582" vertical-scroll-proportion="0.15925059">
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="shovel.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sand/shovel.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="65" column="0" selection-start="1831" selection-end="1831" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="sandbox.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sand/sandbox.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="42" column="14" selection-start="1200" selection-end="1200" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="api.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sand/api.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="46" column="24" selection-start="1368" selection-end="1368" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -106,29 +112,29 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/node_modules/routes.js" />
-        <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/public/contest.js" />
-        <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/utdb.js" />
         <option value="$PROJECT_DIR$/routes.js" />
         <option value="$PROJECT_DIR$/test.js" />
         <option value="$PROJECT_DIR$/api.js" />
         <option value="$PROJECT_DIR$/test_file.txt" />
         <option value="$PROJECT_DIR$/web.js" />
-        <option value="$PROJECT_DIR$/sand/sandbox.js" />
-        <option value="$PROJECT_DIR$/sand/shovel.js" />
         <option value="$PROJECT_DIR$/sand/api.js" />
+        <option value="$PROJECT_DIR$/sand/commlog.txt" />
+        <option value="$PROJECT_DIR$/sand2/api.js" />
+        <option value="$PROJECT_DIR$/sand2/sandbox.js" />
+        <option value="$PROJECT_DIR$/sand/shovel.js" />
+        <option value="$PROJECT_DIR$/sand/sandbox.js" />
+        <option value="$PROJECT_DIR$/sand/log_P1.txt" />
+        <option value="$PROJECT_DIR$/sand/log_P2.txt" />
         <option value="$PROJECT_DIR$/sand/comm.js" />
         <option value="$PROJECT_DIR$/contest.js" />
-        <option value="$PROJECT_DIR$/sand/commlog.txt" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="64" />
     <option name="y" value="23" />
-    <option name="width" value="1636" />
+    <option name="width" value="1791" />
     <option name="height" value="1000" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
@@ -216,13 +222,15 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="64" y="23" width="1636" height="1000" extended-state="0" />
+    <frame x="64" y="23" width="1791" height="1000" extended-state="0" />
     <editor active="true" />
     <layout>
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3291714" sideWeight="0.9881087" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32982022" sideWeight="0.0" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.300905" sideWeight="0.6708286" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -232,7 +240,6 @@
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -290,16 +297,6 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/public/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="0" selection-start="41" selection-end="41" vertical-scroll-proportion="0.07962529" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/node_modules/sandbox/lib/shovel.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
@@ -357,9 +354,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sand/sandbox.js">
+    <entry file="file://$PROJECT_DIR$/sand/api.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="14" selection-start="1200" selection-end="1200" vertical-scroll-proportion="0.0">
+        <state line="5" column="0" selection-start="0" selection-end="1464" vertical-scroll-proportion="0.09953161">
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
@@ -368,17 +365,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/sand/shovel.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="65" column="0" selection-start="1831" selection-end="1831" vertical-scroll-proportion="0.0">
+        <state line="71" column="0" selection-start="1945" selection-end="1945" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sand/comm.js">
+    <entry file="file://$PROJECT_DIR$/sand/sandbox.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="34" column="17" selection-start="789" selection-end="789" vertical-scroll-proportion="0.0">
-          <folding />
+        <state line="51" column="0" selection-start="1738" selection-end="1738" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -389,18 +388,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sand/api.js">
+    <entry file="file://$PROJECT_DIR$/sand/comm.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="46" column="24" selection-start="1368" selection-end="1368" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
+        <state line="74" column="28" selection-start="1784" selection-end="1784" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sand/log_P1.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="17" selection-start="17" selection-end="17" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sand/log_P2.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/contest.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="0" selection-start="94" selection-end="94" vertical-scroll-proportion="0.0">
+        <state line="19" column="0" selection-start="631" selection-end="631" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
@@ -409,7 +420,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/sand/commlog.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="0" selection-start="527" selection-end="527" vertical-scroll-proportion="0.15925059">
+        <state line="8" column="55" selection-start="582" selection-end="582" vertical-scroll-proportion="0.15925059">
           <folding />
         </state>
       </provider>
