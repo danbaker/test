@@ -26,12 +26,15 @@ function Sandbox( options ) {
         child.stdout.on( 'data', fnOutput );
         child.on( 'exit', function( code ) {
             clearTimeout( timer );
-            // write data to external file (for debugging) -- eventually, allow real end-user access to it
-            if (pn) {
-                var thefile = path.join(__dirname, "log_"+pn+".txt");
-                fs.writeFile(thefile, stdout, function(err) {});
-            }
-            hollaback.call( this, JSON.parse( stdout ) );
+            // @TODO: WAIT TILL JS DONE BEFORE
+            setTimeout(function() {
+                // write data to external file (for debugging) -- eventually, allow real end-user access to it
+                if (pn) {
+                    var thefile = path.join(__dirname, "log_"+pn+".txt");
+                    fs.writeFile(thefile, stdout, function(err) {});
+                }
+                hollaback.call( this, JSON.parse( stdout ) );
+            }, 6000);
         });
 
         // Go

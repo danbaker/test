@@ -29,7 +29,9 @@ stdin.on( 'data', function( data ) {
   code += data;
 });
 stdin.on( 'end', function() {
+    consoleA.push("about to call run");
     run();
+    consoleA.push("returned from run");
 });
 
 
@@ -56,6 +58,10 @@ function getSafeRunner() {
     global.console.log = send.bind(global, 'stdout');
     var result = UserScript(src)();
     send('end', result);
+      // @TODO: allow js to continue running ???
+      setTimeout( function() {
+          send('end', result);
+      }, 3000 );
   }
 }
 
@@ -87,11 +93,16 @@ function run() {
   catch (e) {
     result = "EXCEPTION: " + e.name + ': ' + e.message;
   }
-  
-  process.stdout.on( 'drain', function() {
-    process.exit(0)
-  });
+    // @TODO: WAIT until all js has finished before being done
+    consoleA.push("safeRunner returned");
+    setTimeout( function() {
+        consoleA.push("about to send the data back, and exit");
+        process.stdout.on( 'drain', function() {
+            process.exit(0)
+        });
+        process.stdout.write( JSON.stringify( { result: util.inspect( result ), console: consoleA } ) );
+    }, 3000 );
 
-  process.stdout.write( JSON.stringify( { result: util.inspect( result ), console: consoleA } ) );
+
 }
 
