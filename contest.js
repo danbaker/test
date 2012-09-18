@@ -3,9 +3,9 @@
     CONTEST
 
 */
-var Sandbox = require('./sand/sandbox');
-var api = require('./sand/api');
-var comm = require('./sand/comm');
+var Sandbox = require('./sand2/sandbox');
+//var api = require('./sand/api');
+//var comm = require('./sand/comm');
 
 
 // NOTE: the following are indicators of which STAGE we are in
@@ -43,7 +43,6 @@ var startPlayer = function(pn, fnc) {
     js +=       "});";
     js +=   "}";
     js += "};";
-  js +=   "contestAPI.submitTurn({a:1,b:2,c:3});";  // DEBUG TESTING ... can we even write to the disk ??
     js += "waitAndRun();";
     s.run( js, function( output ) {
         // output.result = returned value
@@ -57,28 +56,25 @@ exports.runContest = function(id_p1, id_p2, fnc) {
     // RESET EVERYTHING FOR A NEW CONTEST
     p1Running = true;
     p2Running = true;
-    comm.resetLog();
+//    comm.resetLog();
 
     // START UP MACHINE ... should set file to: {did:"P1MA", now:"P1"}
-    comm.log("indicating NOTHING is next .. allow players to startup");
-    comm.writeJson({starting:true}, function() {
-        comm.log("start P1");
+//    comm.log("indicating NOTHING is next .. allow players to startup");
+//    comm.writeJson({starting:true}, function() {
+//        comm.log("start P1");
         // START UP PLAYER 1
         startPlayer(p1, function(output) {
             p1Running = false;
-            comm.log("P1 code finished");
-            comm.writeJson({done:true}, function() {});     // kick anyone waiting on the file
+//            comm.log("P1 code finished");
+//            comm.writeJson({done:true}, function() {});     // kick anyone waiting on the file
         });
-        // START UP PLAYER 2
-        comm.log("start P2");
-        startPlayer(p2, function(output) {
-            p2Running = false;
-            comm.log("P2 code finished");
-            comm.writeJson({done:true}, function() {});     // kick anyone waiting on the file
-        });
-    });
+//        // START UP PLAYER 2
+//        startPlayer(p2, function(output) {
+//            p2Running = false;
+//        });
+//    });
     fnc("contest running...");
-    continueContest();
+//    continueContest();
 };
 
 // P1MA -- P1 -- P1MB -- P2MA -- P2 -- P2MB (loop)

@@ -10,6 +10,7 @@ var pg = require('pg');
 var utdb = require('./utdb');
 var app = express.createServer();
 var mongo = require('mongodb');
+require('./sand2/log').setPrefix("MAIN");
 
 var store  = new express.session.MemoryStore;
 app.configure( function() {
@@ -110,3 +111,10 @@ utdb.onReady(function() {
 //}
 
 
+// --------------
+// RUN UNIT TESTS
+var packet = require('./sand2/packet');
+packet.test();
+
+var log = require('./sand2/log').log;
+log("- - - - - - - - - - - -");
