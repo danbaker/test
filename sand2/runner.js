@@ -12,12 +12,14 @@ console = {};
     // hidden variables
     var packet = require('./packet');
     var log = require('./log').log;
+    var playerN = 0;
     contestAPI.setPlayer = function(pn) {
-        console.log("API.setPlayer()");
+        playerN = pn;
+        console.log("API.setPlayer("+pn+")");
     };
     contestAPI.submitTurn = function(json) {
         console.log("API.submitTurn");
-        packet.sendJson(json);
+        packet.sendJson({op:"submitTurn", pn:playerN, data:json});
     };
     console.log = function(msg) {
         log("CODE:"+msg);

@@ -17,6 +17,7 @@ var path = require('path');
 var spawn = require('child_process').spawn;
 var packet = require('./packet');
 var log = require('./log').log;
+var mainHandler = require('./mainHandler');
 
 
 // main constructor for creating a sandbox
@@ -36,11 +37,10 @@ function Sandbox(options) {
                 if (json.packet) {
                     if (json.packet.json) {
                         log("GOT An OBJECT FROM THE CHILD:"+JSON.stringify(json.packet.json));
-
+                        mainHandler.process(json.packet.json);
                     } else if (json.packet.str) {
                         log("GOT A STRING FROM THE CHILD:"+json.packet.str);
                     }
-                    // @TODO: process/handle the str: json.packet.str
                 }
             }
         };
