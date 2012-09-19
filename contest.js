@@ -42,6 +42,9 @@ var startPlayer = function(pn, fnc) {
     js +=   "console.log('from the timeout 2');";
     js += "}, 100);";
     js += "console.log('end of code');";
+    js += "contestAPI.runNextTurn = function() {";
+    js +=   "console.log('NEAT-O -- running code inside the client, called form the main server!');";
+    js += "};";
     s.run( js, function( output ) {
         // output.result = returned value
         // output.console = returned console logs (doesn't seem to work on heroku)

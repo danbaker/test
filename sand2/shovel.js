@@ -26,9 +26,18 @@ var trace = function(msg) {
 trace("loaded shovel.js");
 
 var processPacket = function(pkt) {
-    trace("processPacket: %j", pkt);
     if (pkt.json) {
+        trace("processPacket.  op="+pkt.json.op);
         // got a json object
+        switch(pkt.json.op) {
+            case "runNextTurn":
+                log("time to run the next turn ...");
+                log("@TODO: HOW do we call/tell the client-code to run?");
+                if (contestAPI && contestAPI.runNextTurn) {
+                    contestAPI.runNextTurn();
+                }
+                break;
+        }
     } else if (pkt.str) {
         // got a simple string (for now, assume this is the actual code to run)
         var code = pkt.str;

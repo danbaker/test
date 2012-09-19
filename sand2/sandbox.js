@@ -37,7 +37,7 @@ function Sandbox(options) {
                 if (json.packet) {
                     if (json.packet.json) {
                         log("GOT An OBJECT FROM THE CHILD:"+JSON.stringify(json.packet.json));
-                        mainHandler.process(json.packet.json);
+                        mainHandler.process(json.packet.json, child.stdin);
                     } else if (json.packet.str) {
                         log("GOT A STRING FROM THE CHILD:"+json.packet.str);
                     }
