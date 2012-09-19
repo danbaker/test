@@ -1,20 +1,23 @@
 // shovel.js
 //  the code that is run in a separate process
 
-
+// load up ALL needed files and global-acccess objects
+var consoleX = console;         // NOTE: this will send data BACK to server (do NOT use it)
+var processX = process;
+require('./log').setPrefix("CHILD");
+var log = require('./log').log;
 var util = require( 'util' );
 var path = require('path');
 var fs = require('fs');
 var packet = require('./packet');
-var log = require('./log').log;
-require('./log').setPrefix("CHILD");
 
-var code = '';          // jscode passed in
+
 var result;
-var consoleA = [];      // REMOVE THIS ... send console data back via stderr(?)
+//var consoleA = [];      // REMOVE THIS ... send console data back via stderr(?)
 var sandbox;
-var Script;
-var stdin;
+//var Script;
+var stdin;              // stdin (data from main app)
+var stdinStr = "";      // the string collected so far from stdin
 
 var trace = function(msg) {
     log(msg);
@@ -22,16 +25,31 @@ var trace = function(msg) {
 
 trace("loaded shovel.js");
 
+var processPacket = function(pkt) {
+    trace("processPacket: %j", pkt);
+    if (pkt.json) {
+        // got a json object
+    } else if (pkt.str) {
+        // got a simple string (for now, assume this is the actual code to run)
+        var code = pkt.str;
+        trace("about to run code: "+code);
+        var runner = require('./runner');
+        runner.runCode(code, process.stdout);
+    }
+};
+
+
 // Get code passed in from main app
 // @TODO: think about leaving stdin open ... and determining "end of data" some other way
-stdin = process.openStdin();
-stdin.on( 'data', function( data ) {
+stdin = processX.openStdin();
+stdin.on('data', function(data) {
     trace("got data: "+data);
-    code += data;
-    var json = packet.checkStringForCompletePacket(code);
-    code = json.str;
+    stdinStr += data;
+    var json = packet.checkStringForCompletePacket(stdinStr);
+    stdinStr = json.str;
     if (json.packet) {
         trace("!! Got a packet: size="+json.packet.size+" :"+json.packet.str);
+        processPacket(json.packet);
     }
 });
 stdin.on( 'end', function() {
@@ -52,7 +70,7 @@ var waiting = function() {
 
 var run2 = function() {
     trace("Inside of run2 ... sending packet back");
-    packet.sendString("This is FROM child", process.stdout);
+    packet.sendString("## 5 {{a:1}", process.stdout);
     waiting();
 };
 run2();

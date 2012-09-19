@@ -27,23 +27,21 @@ var startPlayer = function(pn, fnc) {
     var s = new Sandbox({pn:pn});
     // contest = the API object
     var userjs = "";
-    userjs += "function runTurn() {";
-    userjs +=   "contestAPI.submitTurn({});";
-    userjs += "}";
+//    userjs += "function runTurn() {";
+//    userjs +=   "contestAPI.submitTurn({});";
+//    userjs += "}";
 
     var js = "";
-    js += "console.log('HI');";
-    js += "contestAPI.setPlayer(\""+pn+"\");";      // tell the API which player I am
+    js += "console.log('Hello world');";
+    js += "contestAPI.setPlayer('"+pn+"');";        // tell the API which player I am
     js += userjs;                                   // run player code
-    js += "var waitAndRun = function() {";
-    js +=   "if (contestAPI.isRunning()) {";                // check that the contest is still on
-    js +=       "contestAPI.waitForTurn(function() {";      // wait for my turn
-    js +=           "runTurn();";                           // run my turn
-    js +=           "waitAndRun();";                        // repeat
-    js +=       "});";
-    js +=   "}";
-    js += "};";
-    js += "waitAndRun();";
+    js += "setTimeout(function() {";
+    js +=   "console.log('from the timeout 1');";
+    js +=   "contestAPI.setPlayer(1);";
+    js +=   "contestAPI.submitTurn({user:'Dan'});";
+    js +=   "console.log('from the timeout 2');";
+    js += "}, 100);";
+    js += "console.log('end of code');";
     s.run( js, function( output ) {
         // output.result = returned value
         // output.console = returned console logs (doesn't seem to work on heroku)

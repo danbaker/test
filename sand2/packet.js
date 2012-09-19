@@ -16,10 +16,16 @@
 //          str:        <string>        // left-over string after removing the packet
 //      }
 var log = require('./log').log;
+var theStream = undefined;
 
+// set the default stream to use
+var setStream = function(stream) {
+    theStream = stream;
+};
 
 // send a string as a packet
 var sendString = function(str, stream) {
+    stream = stream || theStream;
     if (!stream) {
         log("PACKET: ERROR -- You forgot to pass the stream in!");
     }
@@ -27,6 +33,19 @@ var sendString = function(str, stream) {
         var n = str.length;
         log("PACKET: sending "+n+" bytes: "+str);
         stream.write("## "+n+" !"+str);
+    }
+};
+
+var sendJson = function(obj, stream) {
+    stream = stream || theStream;
+    if (!stream) {
+        log("PACKET: ERROR -- You forgot to pass the stream in!");
+    }
+    if (obj && stream) {
+        var str = JSON.stringify(obj);
+        var n = str.length;
+        log("PACKET: sending "+n+" bytes: "+str);
+        stream.write("## "+n+" {"+str);
     }
 };
 
@@ -82,7 +101,7 @@ var checkStringForCompletePacket = function(str) {
             }
         } else {
             // ERROR ... what do we do with a malformed string ??
-            log("PACKET: ERROR! malformed string. stuck forever ??");
+            log("PACKET: ERROR! malformed string. stuck forever ??:"+str);
         }
     }
     return json;
@@ -91,7 +110,9 @@ var checkStringForCompletePacket = function(str) {
 
 
 // --- EXPORTS ---
+exports.setStream = setStream;
 exports.sendString = sendString;
+exports.sendJson = sendJson;
 exports.checkStringForCompletePacket = checkStringForCompletePacket;
 
 

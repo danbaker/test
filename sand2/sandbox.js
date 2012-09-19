@@ -34,8 +34,12 @@ function Sandbox(options) {
                 var json = packet.checkStringForCompletePacket(stdoutTxt);
                 stdoutTxt = json.str;
                 if (json.packet) {
-                    log("GOT A PACKET FROM THE CHILD:"+json.packet.str);
-                    console.log(json);
+                    if (json.packet.json) {
+                        log("GOT An OBJECT FROM THE CHILD:"+JSON.stringify(json.packet.json));
+
+                    } else if (json.packet.str) {
+                        log("GOT A STRING FROM THE CHILD:"+json.packet.str);
+                    }
                     // @TODO: process/handle the str: json.packet.str
                 }
             }

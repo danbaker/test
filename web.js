@@ -117,4 +117,4 @@ var packet = require('./sand2/packet');
 packet.test();
 
 var log = require('./sand2/log').log;
-log("- - - - - - - - - - - -");
+log("- - - - - - - - - - - - - - - - - - - -");
