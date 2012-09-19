@@ -2,13 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b163e181-c391-49fa-b20a-b6034a2cbb74" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/sand2/runner.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/contest.js" afterPath="$PROJECT_DIR$/contest.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sand2/packet.js" afterPath="$PROJECT_DIR$/sand2/packet.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sand2/sandbox.js" afterPath="$PROJECT_DIR$/sand2/sandbox.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sand2/shovel.js" afterPath="$PROJECT_DIR$/sand2/shovel.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web.js" afterPath="$PROJECT_DIR$/web.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sand2/log.js" afterPath="$PROJECT_DIR$/sand2/log.js" />
     </list>
     <ignored path="h1.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -34,6 +28,17 @@
         <entry file="file://$PROJECT_DIR$/sand2/shovel.js">
           <provider selected="true" editor-type-id="text-editor">
             <state line="36" column="45" selection-start="1121" selection-end="1121" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="log.js" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/sand2/log.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="17" column="0" selection-start="479" selection-end="479" vertical-scroll-proportion="0.3384075">
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -83,10 +88,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="log.txt" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="log.txt" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sand2/log.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="1" column="0" selection-start="1" selection-end="1" vertical-scroll-proportion="0.019906323">
+            <state line="1" column="0" selection-start="1" selection-end="1" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -126,7 +131,6 @@
         <option value="$PROJECT_DIR$/sand/sandbox.js" />
         <option value="$PROJECT_DIR$/sand/shovel.js" />
         <option value="$PROJECT_DIR$/sand/log_P2.txt" />
-        <option value="$PROJECT_DIR$/sand2/log.js" />
         <option value="$PROJECT_DIR$/sand2/packet.js" />
         <option value="$PROJECT_DIR$/web.js" />
         <option value="$PROJECT_DIR$/sand2/runner.js" />
@@ -134,6 +138,7 @@
         <option value="$PROJECT_DIR$/sand2/shovel.js" />
         <option value="$PROJECT_DIR$/sand2/sandbox.js" />
         <option value="$PROJECT_DIR$/sand2/log.txt" />
+        <option value="$PROJECT_DIR$/sand2/log.js" />
       </list>
     </option>
   </component>
@@ -381,15 +386,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sand2/log.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="60" selection-start="267" selection-end="267" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/web.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="120" column="0" selection-start="4566" selection-end="4566" vertical-scroll-proportion="0.0">
@@ -400,15 +396,6 @@
     <entry file="file://$PROJECT_DIR$/sand2/runner.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="18" column="35" selection-start="488" selection-end="488" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sand2/shovel.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="36" column="45" selection-start="1121" selection-end="1121" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
@@ -444,8 +431,26 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/sand2/log.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="0" selection-start="1" selection-end="1" vertical-scroll-proportion="0.019906323">
+        <state line="1" column="0" selection-start="1" selection-end="1" vertical-scroll-proportion="0.0">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sand2/shovel.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="36" column="45" selection-start="1121" selection-end="1121" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sand2/log.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="17" column="0" selection-start="479" selection-end="479" vertical-scroll-proportion="0.3384075">
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

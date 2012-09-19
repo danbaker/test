@@ -8,7 +8,9 @@ var prefix = "";
 
 var log = function(msg) {
     var str = "" + (new Date().toString()) + ": "+prefix+": " + msg + "\n";
-    fs.appendFileSync(logfile, str);
+    if (fs.appendFileSync) {
+        fs.appendFileSync(logfile, str);
+    }
 //    var id = fs.openSync(logfile, 'a');
 //    fs.writeSync( id, str, 0, str.length, null);
 //    fs.closeSync(id);
