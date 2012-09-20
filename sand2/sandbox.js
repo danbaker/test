@@ -11,20 +11,24 @@
 //  });
 //  s.<some way of sending data TO the sandbox code>
 
-
+var playerN = "0";
 var fs = require('fs');
 var path = require('path');
 var spawn = require('child_process').spawn;
 var packet = require('./packet');
-var log = require('./log').log;
 var mainHandler = require('./mainHandler');
+var logX = require('./log').log;
+var log = function(msg) {
+    logX("sandbox."+playerN+": "+msg);
+};
 
 
 // main constructor for creating a sandbox
 function Sandbox(options) {
     (this.options = options || {}).__proto__ = Sandbox.options;
 
-    this.run = function(jscode, fnc) {
+    this.run = function(pn, jscode, fnc) {
+        playerN = pn;
         log("Sandbox.run -- starting");
         var timer;
         var stdoutTxt = '';
@@ -36,10 +40,10 @@ function Sandbox(options) {
                 stdoutTxt = json.str;
                 if (json.packet) {
                     if (json.packet.json) {
-                        log("GOT An OBJECT FROM THE CHILD:"+JSON.stringify(json.packet.json));
+//                        log("GOT An OBJECT FROM THE CHILD:"+JSON.stringify(json.packet.json));
                         mainHandler.process(json.packet.json, child.stdin);
                     } else if (json.packet.str) {
-                        log("GOT A STRING FROM THE CHILD:"+json.packet.str);
+//                        log("GOT A STRING FROM THE CHILD:"+json.packet.str);
                     }
                 }
             }
@@ -57,7 +61,8 @@ function Sandbox(options) {
         });
 
         // send the javascript code TO the new node process as a packet
-
+        log("sending setPlayer="+playerN);
+        packet.sendJson({op:"setPlayer", pn:playerN}, child.stdin);
         log("sending: "+jscode);
         packet.sendString(jscode, child.stdin);
 //        child.stdin.write(jscode);
@@ -66,8 +71,10 @@ function Sandbox(options) {
 
         // set up a timeout timer (if node process runs too long, just kill it)
         timer = setTimeout( function() {
+            log("TIMEOUT --- kill child process NOW");
             child.stdout.removeListener( 'output', fnStdout );
-            stdoutTxt = JSON.stringify( { result: 'TimeoutError', console: [] } );
+            child.stdin.end();
+//            stdoutTxt = JSON.stringify( { result: 'TimeoutError', console: [] } );
             child.kill( 'SIGKILL' );
         }, this.options.timeout );
 

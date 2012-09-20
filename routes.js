@@ -116,6 +116,67 @@ module.exports = function(app){
     //  user authentication
 
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+    //  GET ? username=dan&password=secret
+    app.get('/apis/:version/sessions', function(req, res) {
+        if (!showDocs(req,res, {
+            version: 1,
+            api: "GET sessions",
+            description: "check if logged in",
+            params: [
+            ],
+            longDesc: "If your username is not valid or the password doesn't match, then the login will fail.<br>" +
+                "Returns a json object that contains:<br>"+
+                ".. auth = bit-fields (see setauth for meaning of each bit)<br>"+
+                ".. id = unique identifier for this user.  Some calls may use this id."
+        })) {
+            if (isAuth(req, 0x01)) {
+                // IS logged in
+                var uobj = req.session.user;
+                sendJson(res, {response:true, auth: uobj.auth, name: uobj.name, message:"logged in"});
+            } else {
+                // NOT logged in
+                res.send(404);
+            }
+        }
+    });
+    app.post('/apis/:version/sessions', function(req, res) {
+        if (!showDocs(req,res, {
+            version: 1,
+            api: "POST sessions",
+            description: "login as a new user",
+            params: [
+            ],
+            longDesc: "If your username is not valid or the password doesn't match, then the login will fail.<br>" +
+                "Returns a json object that contains:<br>"+
+                ".. auth = bit-fields (see setauth for meaning of each bit)<br>"+
+                ".. id = unique identifier for this user.  Some calls may use this id."
+        })) {
+            // Note: anyone allowed to request to login
+            // apis/<version>/login a username w/ password
+            var username = req.params.username || req.query.username || req.body.username;
+            var password = req.params.password || req.query.password || req.body.password;
+            console.log("POST session "+username+","+password);
+            utdb.findUser(username, password, function(result) {
+                if (!result) {
+                    // return "FAILED LOGIN"
+                    console.log("login "+req.params.username+" FAILED");
+                    res.send(404);
+                } else {
+                    // return "LOGIN OK"
+                    // set result.id into the session
+                    console.log("login "+req.params.username+" OK: id="+result.id+"  auth="+result.auth);
+                    doLogin(req, res, result, "login ok");
+                }
+            });
+        }
+    });
+    app.delete('/apis/:version/sessions', function(req, res) {
+        req.session.user = undefined;
+        req.session.destroy();
+        sendJson(res, {response:true, message:"logout ok"});
+    });
+
+    // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     app.get('/apis/:version/createuser/:username/:password', function(req, res) {
         if (!showDocs(req,res, {
             version: 1,

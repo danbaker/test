@@ -191,14 +191,18 @@ var getUserDoc = function(obj, fnc) {
 // find a user in the user table (given username AND password)
 // used for logging in
 exports.findUser = function(name, opw, fnc) {
-    var epw = encryptPW(opw, name);
-    getUserDoc({uname:name, upw:epw}, function(doc) {
-        if (!doc) {
-            fnc(undefined);
-        } else {
-            fnc(doc);
-        }
-    });
+    if (name && opw && fnc) {
+        var epw = encryptPW(opw, name);
+        getUserDoc({uname:name, upw:epw}, function(doc) {
+            if (!doc) {
+                fnc(undefined);
+            } else {
+                fnc(doc);
+            }
+        });
+    } else {
+        fnc(undefined);
+    }
 };
 
 // get the id for a given username

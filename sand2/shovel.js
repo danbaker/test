@@ -2,10 +2,12 @@
 //  the code that is run in a separate process
 
 // load up ALL needed files and global-acccess objects
+var playerN = "0";
+var lastJson = {};
 var consoleX = console;         // NOTE: this will send data BACK to server (do NOT use it)
 var processX = process;
 require('./log').setPrefix("CHILD");
-var log = require('./log').log;
+var logX = require('./log').log;
 var util = require( 'util' );
 var path = require('path');
 var fs = require('fs');
@@ -22,21 +24,35 @@ var stdinStr = "";      // the string collected so far from stdin
 var trace = function(msg) {
     log(msg);
 };
+var log = function(msg) {
+    logX("Shovel."+playerN+"."+lastJson.op+": "+msg);
+};
 
 trace("loaded shovel.js");
 
+
+// @TODO: rename this file "childapp.js"
+
+
 var processPacket = function(pkt) {
     if (pkt.json) {
+        lastJson = pkt.json;
         trace("processPacket.  op="+pkt.json.op);
         // got a json object
         switch(pkt.json.op) {
             case "runNextTurn":
                 log("time to run the next turn ...");
                 log("@TODO: HOW do we call/tell the client-code to run?");
+                // @TODO: have this run in the sandbox ... NOT here ... closure access ?
                 if (contestAPI && contestAPI.runNextTurn) {
                     contestAPI.runNextTurn();
                 }
                 break;
+            case "setPlayer":
+                playerN = pkt.json.pn;
+                break;
+            default:
+                log("ERROR: unknown op")
         }
     } else if (pkt.str) {
         // got a simple string (for now, assume this is the actual code to run)
