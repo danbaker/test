@@ -28,7 +28,7 @@ module.exports = function(app){
         // save this newly created user object in the session
         req.session.user = uobj;
 
-        sendJson(res, {response:true, auth: uobj.auth, name: uobj.name, message:msg});        // return "logged in OK" or "created user OK"
+        sendJson(res, {response:true, auth: uobj.auth, namex: uobj.name, message:msg});        // return "logged in OK" or "created user OK"
     };
     // check if the user is logged in for a given request
     var isLoggedIn = function(req) {
@@ -132,7 +132,7 @@ module.exports = function(app){
             if (isAuth(req, 0x01)) {
                 // IS logged in
                 var uobj = req.session.user;
-                sendJson(res, {response:true, auth: uobj.auth, name: uobj.name, message:"logged in"});
+                sendJson(res, {response:true, auth: uobj.auth, namex: uobj.name, message:"logged in"});
             } else {
                 // NOT logged in
                 res.send(404);
