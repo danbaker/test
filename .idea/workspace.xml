@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b163e181-c391-49fa-b20a-b6034a2cbb74" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/contest.js" afterPath="$PROJECT_DIR$/contest.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sand2/mainHandler.js" afterPath="$PROJECT_DIR$/sand2/mainHandler.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sand2/packet.js" afterPath="$PROJECT_DIR$/sand2/packet.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/app/LoginView.js" afterPath="$PROJECT_DIR$/public/app/LoginView.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/index.html" afterPath="$PROJECT_DIR$/public/index.html" />
     </list>
     <ignored path="h1.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -406,15 +406,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sand2/packet.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="61" selection-start="1327" selection-end="1327" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/sand2/sandbox.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="97" column="0" selection-start="3318" selection-end="3318" vertical-scroll-proportion="0.0">
@@ -436,6 +427,15 @@
     <entry file="file://$PROJECT_DIR$/contest.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="82" column="26" selection-start="2695" selection-end="2695" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sand2/packet.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="42" column="61" selection-start="1327" selection-end="1327" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>

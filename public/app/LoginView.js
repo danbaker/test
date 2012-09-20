@@ -17,7 +17,9 @@ define([
         },
 
         events: {
-            'click .sign-in-button': '_login'
+            'click .register-button': '_register',
+            'click .sign-in-button': '_login',
+            'click .sign-out-menu-item': '_logout'
         },
 
         render: function() {
@@ -53,13 +55,31 @@ define([
                 },
                 url: '/apis/1/sessions'
             }).done(function(data) {
-                    console.log('success', data);
                     $('.dropdown.register').hide();
                     $('.dropdown.sign-in').hide();
                     $('.dropdown.user-menu .username').html(data.name);
                     $('.dropdown.user-menu').show();
                 }).fail(function(data) {
-                    console.log('fail', data);
+                    $('.dropdown.register').show();
+                    $('.dropdown.sign-in').show();
+                });
+
+        },
+
+        _register: function() {
+
+            var email = $('#register-input-email').val();
+            var password = $('#register-input-password').val();
+
+            $.ajax({
+                type: 'GET',
+                url: '/apis/1/createuser/' + email + '/' + password
+            }).done(function(data) {
+                    $('.dropdown.register').hide();
+                    $('.dropdown.sign-in').hide();
+                    $('.dropdown.user-menu .username').html(data.name);
+                    $('.dropdown.user-menu').show();
+                }).fail(function(data) {
                     $('.dropdown.register').show();
                     $('.dropdown.sign-in').show();
                 });
@@ -72,6 +92,20 @@ define([
             var password = $('#sign-in-input-password').val();
 
             this._tryLoggingIn(email, password);
+
+        },
+
+        _logout: function() {
+
+            $.ajax({
+                type: 'DELETE',
+                url: '/apis/1/sessions'
+            }).done(function(data) {
+                    $('.dropdown.register').show();
+                    $('.dropdown.sign-in').show();
+                    $('.dropdown.user-menu').hide();
+                }).fail(function(data) {
+                });
 
         }
 
