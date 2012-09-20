@@ -37,7 +37,11 @@ var sendString = function(str, stream) {
     if (str && stream) {
         var n = str.length;
         log("sending "+n+" bytes: "+str);
-        stream.write("## "+n+" !"+str);
+        try {
+            stream.write("## "+n+" !"+str);
+        } catch (e) {
+            log("ERROR: stream.write failed: "+e.toString());
+        }
     }
 };
 
@@ -50,7 +54,11 @@ var sendJson = function(obj, stream) {
         var str = JSON.stringify(obj);
         var n = str.length;
         log("sending "+n+" bytes: "+str);
-        stream.write("## "+n+" {"+str);
+        try {
+            stream.write("## "+n+" {"+str);
+        } catch (e) {
+            log("ERROR: stream.write failed: "+e.toString());
+        }
     }
 };
 

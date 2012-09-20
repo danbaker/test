@@ -3,7 +3,7 @@
 
 var logMsg = require('./log').log;
 var packet = require('./packet');
-
+var contest;                                    // set by calling "startContest"
 
 var lastJSON = {};
 var log = function(msg) {
@@ -22,8 +22,7 @@ var process = function(json, stream, sand) {
     switch(json.op) {
         case "submitTurn":
             log(". . . in mainHandler.process op=submitTurn by player "+json.pn+"=="+sand.getPlayerN()+" nextPlayer="+sandOther.getPlayerN());
-//            log("TODO: ask the OTHER player to runNextTurn");
-//            packet.sendJson({op:"runNextTurn"}, stream);
+            contest.submitTurn(data, sand, sandOther);
             packet.sendJson({op:"runNextTurn"}, sandOther.getStream());
             break;
         default:
@@ -40,7 +39,8 @@ var setSandboxes = function(s1,s2) {
 };
 
 // START the contest (with player1 starting)
-var startContest = function() {
+var startContest = function(theContest) {
+    contest = theContest;
     // give a brief pause ... so all apps can startup and be ready to run
     setTimeout(function() {
         log("= = = = = = = startContest = = = = = = =");
