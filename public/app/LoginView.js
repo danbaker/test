@@ -13,9 +13,13 @@ define([
             $.ajax({
                 url: '/apis/1/sessions'
             }).done(function(data) {
-                    console.log(data);
+                    $('.dropdown.register').hide();
+                    $('.dropdown.sign-in').hide();
+                    $('.dropdown.user-menu .username').html(data.name);
+                    $('.dropdown.user-menu').show();
                 }).fail(function(data) {
-                    console.log(data);
+                    $('.dropdown.register').show();
+                    $('.dropdown.sign-in').show();
                 });
         },
 
