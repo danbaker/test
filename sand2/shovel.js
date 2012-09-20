@@ -25,7 +25,7 @@ var trace = function(msg) {
     log(msg);
 };
 var log = function(msg) {
-    logX("Shovel."+playerN+"."+lastJson.op+": "+msg);
+//    logX("Shovel."+playerN+"."+lastJson.op+": "+msg);
 };
 
 trace("loaded shovel.js");
@@ -100,7 +100,7 @@ var waiting = function() {
 var run2 = function() {
     trace("Inside of run2 ... sending packet back");
     packet.sendString("## 5 {{a:1}", process.stdout);
-    waiting();
+//    waiting();
 };
 run2();
 

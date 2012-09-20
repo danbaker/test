@@ -16,20 +16,22 @@ var startPlayer = function(pn, fnc) {
 //    userjs += "}";
 
     var js = "";
-    js += "console.log('Hello world');";
+    js += "console.log('Hello world ... client JavaScript is RUNNING');";
+    js += "console.log('R='+Math.random());";
     js += "contestAPI.setPlayer('"+pn+"');";        // tell the API which player I am
     js += userjs;                                   // run player code
 //    js += "setTimeout(function() {";
 //    js +=   "console.log('from the timeout 1');";
 //    js += "}, 100);";
-    js += "console.log('end of code');";
+//    js += "console.log('end of code');";
     // server calls the "contestAPI.runNextTurn" function when it is time to run a turn
     js += "var pickN = 1;";
     js += "contestAPI.runNextTurn = function() {";
     js +=   "console.log('Server requested client("+pn+") to runNextTurn. pick='+pickN);";
     js +=   "setTimeout(function() {";
-    js +=      "contestAPI.submitTurn({pick:pickN});";
-    js +=      "pickN++;";
+    js +=       "var rn=Math.floor(Math.random()*3);";              // 0,1,2
+    js +=       "contestAPI.submitTurn({pick:rn});";
+    js +=       "pickN++;";
     js +=    "}, 100);";
     js += "};";
     // IF this is player-1 ... kick-start it running
