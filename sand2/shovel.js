@@ -37,7 +37,7 @@ trace("loaded shovel.js");
 var processPacket = function(pkt) {
     if (pkt.json) {
         lastJson = pkt.json;
-        trace("processPacket.  op="+pkt.json.op);
+        trace("processPacket.  op="+pkt.json.op+" playerN="+playerN);
         // got a json object
         switch(pkt.json.op) {
             case "runNextTurn":
@@ -50,6 +50,7 @@ var processPacket = function(pkt) {
                 break;
             case "setPlayer":
                 playerN = pkt.json.pn;
+                packet.setPlayerN(playerN);
                 break;
             default:
                 log("ERROR: unknown op")
@@ -65,16 +66,19 @@ var processPacket = function(pkt) {
 
 
 // Get code passed in from main app
-// @TODO: think about leaving stdin open ... and determining "end of data" some other way
 stdin = processX.openStdin();
 stdin.on('data', function(data) {
     trace("got data: "+data);
     stdinStr += data;
-    var json = packet.checkStringForCompletePacket(stdinStr);
-    stdinStr = json.str;
-    if (json.packet) {
-        trace("!! Got a packet: size="+json.packet.size+" :"+json.packet.str);
-        processPacket(json.packet);
+    for(var i=0; i<50 && stdinStr; i++) {
+        var json = packet.checkStringForCompletePacket(stdinStr);
+        stdinStr = json.str;
+        if (json.packet) {
+            trace("!! Got a packet: size="+json.packet.size+" :"+json.packet.str);
+            processPacket(json.packet);
+        } else {
+            break;
+        }
     }
 });
 stdin.on( 'end', function() {
@@ -85,9 +89,9 @@ stdin.on( 'end', function() {
 var n = 0;
 var waiting = function() {
     trace("entered waiting.  n="+n);
-    if (n++ < 10) {
+    if (n++ < 2) {
         setTimeout(function() {
-            trace("waiting timeout fired.  n="+n);
+            trace("waiting ... n="+n);
             waiting();
         }, 100);
     }

@@ -11,15 +11,14 @@
 //  });
 //  s.<some way of sending data TO the sandbox code>
 
-var playerN = "0";
 var fs = require('fs');
 var path = require('path');
 var spawn = require('child_process').spawn;
 var packet = require('./packet');
 var mainHandler = require('./mainHandler');
 var logX = require('./log').log;
-var log = function(msg) {
-    logX("sandbox."+playerN+": "+msg);
+var log = function(msg, pn) {
+    logX("sandbox."+pn+": "+msg);
 };
 
 
@@ -27,54 +26,75 @@ var log = function(msg) {
 function Sandbox(options) {
     (this.options = options || {}).__proto__ = Sandbox.options;
 
+    var childStdin;
+    var self = this;
+    var playerN = "0";
+
+
+    // return the stream to send packet data to for this child-sandbox-app
+    this.getStream = function() {
+        return childStdin;
+    };
+
+    // DEBUG-ONLY !!!
+    this.getPlayerN = function() {
+        return playerN;
+    };
+
+
     this.run = function(pn, jscode, fnc) {
         playerN = pn;
-        log("Sandbox.run -- starting");
+        log("Sandbox.run -- starting", playerN);
         var timer;
         var stdoutTxt = '';
         var child = spawn( this.options.node, [this.options.shovel] );
         var fnStdout = function(data) {
             if (!!data) {
                 stdoutTxt += data;
-                var json = packet.checkStringForCompletePacket(stdoutTxt);
-                stdoutTxt = json.str;
-                if (json.packet) {
-                    if (json.packet.json) {
-//                        log("GOT An OBJECT FROM THE CHILD:"+JSON.stringify(json.packet.json));
-                        mainHandler.process(json.packet.json, child.stdin);
-                    } else if (json.packet.str) {
-//                        log("GOT A STRING FROM THE CHILD:"+json.packet.str);
+                for(var i=0; i<50 && stdoutTxt; i++) {
+                    var json = packet.checkStringForCompletePacket(stdoutTxt);
+                    stdoutTxt = json.str;
+                    if (json.packet) {
+                        if (json.packet.json) {
+                            mainHandler.process(json.packet.json, child.stdin, self);
+                        } else if (json.packet.str) {
+                            // ??
+                            break;
+                        } else {
+                            // ??
+                            break;
+                        }
+                    } else {
+                        break;
                     }
                 }
             }
         };
+
+        childStdin = child.stdin;
 
         // 3rd party code send some data back via stdout
         child.stdout.on( 'data', fnStdout);
 
         // wait for 3rd party to exit
         child.on( 'exit', function( code ) {
-            log("got an EXIT from child");
+            log("got an EXIT from child", playerN);
             clearTimeout( timer );
 //            fnc.call( this, JSON.parse( stdoutTxt ) );
             fnc.call( this, {} );
         });
 
         // send the javascript code TO the new node process as a packet
-        log("sending setPlayer="+playerN);
+        log("sending setPlayer="+playerN, playerN);
         packet.sendJson({op:"setPlayer", pn:playerN}, child.stdin);
-        log("sending: "+jscode);
+        log("sending: "+jscode, playerN);
         packet.sendString(jscode, child.stdin);
-//        child.stdin.write(jscode);
-// @TODO: think about leaving stdin open ... and determining "end of data" some other way
-//        child.stdin.end();
 
         // set up a timeout timer (if node process runs too long, just kill it)
         timer = setTimeout( function() {
-            log("TIMEOUT --- kill child process NOW");
+            log("TIMEOUT --- kill child process NOW", playerN);
             child.stdout.removeListener( 'output', fnStdout );
             child.stdin.end();
-//            stdoutTxt = JSON.stringify( { result: 'TimeoutError', console: [] } );
             child.kill( 'SIGKILL' );
         }, this.options.timeout );
 

@@ -15,8 +15,13 @@
 //          },
 //          str:        <string>        // left-over string after removing the packet
 //      }
-var log = require('./log').log;
+var logX = require('./log').log;
 var theStream = undefined;
+var playerN = "0";
+
+var log = function(msg) {
+    logX("PACKET."+playerN+": "+msg);
+};
 
 // set the default stream to use
 var setStream = function(stream) {
@@ -27,11 +32,11 @@ var setStream = function(stream) {
 var sendString = function(str, stream) {
     stream = stream || theStream;
     if (!stream) {
-        log("PACKET: ERROR -- You forgot to pass the stream in!");
+        log("ERROR -- You forgot to pass the stream in!");
     }
     if (str && stream) {
         var n = str.length;
-        log("PACKET: sending "+n+" bytes: "+str);
+        log("sending "+n+" bytes: "+str);
         stream.write("## "+n+" !"+str);
     }
 };
@@ -39,12 +44,12 @@ var sendString = function(str, stream) {
 var sendJson = function(obj, stream) {
     stream = stream || theStream;
     if (!stream) {
-        log("PACKET: ERROR -- You forgot to pass the stream in!");
+        log("ERROR -- You forgot to pass the stream in!");
     }
     if (obj && stream) {
         var str = JSON.stringify(obj);
         var n = str.length;
-        log("PACKET: sending "+n+" bytes: "+str);
+        log("sending "+n+" bytes: "+str);
         stream.write("## "+n+" {"+str);
     }
 };
@@ -62,7 +67,7 @@ var sendJson = function(obj, stream) {
 //      }
 //
 var checkStringForCompletePacket = function(str) {
-    log("PACKET: checking str: "+str);
+    log("checking str: "+str);
     var json = { str: str };
     if (str) {
         str = str.replace(/^\s+/,"");               // trim whitespace from the beginning
@@ -81,12 +86,12 @@ var checkStringForCompletePacket = function(str) {
                 switch (type) {
                     case "!":
                         json.packet.str = packetStr;
-                        log("PACKET: FOUND PACKET: size="+len+" str="+packetStr);
+                        log("FOUND PACKET: size="+len+" str="+packetStr);
                         break;
                     case "{":
                         try {
-                            json.packet.json = JSON.parse(str);
-                            log("PACKET: FOUND PACKET: size="+len+" object="+packetStr);
+                            json.packet.json = JSON.parse(packetStr);
+                            log("FOUND PACKET: size="+len+" object="+packetStr);
                         } catch (e) {
                             json.packet.json = {};
                             log("ERROR IN PACKET: size="+len+" BAD object="+packetStr);
@@ -101,20 +106,22 @@ var checkStringForCompletePacket = function(str) {
             }
         } else {
             // ERROR ... what do we do with a malformed string ??
-            log("PACKET: ERROR! malformed string. stuck forever ??:"+str);
+            log("ERROR! malformed string. stuck forever ??:"+str);
         }
     }
     return json;
 };
 
-
+var setPlayerN = function(pn) {
+    playerN = pn;
+};
 
 // --- EXPORTS ---
 exports.setStream = setStream;
 exports.sendString = sendString;
 exports.sendJson = sendJson;
 exports.checkStringForCompletePacket = checkStringForCompletePacket;
-
+exports.setPlayerN = setPlayerN;
 
 
 // --- UNIT TESTS ---

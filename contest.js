@@ -4,8 +4,7 @@
 
 */
 var Sandbox = require('./sand2/sandbox');
-//var api = require('./sand/api');
-//var comm = require('./sand/comm');
+var mainHandler = require('./sand2/mainHandler');
 
 
 var startPlayer = function(pn, fnc) {
@@ -27,23 +26,24 @@ var startPlayer = function(pn, fnc) {
     // server calls the "contestAPI.runNextTurn" function when it is time to run a turn
     js += "var pickN = 1;";
     js += "contestAPI.runNextTurn = function() {";
-    js +=   "console.log('Server requested client to runNextTurn. pick='+pickN);";
+    js +=   "console.log('Server requested client("+pn+") to runNextTurn. pick='+pickN);";
     js +=   "setTimeout(function() {";
     js +=      "contestAPI.submitTurn({pick:pickN});";
     js +=      "pickN++;";
     js +=    "}, 100);";
     js += "};";
     // IF this is player-1 ... kick-start it running
-    if (pn === "P1") {
-        js += "setTimeout(function() {";
-            js += "contestAPI.runNextTurn();";
-        js += "}, 500);"
-    }
+//    if (pn === "P1") {
+//        js += "setTimeout(function() {";
+//            js += "contestAPI.runNextTurn();";
+//        js += "}, 500);"
+//    }
     s.run( pn, js, function( output ) {
         // output.result = returned value
         // output.console = returned console logs (doesn't seem to work on heroku)
         fnc(output);
     });
+    return s;
 };
 
 // start running a contest between P1 and P2 (call callback fnc when done)
@@ -51,11 +51,13 @@ exports.runContest = function(id_p1, id_p2, fnc) {
     // RESET EVERYTHING FOR A NEW CONTEST
 
     // START UP PLAYER 1
-    startPlayer("P1", function(output) {
+    var s1 = startPlayer("P1", function(output) {
     });
     // START UP PLAYER 2
-    startPlayer("P2", function(output) {
+    var s2 = startPlayer("P2", function(output) {
     });
     fnc("contest running...");
 //    continueContest();
+    mainHandler.setSandboxes(s1, s2);
+    mainHandler.startContest();
 };
