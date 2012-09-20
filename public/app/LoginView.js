@@ -46,7 +46,7 @@ define([
         _tryLoggingIn: function(email, password) {
 
             $.ajax({
-                method: 'POST',
+                type: 'POST',
                 data: {
                     username: email,
                     password: password
