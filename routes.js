@@ -11,12 +11,10 @@ module.exports = function(app){
 
     var utdb = require('./utdb');
     var contest = require('./contest');
+    var routesContests = require('./routesContests');
+    var routesSessions = require('./routesSessions');
+    var helper = require('./routesHelper');
 
-    // HELPER: send JSON to client
-    var sendJson = function(res, json) {
-        res.writeHead(200, {'Content-Type': 'application/json'});
-        res.end(JSON.stringify(json));
-    };
     // FUNCTION: perform login of user
     var doLogin = function(req, res, result, msg) {
         // create a new, empty, "user" object in the session
@@ -32,54 +30,10 @@ module.exports = function(app){
 
         sendJson(res, {response:true, auth: uobj.auth, name: uobj.name, message:msg});        // return "logged in OK" or "created user OK"
     };
-    // check if the user is logged in for a given request
-    var isLoggedIn = function(req) {
-        if (req && req.session && req.session.user && req.session.user.auth) {
-            return true;
-        }
-    };
-    // check if the user is authorized for a given action ("n" is a bit -- see utdb.js)
-    var isAuth = function(req, n) {
-        if (req && req.session && req.session.user)
-            return req.session.user.auth & n;               // 1, 2, 4, 8 ...  (see utdb.js)
-        return false;
-    };
-    // check if user requested docs -- return docs (and return "true"
-    var showDocs = function(req,res,docs) {
-        if (utdb.isLocal()) {
-            var uobj = {};
-            uobj.name = "LocalDANB";
-            uobj.id = 12345;
-            uobj.auth = 255;
-            req.session.user = uobj;
-        }
-        if (req && req.query && (req.query["docs"] || req.query["doc"])) {
-            var i;
-            var msg = "";
-            msg += "Documentation for request: "+req.url+"<br>";
-            msg += ".. usage: /apis/"+docs.version+"/"+docs.api;
-            if (docs.params) {
-                for(i=0; i<docs.params.length; i++) {
-                    msg += "/"+docs.params[i].substr(0,docs.params[i].indexOf(" "));
-                }
-            }
-            msg += "<br>";
-            msg += ".. api "+docs.api+"<br>";
-            msg += ".. version "+docs.version+"<br>";
-            msg += ".. "+docs.description+"<br>";
-            if (docs.params) {
-                msg += ".. URL parameters:<br>"
-                for(i=0; i<docs.params.length; i++) {
-                    msg += ".. .. "+i+": "+docs.params[i]+"<br>";
-                }
-            }
-            msg += "<br><br>" + docs.longDesc;
-            res.writeHead(200, {'Content-Type': 'text/html'});
-            res.end(msg);
-            return true;
-        }
-        return false;
-    };
+    var sendJson = helper.sendJson;
+    var isLoggedIn = helper.isLoggedIn;
+    var isAuth = helper.isAuth;
+    var showDocs = helper.showDocs;
 
 
 
@@ -113,69 +67,18 @@ module.exports = function(app){
 
 
 
-    // // // // // // // // //
+    // // // // // // // // // // // // //
     //
-    //  user authentication
+    //  user authentication (sessions)
 
-    // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-    //  GET ? username=dan&password=secret
     app.get('/apis/:version/sessions', function(req, res) {
-        if (!showDocs(req,res, {
-            version: 1,
-            api: "GET sessions",
-            description: "check if logged in",
-            params: [
-            ],
-            longDesc: "If your username is not valid or the password doesn't match, then the login will fail.<br>" +
-                "Returns a json object that contains:<br>"+
-                ".. auth = bit-fields (see setauth for meaning of each bit)<br>"+
-                ".. id = unique identifier for this user.  Some calls may use this id."
-        })) {
-            if (isAuth(req, 0x01)) {
-                // IS logged in
-                var uobj = req.session.user;
-                sendJson(res, {response:true, auth: uobj.auth, name: uobj.name, message:"logged in"});
-            } else {
-                // NOT logged in
-                res.send(404);
-            }
-        }
+        routesSessions.getSessions(req, res);
     });
     app.post('/apis/:version/sessions', function(req, res) {
-        if (!showDocs(req,res, {
-            version: 1,
-            api: "POST sessions",
-            description: "login as a new user",
-            params: [
-            ],
-            longDesc: "If your username is not valid or the password doesn't match, then the login will fail.<br>" +
-                "Returns a json object that contains:<br>"+
-                ".. auth = bit-fields (see setauth for meaning of each bit)<br>"+
-                ".. id = unique identifier for this user.  Some calls may use this id."
-        })) {
-            // Note: anyone allowed to request to login
-            // apis/<version>/login a username w/ password
-            var username = req.params.username || req.query.username || req.body.username;
-            var password = req.params.password || req.query.password || req.body.password;
-            console.log("POST session "+username+","+password);
-            utdb.findUser(username, password, function(result) {
-                if (!result) {
-                    // return "FAILED LOGIN"
-                    console.log("login "+username+" FAILED");
-                    res.send(404);
-                } else {
-                    // return "LOGIN OK"
-                    // set result.id into the session
-                    console.log("login "+username+" OK: id="+result.id+"  auth="+result.auth);
-                    doLogin(req, res, result, "login ok");
-                }
-            });
-        }
+        routesSessions.postSessions(req, res);
     });
     app.delete('/apis/:version/sessions', function(req, res) {
-        req.session.user = undefined;
-        req.session.destroy();
-        sendJson(res, {response:true, message:"logout ok"});
+        routesSessions.deleteSessions(req, res);
     });
 
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -184,7 +87,7 @@ module.exports = function(app){
             version: 1,
             api: "createuser",
             description: "create a new user with initial password",
-            params: [
+            urlparams: [
                 "username -- the user to create",
                 "password -- the cleartext password to be their password"
             ],
@@ -215,7 +118,7 @@ module.exports = function(app){
             version: 1,
             api: "login",
             description: "login as a new user",
-            params: [
+            urlparams: [
                 "username -- the user to login as",
                 "password -- the cleartext password"
             ],
@@ -248,7 +151,7 @@ module.exports = function(app){
             version: 1,
             api: "logout",
             description: "logout the current user. Delete their session.",
-            params: [
+            urlparams: [
             ],
             longDesc: "This will delete the session data for the current logged in user.<br>" +
                 "This call should always succeed, even if you aren't logged in."
@@ -267,7 +170,7 @@ module.exports = function(app){
             version: 1,
             api: "setauth",
             description: "Set the authorization level for a specified user",
-            params: [
+            urlparams: [
                 "username -- the username to set",
                 "auth level -- the new authorization (number) for the user"
             ],
@@ -318,7 +221,7 @@ module.exports = function(app){
             version: 1,
             api: "setcode",
             description: "Set the code for the contest",
-            params: [
+            urlparams: [
             ],
             longDesc: "POST/GET a variable called 'code' with the string value for the code to set<br>" +
                         " Example:  /apis/1/setcode?code=var a=1;"
@@ -353,7 +256,7 @@ module.exports = function(app){
             version: 1,
             api: "getcode",
             description: "Get the code for the contest",
-            params: [
+            urlparams: [
             ],
             longDesc: "Returns the current contest code as {code:CODE}<br>"
         })) {
@@ -383,7 +286,7 @@ module.exports = function(app){
             version: 1,
             api: "playnow",
             description: "Run contest between me and another user",
-            params: [
+            urlparams: [
                 "username --- name of user to play against"
             ],
             longDesc: "Runs logged in user against specified user, and returns the JSON"
@@ -411,6 +314,26 @@ module.exports = function(app){
 
         //other routes..
 
+    //
+    //  /contests                       -> all contests
+    //  /contests/:id                   -> ONE contest info
+    //  /contests/:id/bots              -> ALL bots for a contest
+    //  /contests/:id/bots/:id          -> ONE bot info
+    //  /bots/:id                       -> ONE bot info (IF this is your bot, you get the code too)
+    //  /contests/:id/bots/:id/plays    -> get all "plays" this bot has played
+    //  /plays/:id                      -> get ONE "play history" (for replay)
+    //
+
+    // // // // // // // // // // // // //
+    //
+    //  contests
+
+    app.get('/apis/:version/contests', function(req, res) {
+        routesContests.getContests(req, res);
+    });
+    app.get('/apis/:version/contests/:id', function(req, res) {
+        routesContests.getContests_id(req, res);
+    });
 
 
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -423,7 +346,9 @@ module.exports = function(app){
         msg += "/apis/1/status --- ask the server if it is running<br>";
         msg += "/apis/1/doc --- this page<br>";
         msg += "/apis/1/sessions --- the sessions collection: GET for status, POST to login, DELETE to logout<br>";
-        msg += "/apis/1/code --- the code collection: GET for logged-in users code, POST to set new code<br>";
+        msg += "/apis/1/contests --- the contests collection: GET the list<br>";
+        msg += "/apis/1/contests/ID --- a contest: GET the contest object<br>";
+        msg += "<br>";
         msg += "<br>";
         msg += "/apis/1/createuser/USERNAME/PASSWORD --- create a new user with password<br>";
         msg += "/apis/1/login/USERNAME/PASSWORD --- login a user<br>";
