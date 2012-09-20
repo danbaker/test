@@ -20,15 +20,17 @@ module.exports = function(app){
     // FUNCTION: perform login of user
     var doLogin = function(req, res, result, msg) {
         // create a new, empty, "user" object in the session
+        var username = req.params.username || req.query.username || req.body.username;
+        var password = req.params.password || req.query.password || req.body.password;
         var uobj = {};
-        uobj.name = req.params.username;        // username the user supplied
+        uobj.name = username;                   // username the user supplied
         uobj.id = result.id;                    // id of the logged in user
         uobj.auth = result.auth | 1;            // authorization level for the logged in user (ensure logged-in)
         console.log("login: %j", uobj);
         // save this newly created user object in the session
         req.session.user = uobj;
 
-        sendJson(res, {response:true, auth: uobj.auth, namex: uobj.name, message:msg});        // return "logged in OK" or "created user OK"
+        sendJson(res, {response:true, auth: uobj.auth, name: uobj.name, message:msg});        // return "logged in OK" or "created user OK"
     };
     // check if the user is logged in for a given request
     var isLoggedIn = function(req) {
@@ -132,7 +134,7 @@ module.exports = function(app){
             if (isAuth(req, 0x01)) {
                 // IS logged in
                 var uobj = req.session.user;
-                sendJson(res, {response:true, auth: uobj.auth, namex: uobj.name, message:"logged in"});
+                sendJson(res, {response:true, auth: uobj.auth, name: uobj.name, message:"logged in"});
             } else {
                 // NOT logged in
                 res.send(404);
@@ -159,12 +161,12 @@ module.exports = function(app){
             utdb.findUser(username, password, function(result) {
                 if (!result) {
                     // return "FAILED LOGIN"
-                    console.log("login "+req.params.username+" FAILED");
+                    console.log("login "+username+" FAILED");
                     res.send(404);
                 } else {
                     // return "LOGIN OK"
                     // set result.id into the session
-                    console.log("login "+req.params.username+" OK: id="+result.id+"  auth="+result.auth);
+                    console.log("login "+username+" OK: id="+result.id+"  auth="+result.auth);
                     doLogin(req, res, result, "login ok");
                 }
             });
