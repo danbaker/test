@@ -17,6 +17,7 @@ define([
         },
 
         events: {
+            'click .register-button': '_register',
             'click .sign-in-button': '_login',
             'click .sign-out-menu-item': '_logout'
         },
@@ -54,13 +55,31 @@ define([
                 },
                 url: '/apis/1/sessions'
             }).done(function(data) {
-                    console.log('success', data);
                     $('.dropdown.register').hide();
                     $('.dropdown.sign-in').hide();
                     $('.dropdown.user-menu .username').html(data.name);
                     $('.dropdown.user-menu').show();
                 }).fail(function(data) {
-                    console.log('fail', data);
+                    $('.dropdown.register').show();
+                    $('.dropdown.sign-in').show();
+                });
+
+        },
+
+        _register: function() {
+
+            var email = $('#register-input-email').val();
+            var password = $('#register-input-password').val();
+
+            $.ajax({
+                type: 'GET',
+                url: '/apis/1/createuser/' + email + '/' + password
+            }).done(function(data) {
+                    $('.dropdown.register').hide();
+                    $('.dropdown.sign-in').hide();
+                    $('.dropdown.user-menu .username').html(data.name);
+                    $('.dropdown.user-menu').show();
+                }).fail(function(data) {
                     $('.dropdown.register').show();
                     $('.dropdown.sign-in').show();
                 });
