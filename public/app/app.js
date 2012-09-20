@@ -1,15 +1,15 @@
 define([
-  "jquery",
-  "underscore",
-  "backbone",
+    "jquery",
+    "underscore",
+    "backbone",
 
     "bootstrap"
-],
+    ],
 
-function($, _, Backbone) {
+    function ($, _, Backbone) {
 
-    return {
-        root: '/'
-    };
+        return {
+            root:'/'
+        };
 
-});
+    });

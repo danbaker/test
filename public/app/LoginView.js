@@ -10,6 +10,25 @@ define([
 
         initialize: function() {
 
+            this._template = $('.login-slot').html();
+
+            this._checkIfLoggedIn();
+
+        },
+
+        events: {
+            'click .sign-in-button': '_login'
+        },
+
+        render: function() {
+
+            this.$el.html(this._template);
+            return this;
+
+        },
+
+        _checkIfLoggedIn: function() {
+
             $.ajax({
                 url: '/apis/1/sessions'
             }).done(function(data) {
@@ -21,38 +40,39 @@ define([
                     $('.dropdown.register').show();
                     $('.dropdown.sign-in').show();
                 });
+
         },
 
-        events: {
-            'click .sign-in': '_login'
-        },
+        _tryLoggingIn: function(email, password) {
 
-        render: function() {
+            $.ajax({
+                type: 'POST',
+                data: {
+                    username: email,
+                    password: password
+                },
+                url: '/apis/1/sessions'
+            }).done(function(data) {
+                    console.log('success', data);
+                    $('.dropdown.register').hide();
+                    $('.dropdown.sign-in').hide();
+                    $('.dropdown.user-menu .username').html(data.name);
+                    $('.dropdown.user-menu').show();
+                }).fail(function(data) {
+                    console.log('fail', data);
+                    $('.dropdown.register').show();
+                    $('.dropdown.sign-in').show();
+                });
 
-            this.$el.html('<a href="#" class="navbar-link sign-in">Sign In</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="#" class="navbar-link register">Register</a>');
-            return this;
         },
 
         _login: function() {
 
-//            var button = '<div class="dropdown">' +
-//                '<a  data-toggle="dropdown" href="#"><i class="icon-user icon-white"></i> Dan Baker</a>' +
-//                '<ul class="dropdown-menu">' +
-//                '<li><a href="#">Profile</a></li>' +
-//                '<li><a href="#">Recent Games</a></li>' +
-//                '<li class="divider"></li>' +
-//                '<li><a href="#">Sign Out</a></li>' +
-//                '</ul>' +
-//                '</div>';
-//            button = '<form class="form-inline">' +
-//                '<input type="text" class="input-small" placeholder="Email">' +
-//                '<input type="password" class="input-small" placeholder="Password">' +
-//                '<label class="checkbox">' +
-//                '<input type="checkbox"> Remember me' +
-//                '</label>' +
-//                '<button type="submit" class="btn">Sign in</button>' +
-//                '</form>';
-//            this.$el.html(button);
+            var email = $('#sign-in-input-email').val();
+            var password = $('#sign-in-input-password').val();
+
+            this._tryLoggingIn(email, password);
+
         }
 
     });
