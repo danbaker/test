@@ -10,6 +10,13 @@ define([
 
         initialize: function() {
 
+            $.ajax({
+                url: '/apis/1/sessions'
+            }).done(function(data) {
+                    console.log(data);
+                }).fail(function(data) {
+                    console.log(data);
+                });
         },
 
         events: {
