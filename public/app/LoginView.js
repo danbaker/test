@@ -17,7 +17,8 @@ define([
         },
 
         events: {
-            'click .sign-in-button': '_login'
+            'click .sign-in-button': '_login',
+            'click .sign-out-menu-item': '_logout'
         },
 
         render: function() {
@@ -72,6 +73,20 @@ define([
             var password = $('#sign-in-input-password').val();
 
             this._tryLoggingIn(email, password);
+
+        },
+
+        _logout: function() {
+
+            $.ajax({
+                type: 'DELETE',
+                url: '/apis/1/sessions'
+            }).done(function(data) {
+                    $('.dropdown.register').show();
+                    $('.dropdown.sign-in').show();
+                    $('.dropdown.user-menu').hide();
+                }).fail(function(data) {
+                });
 
         }
 
