@@ -2,13 +2,27 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b163e181-c391-49fa-b20a-b6034a2cbb74" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/app/app.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/app/config.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/app/router.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/app/start.js" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/clientjs/js/main.js" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/public/clientjs/js/LoginView.js" afterPath="$PROJECT_DIR$/public/app/LoginView.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/public/clientjs/vendor/css/bootstrap-responsive.css" afterPath="$PROJECT_DIR$/public/vendor/css/bootstrap-responsive.css" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/public/clientjs/vendor/css/bootstrap-responsive.min.css" afterPath="$PROJECT_DIR$/public/vendor/css/bootstrap-responsive.min.css" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/public/clientjs/vendor/css/bootstrap.css" afterPath="$PROJECT_DIR$/public/vendor/css/bootstrap.css" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/public/clientjs/vendor/css/bootstrap.min.css" afterPath="$PROJECT_DIR$/public/vendor/css/bootstrap.min.css" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/public/clientjs/vendor/img/glyphicons-halflings-white.png" afterPath="$PROJECT_DIR$/public/vendor/img/glyphicons-halflings-white.png" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/public/clientjs/vendor/img/glyphicons-halflings.png" afterPath="$PROJECT_DIR$/public/vendor/img/glyphicons-halflings.png" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/public/clientjs/vendor/js/backbone-min.js" afterPath="$PROJECT_DIR$/public/vendor/js/backbone-min.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/public/clientjs/vendor/js/bootstrap.js" afterPath="$PROJECT_DIR$/public/vendor/js/bootstrap.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/public/clientjs/vendor/js/bootstrap.min.js" afterPath="$PROJECT_DIR$/public/vendor/js/bootstrap.min.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/public/clientjs/vendor/js/jquery-1.8.1.min.js" afterPath="$PROJECT_DIR$/public/vendor/js/jquery-1.8.1.min.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/public/clientjs/vendor/js/json2.js" afterPath="$PROJECT_DIR$/public/vendor/js/json2.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/public/clientjs/vendor/js/require.js" afterPath="$PROJECT_DIR$/public/vendor/js/require.js" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/public/clientjs/vendor/js/underscore-min.js" afterPath="$PROJECT_DIR$/public/vendor/js/underscore-min.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/contest.js" afterPath="$PROJECT_DIR$/contest.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routes.js" afterPath="$PROJECT_DIR$/routes.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sand2/mainHandler.js" afterPath="$PROJECT_DIR$/sand2/mainHandler.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sand2/sandbox.js" afterPath="$PROJECT_DIR$/sand2/sandbox.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sand2/shovel.js" afterPath="$PROJECT_DIR$/sand2/shovel.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/utdb.js" afterPath="$PROJECT_DIR$/utdb.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/index.html" afterPath="$PROJECT_DIR$/public/index.html" />
     </list>
     <ignored path="h1.iws" />
     <ignored path=".idea/workspace.xml" />
