@@ -6,6 +6,7 @@
 //  /bots/:id/plays         -> get all "plays" this bot has played
 //  /bots/:id/plays/:id     -> get all "plays" this bot has played
 var helper = require('./routesHelper');
+var utdb = require('./utdb');
 
 
 // GET /apis/:version/bots ?fields=name & contest=1234
@@ -23,6 +24,10 @@ exports.getBots = function(req, res) {
             ],
             longDesc: "get a collection"
         })) {
+            console.log("calling getContests");
+            utdb.getContests({}, function() {
+                console.log("getContests called callback");
+            });
             helper.sendJson(res, []);
         }
     } else {

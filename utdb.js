@@ -113,8 +113,8 @@ if (isLocal) {
             db.collection('contests', function(err, collection) {
                 if (err) console.log("collection code error: %j", err);
                 contestsCollection = collection;
-                contestsCollection.insert({uid:"123", name:"RockPaperScissors"}, function(err, result) {});
-                contestsCollection.insert({uid:"234", name:"Contest2"}, function(err, result) {});
+//                contestsCollection.insert({uid:"123", name:"RockPaperScissors"}, function(err, result) {});
+//                contestsCollection.insert({uid:"234", name:"Contest2"}, function(err, result) {});
             });
         });
 
@@ -367,8 +367,12 @@ exports.getContests = function(options, fnc) {
 
         console.log("getContests -- About to find");
         contestsCollection.find({}).forEach(function(doc) {
-            console.log("getContests -- found one");
-            contests.push(doc);
+            console.log("getContests -- found one: %j", doc);
+            if (!doc) {
+                fnc(contests);
+            } else {
+                contests.push(doc);
+            }
         });
         console.log("getContests -- done with foreach");
     }
