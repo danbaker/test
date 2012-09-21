@@ -37,6 +37,8 @@ if (!isLocal) {
 // * * * * * * * * * * * * * * * *
 var userCollection;             // the "users" collection
 var codeCollection;             // the "code" collection (each code-document is related to a user-id)
+var contestsCollection;         // the "contests" collection
+var botsCollection;             // the "bots" collection (each bot is related to a user and a contest)
 
 
 
@@ -86,6 +88,7 @@ if (isLocal) {
         });
 
         // create each collection
+
         db.createCollection('users', function(err, collection) {
             if (err) console.log("createCollection users error: %j", err);
             db.collection('users', function(err, collection) {
@@ -102,6 +105,16 @@ if (isLocal) {
             db.collection('users', function(err, collection) {
                 if (err) console.log("collection code error: %j", err);
                 codeCollection = collection;
+            });
+        });
+
+        db.createCollection('contests', function(err, collection) {
+            if (err) console.log("createCollection code error: %j", err);
+            db.collection('contests', function(err, collection) {
+                if (err) console.log("collection code error: %j", err);
+                contestsCollection = collection;
+                contestsCollection.insert({uid:"123", name:"RockPaperScissors"}, function(err, result) {});
+                contestsCollection.insert({uid:"234", name:"Contest2"}, function(err, result) {});
             });
         });
 
@@ -337,6 +350,32 @@ exports.getCode = function(uid, fnc) {
 };
 
 
+// * * * * * * * * * * * * * * * * * * * * * * * * *
+// *
+// *            contests collection
+// *
+
+
+// get a collection of contests
+// in:  fields  = [] array of fields to return
+//      fnc     = callback(string) --or-- callback(undefined)
+// out: code    = the actual javascript code (string)
+exports.getContests = function(options, fnc) {
+    if (contestsCollection && fnc) {
+        var contests = [];
+        var fields = options.fields;    // ["id", "name"] == fields to return
+
+        console.log("getContests -- About to find");
+        contestsCollection.find({}).forEach(function(doc) {
+            console.log("getContests -- found one");
+            contests.push(doc);
+        });
+        console.log("getContests -- done with foreach");
+    }
+};
+
+// * * * * * * * * * * * * * * * * * * * * * * * * *
+// *
 
 // add another function to be called with the database is ready to use
 exports.onReady = function(fnc) {

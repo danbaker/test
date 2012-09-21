@@ -8,10 +8,23 @@
 var helper = require('./routesHelper');
 
 
-// GET /apis/:version/bots
+// GET /apis/:version/bots ?fields=name & contest=1234
 exports.getBots = function(req, res) {
     if (helper.isLoggedIn(req)) {
-        helper.sendJson(res, []);
+        if (!helper.showDocs(req,res, {
+            version: 1,
+            api: "bots",
+            description: "get a collection of bots",
+            urlparams: [
+            ],
+            params: [
+                "fields --- limit the fields to return",
+                "contest --- the contest to get bots for"
+            ],
+            longDesc: "get a collection"
+        })) {
+            helper.sendJson(res, []);
+        }
     } else {
         res.send(404);
     }
@@ -26,4 +39,3 @@ exports.getBots_id = function(req, res) {
     }
     res.send(404);
 };
-

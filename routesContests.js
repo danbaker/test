@@ -15,7 +15,6 @@ var getContests = function() {
 
 // GET /apis/:version/contests ? fields=id,name
 exports.getContests = function(req, res) {
-    // apis/<version>/play two users code against each other
     if (!helper.showDocs(req,res, {
         version: 1,
         api: "contests",
@@ -23,7 +22,7 @@ exports.getContests = function(req, res) {
         urlparams: [
         ],
         params: [
-            "fields"
+            "fields --- limit fields returned"
         ],
         longDesc: "get a collection"
     })) {
