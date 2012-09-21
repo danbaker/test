@@ -113,8 +113,10 @@ if (isLocal) {
             db.collection('contests', function(err, collection) {
                 if (err) console.log("collection code error: %j", err);
                 contestsCollection = collection;
-//                contestsCollection.insert({uid:"123", name:"RockPaperScissors"}, function(err, result) {});
-//                contestsCollection.insert({uid:"234", name:"Contest2"}, function(err, result) {});
+                contestsCollection.insert({ name:"Rocks", description:"Rocks are great"}, function(err, result) {});
+                contestsCollection.insert({ name:"RPS", description:"Rocks, Papers, and ??"}, function(err, result) {});
+                contestsCollection.insert({ name:"Special Somthing"}, function(err, result) {});
+                contestsCollection.insert({ name:"another contest", info1: "a", info2: "b"}, function(err, result) {});
             });
         });
 
