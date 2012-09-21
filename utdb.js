@@ -362,6 +362,11 @@ exports.getContests = function(options, fnc) {
     if (contestsCollection && fnc) {
         var contests = [];
         var fields = options.fields;    // "id,name"
+        if (fields) {
+            // fields = {id:true, name:true}
+        } else {
+            fields = {};
+        }
 
         contestsCollection.find({}, function(err, cursor) {
             if (err || !cursor) {
@@ -369,6 +374,8 @@ exports.getContests = function(options, fnc) {
                 // error
                 fnc();
             } else {
+                if (options.limit) cursor.limit(options.limit);
+                if (options.offset) cursor.skip(options.offset);
                 cursor.each(function(err, item) {
                     if(!item) {
                         fnc(contests);
