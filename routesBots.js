@@ -19,13 +19,15 @@ exports.getBots = function(req, res) {
             urlparams: [
             ],
             params: [
-                "fields --- limit the fields to return",
-                "contest --- the contest to get bots for"
+                "fields --- limit the fields to return: fields=id,name,description",
+                "id_contest --- the contest to get bots for: idcontest=45af3cd8",
+                "limit --- return N items: limit=10",
+                "offset --- skip the first N items: offset=100"
             ],
             longDesc: "get a collection"
         })) {
             console.log("calling getContests");
-            utdb.getContests({}, function(contests) {
+            utdb.getContests(helper.makeOptions(req), function(contests) {
                 console.log("getContests called callback");
                 helper.sendJson(res, contests);
             });

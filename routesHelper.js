@@ -113,3 +113,17 @@ exports.cleanItem = function(req, item) {
     return cleanItem(fields, item);
 };
 
+// generate an "options" object that can be sent to the database object when querying a collection
+exports.makeOptions = function(req) {
+    var options = {};
+    var x = exports.getParam("fields");         // "id,name"
+    if (x) options.fields = x;
+    x = exports.getParam("limit");              // 10
+    if (!x) x = 0;
+    if (x) x = parseInt(x);
+    if (x<1 || x>500) x = 500;                  // absolute maximum rows can return in 1 query
+    options.limit = x;
+    x = exports.getParam("offset");             // 100
+    if (x) options.offset = x;
+    return options;
+};
