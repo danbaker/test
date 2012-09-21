@@ -10,12 +10,27 @@
 var helper = require('./routesHelper');
 
 var getContests = function() {
-    return [{id:"RockPaperScissors", name:"RockPaperScissors", description:"Rock Paper Scissors"}, {id:"Contest 2", name:"Contest 2", description:"Something goes here"}];
+    return [{id:"123a6", name:"RockPaperScissors", description:"Rock Paper Scissors"}, {id:"528f1", name:"Contest 2", description:"Something goes here"}];
 };
 
-// GET /apis/:version/contests
+// GET /apis/:version/contests ? fields=id,name
 exports.getContests = function(req, res) {
-    helper.sendJson(res, getContests());
+    // apis/<version>/play two users code against each other
+    if (!helper.showDocs(req,res, {
+        version: 1,
+        api: "contests",
+        description: "get a collection of contests",
+        urlparams: [
+        ],
+        params: [
+            "fields"
+        ],
+        longDesc: "get a collection"
+    })) {
+        var coll = getContests();
+        coll = helper.cleanCollection(req, coll);
+        helper.sendJson(res, coll);
+    }
 };
 
 
@@ -27,7 +42,7 @@ exports.getContests_id = function(req, res) {
     for(var i=0; i<list.length; i++) {
         item = list[i];
         if (item.id === id) {
-            helper.sendJson(res, item);
+            helper.sendJson(res, helper.cleanItem(req, item));
             return;
         }
     }

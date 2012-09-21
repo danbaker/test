@@ -11,9 +11,10 @@ module.exports = function(app){
 
     var utdb = require('./utdb');
     var contest = require('./contest');
+    var helper = require('./routesHelper');
+    var routesBots = require('./routesBots');
     var routesContests = require('./routesContests');
     var routesSessions = require('./routesSessions');
-    var helper = require('./routesHelper');
 
     // FUNCTION: perform login of user
     var doLogin = function(req, res, result, msg) {
@@ -322,6 +323,9 @@ module.exports = function(app){
     //  /bots/:id                       -> ONE bot info (IF this is your bot, you get the code too)
     //  /contests/:id/bots/:id/plays    -> get all "plays" this bot has played
     //  /plays/:id                      -> get ONE "play history" (for replay)
+    //  .../<COLLECTION>/<VERB>         -> run verb on the entire collection (verb can't be an "id")
+    //  .../<COLLECTION>/count          -> return the # of items on the collection
+    //  .../<COLLECTION>/:id/<VERB>     -> run verb on a single item in the collection (verb can't be the name of another collection)
     //
 
     // // // // // // // // // // // // //
@@ -336,9 +340,21 @@ module.exports = function(app){
     });
 
 
+    // // // // // // // // // // // // //
+    //
+    //  bots
+
+    app.get('/apis/:version/bots', function(req, res) {
+        routesBots.getBots(req, res);
+    });
+    app.get('/apis/:version/bots/:id', function(req, res) {
+        routesBots.getBots_id(req, res);
+    });
+
+
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-    app.get('/apis/doc', function(req, res) {
         // Note: anyone allowed to ask for documentation
+    var docs = function(req, res) {
         var msg = "";
         msg += "Documentation of all known endpoint routes<br>";
         msg += "Note: you can call any endpoint with ?doc=1 to get detailed information about the route";
@@ -348,6 +364,8 @@ module.exports = function(app){
         msg += "/apis/1/sessions --- the sessions collection: GET for status, POST to login, DELETE to logout<br>";
         msg += "/apis/1/contests --- the contests collection: GET the list<br>";
         msg += "/apis/1/contests/ID --- a contest: GET the contest object<br>";
+        msg += "/apis/1/bots --- the bots collection: GET the list, POST to add a bot to a contest<br>";
+        msg += "/apis/1/bots/ID --- a bot: GET the bot object<br>";
         msg += "<br>";
         msg += "<br>";
         msg += "/apis/1/createuser/USERNAME/PASSWORD --- create a new user with password<br>";
@@ -357,8 +375,16 @@ module.exports = function(app){
         msg += "/apis/1/setcode?code=CODE --- set the code for the contest for current user<br>";
         msg += "/apis/1/getcode --- get the code for the contest for current user<br>";
         msg += "/apis/1/playnow/USERNAME --- run contest between logged-in user and specified USER, and return json results<br>";
+        msg += "<br>";
+        msg += "?fields=name,description,id --- limits the fields that are returned to those specified<br>";
         res.writeHead(200, {'Content-Type': 'text/html'});
         res.end(msg);
+    };
+    app.get('/apis/doc', function(req, res) {
+        docs(req, res);
+    });
+    app.get('/apis/docs', function(req, res) {
+        docs(req, res);
     });
 
 

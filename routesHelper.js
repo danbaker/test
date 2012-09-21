@@ -71,3 +71,45 @@ exports.showDocs = function(req,res,docs) {
     }
     return false;
 };
+
+// get an array of field-names from the request "?fields=id,name"
+exports.getFields = function(req) {
+    var fields = exports.getParam(req, "fields");
+    if (fields) {
+        fields = fields.split(",");
+        if (fields.length) {
+            return fields;
+        }
+    }
+    return undefined;
+};
+
+// clean(shrink) a collection based on ?field=
+exports.cleanCollection = function(req, coll) {
+    var fields = exports.getFields(req);
+    if (fields) {
+        for(var i=0; i<coll.length; i++) {
+            coll[i] = cleanItem(fields, coll[i]);
+        }
+    }
+    return coll;
+};
+
+// clean a single item(object), based on a list of wanted field-names
+var cleanItem = function(fields, item) {
+    if (fields) {
+        var r = {};
+        for(var i=0; i<fields.length; i++) {
+            r[fields[i]] = item[fields[i]];
+        }
+        return r;
+    }
+    return item;
+};
+
+// clean(shrink) a single item based on ?field=
+exports.cleanItem = function(req, item) {
+    var fields = exports.getFields(req);
+    return cleanItem(fields, item);
+};
+
