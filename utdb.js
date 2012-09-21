@@ -363,18 +363,23 @@ exports.getCode = function(uid, fnc) {
 exports.getContests = function(options, fnc) {
     if (contestsCollection && fnc) {
         var contests = [];
-        var fields = options.fields;    // ["id", "name"] == fields to return
+        var fields = options.fields;    // "id,name"
 
-        console.log("getContests -- About to find");
-        contestsCollection.find({}).forEach(function(doc) {
-            console.log("getContests -- found one: %j", doc);
-            if (!doc) {
-                fnc(contests);
+        contestsCollection.find({}, function(err, cursor) {
+            if (err || !cursor) {
+                if (err) console.log("getContests: error: %j", err);
+                // error
+                fnc();
             } else {
-                contests.push(doc);
+                cursor.each(function(err, item) {
+                    if(!item) {
+                        fnc(contests);
+                    } else {
+                        contests.push(item);
+                    }
+                });
             }
         });
-        console.log("getContests -- done with foreach");
     }
 };
 

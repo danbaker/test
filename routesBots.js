@@ -25,10 +25,10 @@ exports.getBots = function(req, res) {
             longDesc: "get a collection"
         })) {
             console.log("calling getContests");
-            utdb.getContests({}, function() {
+            utdb.getContests({}, function(contests) {
                 console.log("getContests called callback");
+                helper.sendJson(res, contests);
             });
-            helper.sendJson(res, []);
         }
     } else {
         res.send(404);
