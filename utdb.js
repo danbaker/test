@@ -364,6 +364,8 @@ exports.getContests = function(options, fnc) {
         var fields = options.fields || {};      // specific fields to return:  {id:true, name:true}
         var query = options.query || {};        // select query:  { name:"Dan" }
 
+        console.log("****** QUERY:");
+        console.log(query);
 
         contestsCollection.find(query, fields, function(err, cursor) {
             if (err || !cursor) {

@@ -138,11 +138,14 @@ exports.makeOptions = function(req) {
     if (x > 0) options.offset = x;
     // QUERY -- a way to narrow which items are selected
     x = exports.getParam("query");                  // query=first_name:Dan,last_name:Baker
+    console.log("query="+x);
     if (x) {
         options.query = {};
         x = x.split(",");                           // ["first_name:Dan", "last_name:Baker"]
+        console.log(x);
         for(i=0; i<x.length; i++) {
             var parts = x.split(":");               // parts[0] = "first_name", parts[1] = "Dan"
+            console.log(parts);
             if (parts.length === 2) {
                 options.query[parts[0]] = parts[1]; // { first_name:"Dan", last_name:"Baker" }
             }
