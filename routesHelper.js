@@ -116,21 +116,37 @@ exports.cleanItem = function(req, item) {
 // generate an "options" object that can be sent to the database object when querying a collection
 exports.makeOptions = function(req) {
     var options = {};
-    var x = exports.getParam(req, "fields");         // "id,name"
+    var i, x;
+    // FIELDS -- specific fields to return
+    x = exports.getParam(req, "fields");         // "id,name"
     if (x) {
         x = x.split(",");                           // ["id", "name"]
         options.fields = {};
-        for(var i=0; i<x.length; i++) {
+        for(i=0; i<x.length; i++) {
             options.fields[x[i]] = true;            // {id:true, nane:true}
         }
     }
+    // LIMIT -- the maximum # of items to return
     x = exports.getParam(req, "limit");              // 10
     if (!x) x = 0;
     if (x) x = parseInt(x);
     if (x<1 || x>500) x = 500;                  // absolute maximum rows can return in 1 query
     options.limit = x;
+    // OFFSET -- the number of items to skip (or start)
     x = exports.getParam(req, "offset");             // 100
     if (x) x = parseInt(x);
     if (x > 0) options.offset = x;
+    // QUERY -- a way to narrow which items are selected
+    x = exports.getParam("query");                  // query=first_name:Dan,last_name:Baker
+    if (x) {
+        options.query = {};
+        x = x.split(",");                           // ["first_name:Dan", "last_name:Baker"]
+        for(i=0; i<x.length; i++) {
+            var parts = x.split(":");               // parts[0] = "first_name", parts[1] = "Dan"
+            if (parts.length === 2) {
+                options.query[parts[0]] = parts[1]; // { first_name:"Dan", last_name:"Baker" }
+            }
+        }
+    }
     return options;
 };

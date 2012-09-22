@@ -363,7 +363,7 @@ exports.getContests = function(options, fnc) {
         var contests = [];
         var fields = options.fields || {};    // specific fields to return:  {id:true, name:true}
 
-        
+
         contestsCollection.find({}, fields, function(err, cursor) {
             if (err || !cursor) {
                 if (err) console.log("getContests: error: %j", err);
