@@ -374,6 +374,7 @@ exports.getContests = function(options, fnc) {
                 // error
                 fnc();
             } else {
+                console.log(options);
                 cursor.count(function(err, count) {
                     console.log("original count="+count);
                 });
