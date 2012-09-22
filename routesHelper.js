@@ -119,15 +119,12 @@ exports.makeOptions = function(req) {
     var x = exports.getParam(req, "fields");         // "id,name"
     if (x) options.fields = x;
     x = exports.getParam(req, "limit");              // 10
-    console.log("limit read as: "+x);
     if (!x) x = 0;
-    console.log("... x = "+x);
     if (x) x = parseInt(x);
-    console.log("... x = "+x);
     if (x<1 || x>500) x = 500;                  // absolute maximum rows can return in 1 query
-    console.log("... x = "+x);
     options.limit = x;
     x = exports.getParam(req, "offset");             // 100
-    if (x) options.offset = x;
+    if (x) x = parseInt(x);
+    if (x > 0) options.offset = x;
     return options;
 };
