@@ -3,6 +3,9 @@
 var utdb = require('./utdb');
 
 exports.getParam = function(req,name) {
+    if (!name) {
+        console.log("ERROR: Did you forget to pass in the req object to getParam");
+    }
     if (req.params && req.params[name] !== undefined) return req.params[name];
     if (req.query && req.query[name] !== undefined) return req.query[name];
     if (req.body && req.body[name] !== undefined) return req.body[name];
@@ -137,7 +140,7 @@ exports.makeOptions = function(req) {
     if (x) x = parseInt(x);
     if (x > 0) options.offset = x;
     // QUERY -- a way to narrow which items are selected
-    x = exports.getParam("query");                  // query=first_name:Dan,last_name:Baker
+    x = exports.getParam(req, "query");                  // query=first_name:Dan,last_name:Baker
     console.log("query="+x);
     if (x) {
         options.query = {};
