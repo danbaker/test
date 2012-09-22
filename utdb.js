@@ -361,10 +361,11 @@ exports.getCode = function(uid, fnc) {
 exports.getContests = function(options, fnc) {
     if (contestsCollection && fnc) {
         var contests = [];
-        var fields = options.fields || {};    // specific fields to return:  {id:true, name:true}
+        var fields = options.fields || {};      // specific fields to return:  {id:true, name:true}
+        var query = options.query || {};        // select query:  { name:"Dan" }
 
 
-        contestsCollection.find({}, fields, function(err, cursor) {
+        contestsCollection.find(query, fields, function(err, cursor) {
             if (err || !cursor) {
                 if (err) console.log("getContests: error: %j", err);
                 // error
