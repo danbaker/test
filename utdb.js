@@ -361,31 +361,16 @@ exports.getCode = function(uid, fnc) {
 exports.getContests = function(options, fnc) {
     if (contestsCollection && fnc) {
         var contests = [];
-        var fields = options.fields;    // "id,name"
-        if (fields) {
-            // fields = {id:true, name:true}
-        } else {
-            fields = {};
-        }
+        var fields = options.fields || {};    // specific fields to return:  {id:true, name:true}
 
-        contestsCollection.find({}, function(err, cursor) {
+        contestsCollection.find({}, fields, function(err, cursor) {
             if (err || !cursor) {
                 if (err) console.log("getContests: error: %j", err);
                 // error
                 fnc();
             } else {
-                console.log(options);
-                cursor.count(function(err, count) {
-                    console.log("original count="+count);
-                });
                 if (options.limit) cursor.limit(options.limit);
-                cursor.count(function(err, count) {
-                    console.log("after limit count="+count);
-                });
                 if (options.offset) cursor.skip(options.offset);
-                cursor.count(function(err, count) {
-                    console.log("after skip count="+count);
-                });
                 cursor.each(function(err, item) {
                     if(!item) {
                         fnc(contests);

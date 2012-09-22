@@ -117,7 +117,13 @@ exports.cleanItem = function(req, item) {
 exports.makeOptions = function(req) {
     var options = {};
     var x = exports.getParam(req, "fields");         // "id,name"
-    if (x) options.fields = x;
+    if (x) {
+        x = x.split(",");                           // ["id", "name"]
+        options.fields = {};
+        for(var i=0; i<x.length; i++) {
+            options.fields[x[i]] = true;            // {id:true, nane:true}
+        }
+    }
     x = exports.getParam(req, "limit");              // 10
     if (!x) x = 0;
     if (x) x = parseInt(x);

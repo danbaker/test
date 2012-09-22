@@ -26,9 +26,7 @@ exports.getBots = function(req, res) {
             ],
             longDesc: "get a collection"
         })) {
-            console.log("calling getContests");
             utdb.getContests(helper.makeOptions(req), function(contests) {
-                console.log("getContests called callback");
                 helper.sendJson(res, contests);
             });
         }
