@@ -374,8 +374,17 @@ exports.getContests = function(options, fnc) {
                 // error
                 fnc();
             } else {
+                cursor.count(function(err, count) {
+                    console.log("original count="+count);
+                });
                 if (options.limit) cursor.limit(options.limit);
+                cursor.count(function(err, count) {
+                    console.log("after limit count="+count);
+                });
                 if (options.offset) cursor.skip(options.offset);
+                cursor.count(function(err, count) {
+                    console.log("after skip count="+count);
+                });
                 cursor.each(function(err, item) {
                     if(!item) {
                         fnc(contests);
