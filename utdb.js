@@ -8,7 +8,7 @@
             0    = default auth. "normal" user (has no special authorization)
             01   = logged in
             02   = can change auth values for all users
-            04   =
+            04   = can alter the contests collection
             08   =
             10   =
             20   =
@@ -355,21 +355,45 @@ exports.getCode = function(uid, fnc) {
 
 
 // get a collection of contests
-// in:  fields  = [] array of fields to return
-//      fnc     = callback(string) --or-- callback(undefined)
-// out: code    = the actual javascript code (string)
+// in:  fnc     = callback(string) --or-- callback(undefined)
+// out: fnc([]) or fnc(undefined)
 exports.getContests = function(options, fnc) {
-    if (contestsCollection && fnc) {
-        var contests = [];
+    get_collection(contestsCollection, options, fnc, "getContests");
+};
+exports.postContests = function(doc, fnc) {
+    post_collection(contestsCollection, doc, fnc, "postContests");
+};
+exports.putContests = function(options, doc, fnc) {
+    put_collection(contestsCollection, options, doc, fnc, "putContests");
+};
+exports.deleteContests = function(options, fnc) {
+    delete_collection(contestsCollection, options, fnc, "deleteContests");
+};
+
+
+// * * * * * * * * * * * * * * * * * * * * * * * * *
+// *
+// *            general collection handling
+// *
+
+// get a set of items from a collection
+// in:  coll    = the collection
+//      options =   { fields: { id:true, name:true }        // return fields:  id, name
+//                    query:  { name:"Dan" }                // find documents that match name="Dan
+//                    limit:  50                            // return, at most, N records
+//                    offset: 100                           // skip the first N records
+//                  }
+//      fnc     = callback([...found docs...]) --or-- callback(undefined)
+//      msgName = the name of the method that was called (used in error messages)
+var get_collection = function(coll, options, fnc, msgName) {
+    if (coll && fnc) {
+        var found = [];
         var fields = options.fields || {};      // specific fields to return:  {id:true, name:true}
-        var query = options.query || {};        // select query:  { name:"Dan" }
+        var query = options.query || {};        // select query:  { name:"Dan" } means "select documents where name = "Dan"
 
-        console.log("****** QUERY:");
-        console.log(query);
-
-        contestsCollection.find(query, fields, function(err, cursor) {
+        coll.find(query, fields, function(err, cursor) {
             if (err || !cursor) {
-                if (err) console.log("getContests: error: %j", err);
+                if (err) console.log(""+msgName+": find error: %j", err);
                 // error
                 fnc();
             } else {
@@ -377,14 +401,91 @@ exports.getContests = function(options, fnc) {
                 if (options.offset) cursor.skip(options.offset);
                 cursor.each(function(err, item) {
                     if(!item) {
-                        fnc(contests);
+                        fnc(found);
                     } else {
-                        contests.push(item);
+                        found.push(item);
                     }
                 });
             }
         });
+    } else if (fnc) {
+        // no collection opened
+        console.log(""+msgName+": error: collection not opened");
+        fnc();
     }
+};
+
+// post a new item to a collection
+// in:  coll    = the collection
+//      doc     = { ... } the document to insert into the collection
+//      fnc     = callback(result_object) --or-- callback(undefined)
+//      msgName = the name of the method that was called (used in error messages)
+var post_collection = function(coll, doc, fnc, msgName) {
+    if (coll && fnc) {
+        coll.insert(doc, function(err, result) {
+            if (err) console.log(""+msgName+": insert error: %j", err);
+            if (result) {
+                fnc(result);
+            } else {
+                fnc();
+            }
+        });
+    } else if (fnc) {
+        // no collection opened
+        console.log(""+msgName+": error: collection not opened");
+        fnc();
+    }
+};
+
+// put an updated item into a collection
+// in:  coll    = the collection
+//      options =   { fields: { id:true, name:true }        // limit fields to get:  id, name
+//                    query:  { name:"Dan" }                // find the document that match name="Dan"
+//                    insert: true                          // true means to insert the doc, even if doc doesn't already exist
+//                  }
+var put_collection = function(coll, options, doc, fnc, msgName) {
+    get_collection(coll, {fields:options.fields, query:options.query, limit:2}, function(docs) {
+        if (!docs) {
+            // error: failed
+            if (options.insert) {
+                // @TODO: maybe post here ...
+            }
+            console.log("docs returns undefined");
+            fnc();
+        } else if (docs.length != 1) {
+            // error ... didn't get exactly 1 document
+            console.log("docs returned: "+docs.length+" docs");
+            fnc();
+        } else {
+            // found the document to update
+            var d = docs[0];
+            doc._id = d._id;
+            coll.save(doc);
+            fnc(true);
+
+        }
+    }, msgName);
+};
+
+// delete a set of items from a collection
+// in:  coll    = the collection
+//      options =   {
+//                    query:  { name:"Dan" }                // find documents that match name="Dan
+//                    limit:  50                            // return, at most, N records
+//                    offset: 100                           // skip the first N records
+//                  }
+//      fnc     = callback([...found docs...]) --or-- callback(undefined)
+//      msgName = the name of the method that was called (used in error messages)
+var delete_collection = function(coll, options, fnc, msgName) {
+    get_collection(coll, options, function(docs) {
+        if (!docs) {
+            // error: didn't find doc(s) to delete
+            console.log(""+msgName+": error didn't find doc to delete");
+            fnc();
+        } else {
+
+        }
+    }, msgName);
 };
 
 // * * * * * * * * * * * * * * * * * * * * * * * * *
