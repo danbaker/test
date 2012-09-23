@@ -392,7 +392,7 @@ var get_collection = function(coll, options, fnc, msgName) {
         var found = [];
         var fields = options.fields || {};      // specific fields to return:  {id:true, name:true}
         var query = options.query || {};        // select query:  { name:"Dan" } means "select documents where name = "Dan"
-
+        query = {};
         coll.find(query, fields, function(err, cursor) {
             if (err || !cursor) {
                 if (err) console.log(""+msgName+": find error: %j", err);
