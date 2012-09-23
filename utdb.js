@@ -386,6 +386,8 @@ exports.deleteContests = function(options, fnc) {
 //      fnc     = callback([...found docs...]) --or-- callback(undefined)
 //      msgName = the name of the method that was called (used in error messages)
 var get_collection = function(coll, options, fnc, msgName) {
+    console.log("get_collection("+msgName+")");
+    console.log(options);
     if (coll && fnc) {
         var found = [];
         var fields = options.fields || {};      // specific fields to return:  {id:true, name:true}
@@ -397,12 +399,16 @@ var get_collection = function(coll, options, fnc, msgName) {
                 // error
                 fnc();
             } else {
+                console.log("cursor returned with count="+cursor.count());
                 if (options.limit) cursor.limit(options.limit);
                 if (options.offset) cursor.skip(options.offset);
                 cursor.each(function(err, item) {
                     if(!item) {
+                        console.log("about to return collection of "+found.length+" items");
+                        console.log(found);
                         fnc(found);
                     } else {
+                        console.log("item pushing onto return collection");
                         found.push(item);
                     }
                 });
