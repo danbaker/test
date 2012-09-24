@@ -461,7 +461,9 @@ var post_collection = function(coll, doc, fnc, msgName) {
 //                    insert: true                          // true means to insert the doc, even if doc doesn't already exist
 //                  }
 var put_collection = function(coll, options, doc, fnc, msgName) {
+    console.log("put_collection .. getting first");
     get_collection(coll, {fields:options.fields, query:options.query, limit:2}, function(docs) {
+        console.log("get_collection returned");
         if (!docs) {
             // error: failed
             if (options.insert) {
@@ -475,6 +477,7 @@ var put_collection = function(coll, options, doc, fnc, msgName) {
             fnc();
         } else {
             // found the document to update
+            console.log("got 1 document ... PUT new doc");
             var d = docs[0];
             doc._id = d._id;
             coll.save(doc);
