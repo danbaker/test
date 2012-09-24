@@ -14,14 +14,10 @@ define([
 
             self._template = $('.contest-list').html();
 
-            self.on('change:contests', function() {
-                self.render();
-            });
-
             $.ajax({
                 url: '/apis/1/contests'
             }).done(function(data) {
-                    self.set('contests', data);
+                    self.contests = data;
                 }).fail(function(data) {
                     alert('failed getting contests!');
                 });
@@ -32,7 +28,7 @@ define([
 
             var html = '<div class="row-fluid">';
 
-            _.each(this.get('contests'), function(contest) {
+            _.each(this.contests, function(contest) {
                 html += '<div class="span4">';
                 html += '<h2>' + contest.name + '</h2>';
                 html += '<p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>';
