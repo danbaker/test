@@ -332,6 +332,9 @@ module.exports = function(app){
     //
     //  contests
 
+    app.post('/apis/:version/contests', function(req, res) {
+        routesContests.postContests(req, res);
+    });
     app.get('/apis/:version/contests', function(req, res) {
         routesContests.getContests(req, res);
     });
