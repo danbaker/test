@@ -399,7 +399,6 @@ var get_collection = function(coll, options, fnc, msgName) {
                 fnc();
             } else {
                 console.log("cursor returned with count="+cursor.count());
-                console.log(cursor);
                 if (options.limit) cursor.limit(options.limit);
                 if (options.offset) cursor.skip(options.offset);
                 cursor.each(function(err, item) {
