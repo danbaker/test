@@ -96,7 +96,6 @@ exports.getContests_id = function(req, res) {
         var options = helper.makeOptions(req);
         if (!options.query) options.query = {};
         options.query._id = id;
-        console.log(options);
         utdb.getContests(options, function(docs) {
             if (docs && docs.length === 1) {
                 helper.sendJson(res, docs);
@@ -104,8 +103,9 @@ exports.getContests_id = function(req, res) {
                 res.send(404);
             }
         });
+    } else {
+        res.send(404);
     }
-    res.send(404);
 };
 exports.putContests_id = function(req, res) {
     var id = req.params.id;
@@ -117,6 +117,7 @@ exports.putContests_id = function(req, res) {
                 res.send(404);
             }
         });
+    } else {
+        res.send(404);
     }
-    res.send(404);
 };
