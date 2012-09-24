@@ -28,6 +28,8 @@ define([
 
             var html = '<div class="row-fluid">';
 
+            console.log('contests', this.contests);
+
             _.each(this.contests, function(contest) {
                 html += '<div class="span4">';
                 html += '<h2>' + contest.name + '</h2>';
