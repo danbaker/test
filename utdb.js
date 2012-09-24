@@ -29,8 +29,10 @@ var isLocal = (mdbURL? false : true);
 var nhash = require('node_hash');
 var pg;
 var mongo;
+var BSON;
 if (!isLocal) {
     mongo = require('mongodb');
+    BSON = mongo.BSONPure;
 }
 
 
@@ -392,6 +394,16 @@ var get_collection = function(coll, options, fnc, msgName) {
         var found = [];
         var fields = options.fields || {};      // specific fields to return:  {id:true, name:true}
         var query = options.query || {};        // select query:  { name:"Dan" } means "select documents where name = "Dan"
+        if (query) {
+            for(var key in query){
+                if (query.hasOwnProperty(key)) {
+                    if (key === "_id") {
+                        query[key] = new BSON.ObjectID(query[key]);
+                        break;
+                    }
+                }
+            }
+        }
         coll.find(query, fields, function(err, cursor) {
             if (err || !cursor) {
                 if (err) console.log(""+msgName+": find error: %j", err);
