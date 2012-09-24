@@ -29,9 +29,11 @@ define([
 
             var html = '<div class="row-fluid">';
 
-            console.log('contests', this.contests);
+            _.each(this.contests, function(contest, index) {
 
-            _.each(this.contests, function(contest) {
+                if (index % 3 === 0) {
+                    html += '</div><div class="row-fluid">';
+                }
                 html += '<div class="span4">';
                 html += '<h2>' + contest.name + '</h2>';
                 html += '<p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>';
