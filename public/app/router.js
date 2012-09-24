@@ -21,7 +21,7 @@ function(app, LoginView, ContestView) {
             loginView.render();
 
             var contestView = new ContestView({el: '.contest-list'});
-            contestView.render();
+//            contestView.render();
 
         });
 

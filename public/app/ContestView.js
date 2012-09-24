@@ -18,6 +18,7 @@ define([
                 url: '/apis/1/contests'
             }).done(function(data) {
                     self.contests = data;
+                    self.render();
                 }).fail(function(data) {
                     alert('failed getting contests!');
                 });
