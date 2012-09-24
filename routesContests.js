@@ -91,7 +91,6 @@ exports.getContests_id = function(req, res) {
 //    }
 //    res.send(404);
     var id = req.params.id;
-    console.log("getContests_id="+id);
     if (id) {
         var options = helper.makeOptions(req);
         if (!options.query) options.query = {};
@@ -109,7 +108,8 @@ exports.getContests_id = function(req, res) {
 };
 exports.putContests_id = function(req, res) {
     var id = req.params.id;
-    if (id) {
+    var doc = helper.getParam(res, "doc");
+    if (id && doc) {
         utdb.putContests({query:{_id:id}}, doc, function(ok) {
             if (ok) {
                 helper.sendJson(res, {});
