@@ -432,7 +432,7 @@ var get_collection = function(coll, options, fnc, msgName) {
     if (coll && fnc) {
         var found = [];
         var fields = options.fields || {};      // specific fields to return:  {id:true, name:true}
-        var query = getQueryOption();           // select query:  { name:"Dan" } means "select documents where name = "Dan"
+        var query = getQueryOption(options);    // select query:  { name:"Dan" } means "select documents where name = "Dan"
         coll.find(query, fields, function(err, cursor) {
             if (err || !cursor) {
                 if (err) console.log(""+msgName+": find error: %j", err);
@@ -524,7 +524,7 @@ var put_collection = function(coll, options, doc, fnc, msgName) {
 //      fnc     = callback(cnt_removed) --or-- callback(undefined)
 //      msgName = the name of the method that was called (used in error messages)
 var delete_collection = function(coll, options, fnc, msgName) {
-    var query = getQueryOption();           // select query:  { name:"Dan" } means "select documents where name = "Dan"
+    var query = getQueryOption(options);            // select query:  { name:"Dan" } means "select documents where name = "Dan"
     coll.remove(query, function(err, removed) {
         if (err) {
             console.log("delete_collection ERROR: %j", err)
