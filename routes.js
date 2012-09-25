@@ -344,6 +344,7 @@ module.exports = function(app){
     app.put('/apis/:version/contests/:id', function(req, res) {
         routesContests.putContests_id(req, res);
     });
+    // @TODO: ADD app.delete
 
 
     // // // // // // // // // // // // //

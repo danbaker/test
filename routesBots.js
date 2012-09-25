@@ -7,13 +7,12 @@
 //  /bots/:id/plays/:id     -> get all "plays" this bot has played
 var helper = require('./routesHelper');
 var utdb = require('./utdb');
+var collName = "contests";
 
-
-
-// GET /apis/:version/contests ? fields=id,name & query=name:Dan & limit=3 & offset=10
+// GET /apis/:version/bots ? fields=id,name & query=name:Dan & limit=3 & offset=10
 exports.getBots = function(req, res) {
     var options = helper.makeOptions(req);
-    utdb.getBots(options, function(docs) {
+    utdb.getDocs(utdb.collection_bots(), collName, options, function(docs) {
         if (docs) {
             helper.sendJson(res, docs);
         } else {
@@ -24,13 +23,13 @@ exports.getBots = function(req, res) {
 exports.postBots = function(req,res) {
     if (!helper.showDocs(req,res, {
         version: 1,
-        api: "bots",
+        api: collName,
         method: "POST",
         description: "create a new bot",
         urlparams: [
         ],
         params: [
-            "doc --- the entire document to add as a bot"
+            "doc --- the entire document to add"
         ],
         longDesc: "get a collection"
     })) {
@@ -38,10 +37,10 @@ exports.postBots = function(req,res) {
             var doc = helper.getParam(req, "doc");
             doc = helper.parseToObject(doc);
             if (!doc) {
-                // error .. didn't pass in a document to store
+                // error .. didn't pass in a document to store as a contest
                 res.send(404);
             } else {
-                utdb.postBots(doc, function(ok) {
+                utdb.postDocs(utdb.collection_bots(), collName, doc, function(ok) {
                     if (ok) {
                         helper.sendJson(res, {response:true, message:"postBots OK"});
                     } else {
@@ -65,7 +64,7 @@ exports.getBots_id = function(req, res) {
         var options = helper.makeOptions(req);
         if (!options.query) options.query = {};
         options.query._id = id;
-        utdb.getBots(options, function(docs) {
+        utdb.getDocs(utdb.collection_bots(), collName, options, function(docs) {
             if (docs && docs.length === 1) {
                 helper.sendJson(res, docs);
             } else {
@@ -76,12 +75,12 @@ exports.getBots_id = function(req, res) {
         res.send(404);
     }
 };
-exports.putBots_id = function(req, res) {
+exports.putContests_id = function(req, res) {
     var id = req.params.id;
     var doc = helper.getParam(req, "doc");
     doc = helper.parseToObject(doc);
     if (id && doc) {
-        utdb.putBots({query:{_id:id}}, doc, function(ok) {
+        utdb.putDoc(utdb.collection_bots(), collName, {query:{_id:id}}, doc, function(ok) {
             if (ok) {
                 helper.sendJson(res, {response:true, message:"putBots OK"});
             } else {

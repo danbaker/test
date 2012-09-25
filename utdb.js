@@ -373,6 +373,7 @@ exports.deleteContests = function(options, fnc) {
 };
 
 exports.collection_contests = function() { return contestsCollection };
+exports.collection_bots = function() { return botsCollection };
 
 exports.getDocs = function(coll, collName, options, fnc) {
     get_collection(coll, options, fnc, "get"+collName);
