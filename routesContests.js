@@ -10,28 +10,8 @@
 var helper = require('./routesHelper');
 var utdb = require('./utdb');
 
-var getContests = function() {
-    return [{id:"123a6", name:"RockPaperScissors", description:"Rock Paper Scissors"}, {id:"528f1", name:"Contest 2", description:"Something goes here"}];
-};
-
 // GET /apis/:version/contests ? fields=id,name & query=name:Dan & limit=3 & offset=10
 exports.getContests = function(req, res) {
-//    if (!helper.showDocs(req,res, {
-//        version: 1,
-//        api: "contests",
-//        method: "GET",
-//        description: "get a collection of contests",
-//        urlparams: [
-//        ],
-//        params: [
-//            "fields --- limit fields returned"
-//        ],
-//        longDesc: "get a collection"
-//    })) {
-//        var coll = getContests();
-//        coll = helper.cleanCollection(req, coll);
-//        helper.sendJson(res, coll);
-//    }
     var options = helper.makeOptions(req);
     utdb.getContests(options, function(docs) {
         if (docs) {
@@ -62,7 +42,7 @@ exports.postContests = function(req,res) {
             } else {
                 utdb.postContests(doc, function(ok) {
                     if (ok) {
-                        helper.sendJson(res, {});
+                        helper.sendJson(res, {response:true, message:"postContests OK"});
                     } else {
                         // error creating a new contest
                         res.send(404);
@@ -79,17 +59,6 @@ exports.postContests = function(req,res) {
 
 // GET /apis/:version/contests/:id
 exports.getContests_id = function(req, res) {
-//    var id = req.params.id;
-//    var list = getContests();
-//    var item;
-//    for(var i=0; i<list.length; i++) {
-//        item = list[i];
-//        if (item.id === id) {
-//            helper.sendJson(res, helper.cleanItem(req, item));
-//            return;
-//        }
-//    }
-//    res.send(404);
     var id = req.params.id;
     if (id) {
         var options = helper.makeOptions(req);
@@ -109,12 +78,13 @@ exports.getContests_id = function(req, res) {
 exports.putContests_id = function(req, res) {
     var id = req.params.id;
     var doc = helper.getParam(req, "doc");
+    console.log("putContest_id="+id+"   doc_string=", doc);
     doc = helper.parseToObject(doc);
     console.log("putContest_id="+id+"   doc=%j", doc);
     if (id && doc) {
         utdb.putContests({query:{_id:id}}, doc, function(ok) {
             if (ok) {
-                helper.sendJson(res, {});
+                helper.sendJson(res, {response:true, message:"putContests OK"});
             } else {
                 res.send(404);
             }

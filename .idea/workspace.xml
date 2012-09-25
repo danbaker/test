@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b163e181-c391-49fa-b20a-b6034a2cbb74" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/app/ContestView.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/app/config.js" afterPath="$PROJECT_DIR$/public/app/config.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/app/router.js" afterPath="$PROJECT_DIR$/public/app/router.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/index.html" afterPath="$PROJECT_DIR$/public/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routesContests.js" afterPath="$PROJECT_DIR$/routesContests.js" />
     </list>
     <ignored path="h1.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -31,7 +27,7 @@
       <file leaf-file-name="routes.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/routes.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="335" column="27" selection-start="13843" selection-end="13843" vertical-scroll-proportion="0.0">
+            <state line="305" column="97" selection-start="12561" selection-end="12616" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -75,7 +71,7 @@
       <file leaf-file-name="routesContests.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/routesContests.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="113" column="20" selection-start="3617" selection-end="3617" vertical-scroll-proportion="0.6130501">
+            <state line="79" column="42" selection-start="2579" selection-end="2579" vertical-scroll-proportion="0.63884676">
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -389,15 +385,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routes.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="335" column="27" selection-start="13843" selection-end="13843" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/routesHelper.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="20" column="17" selection-start="655" selection-end="655" vertical-scroll-proportion="0.0">
@@ -407,9 +394,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/routes.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="305" column="97" selection-start="12561" selection-end="12616" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/routesContests.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="113" column="20" selection-start="3617" selection-end="3617" vertical-scroll-proportion="0.6130501">
+        <state line="79" column="42" selection-start="2579" selection-end="2579" vertical-scroll-proportion="0.63884676">
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
