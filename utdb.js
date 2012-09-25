@@ -118,6 +118,14 @@ if (isLocal) {
             });
         });
 
+        db.createCollection('bots', function(err, collection) {
+            if (err) console.log("createCollection code error: %j", err);
+            db.collection('bots', function(err, collection) {
+                if (err) console.log("collection code error: %j", err);
+                botsCollection = collection;
+            });
+        });
+
         // @TODO: create other collections here ...
     });
 }

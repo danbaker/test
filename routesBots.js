@@ -7,7 +7,7 @@
 //  /bots/:id/plays/:id     -> get all "plays" this bot has played
 var helper = require('./routesHelper');
 var utdb = require('./utdb');
-var collName = "contests";
+var collName = "bots";
 
 // GET /apis/:version/bots ? fields=id,name & query=name:Dan & limit=3 & offset=10
 exports.getBots = function(req, res) {
