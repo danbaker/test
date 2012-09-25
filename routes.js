@@ -344,7 +344,9 @@ module.exports = function(app){
     app.put('/apis/:version/contests/:id', function(req, res) {
         routesContests.putContests_id(req, res);
     });
-    // @TODO: ADD app.delete
+    app.delete('/apis/:version/contests/:id', function(req, res) {
+        routesContests.deleteContests_id(req, res);
+    });
 
 
     // // // // // // // // // // // // //
@@ -362,6 +364,9 @@ module.exports = function(app){
     });
     app.put('/apis/:version/bots/:id', function(req, res) {
         routesBots.putBots_id(req, res);
+    });
+    app.delete('/apis/:version/bots/:id', function(req, res) {
+        routesBots.deleteBots_id(req, res);
     });
 
 

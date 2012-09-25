@@ -402,6 +402,21 @@ exports.deleteDoc = function(coll, collName, options, fnc) {
 // *            general collection handling
 // *
 
+var getQueryOption = function(options) {
+    var query = options.query || {};        // select query:  { name:"Dan" } means "select documents where name = "Dan"
+    if (query) {
+        for(var key in query){
+            if (query.hasOwnProperty(key)) {
+                if (key === "_id") {                                // @TODO: fix ANY keys that end with "_id" (bot_id, contest_id ...)
+                    query[key] = new BSON.ObjectID(query[key]);
+                    break;
+                }
+            }
+        }
+    }
+    return query;
+};
+
 // get a set of items from a collection
 // in:  coll    = the collection
 //      options =   { fields: { id:true, name:true }        // return fields:  id, name
@@ -417,17 +432,7 @@ var get_collection = function(coll, options, fnc, msgName) {
     if (coll && fnc) {
         var found = [];
         var fields = options.fields || {};      // specific fields to return:  {id:true, name:true}
-        var query = options.query || {};        // select query:  { name:"Dan" } means "select documents where name = "Dan"
-        if (query) {
-            for(var key in query){
-                if (query.hasOwnProperty(key)) {
-                    if (key === "_id") {
-                        query[key] = new BSON.ObjectID(query[key]);
-                        break;
-                    }
-                }
-            }
-        }
+        var query = getQueryOption();           // select query:  { name:"Dan" } means "select documents where name = "Dan"
         coll.find(query, fields, function(err, cursor) {
             if (err || !cursor) {
                 if (err) console.log(""+msgName+": find error: %j", err);
@@ -514,22 +519,30 @@ var put_collection = function(coll, options, doc, fnc, msgName) {
 // delete a set of items from a collection
 // in:  coll    = the collection
 //      options =   {
-//                    query:  { name:"Dan" }                // find documents that match name="Dan
-//                    limit:  50                            // return, at most, N records
-//                    offset: 100                           // skip the first N records
+//                    query:  { name:"Dan" }                // find documents that match name="Dan"
 //                  }
-//      fnc     = callback([...found docs...]) --or-- callback(undefined)
+//      fnc     = callback(cnt_removed) --or-- callback(undefined)
 //      msgName = the name of the method that was called (used in error messages)
 var delete_collection = function(coll, options, fnc, msgName) {
-    get_collection(coll, options, function(docs) {
-        if (!docs) {
-            // error: didn't find doc(s) to delete
-            console.log(""+msgName+": error didn't find doc to delete");
-            fnc();
+    var query = getQueryOption();           // select query:  { name:"Dan" } means "select documents where name = "Dan"
+    coll.remove(query, function(err, removed) {
+        if (err) {
+            console.log("delete_collection ERROR: %j", err)
+                fnc(undefined);
         } else {
-
+            console.log("delete_collection OK: %j", removed)
+            fnc(removed);
         }
-    }, msgName);
+    });
+//    get_collection(coll, options, function(docs) {
+//        if (!docs) {
+//            // error: didn't find doc(s) to delete
+//            console.log(""+msgName+": error didn't find doc to delete");
+//            fnc();
+//        } else {
+//
+//        }
+//    }, msgName);
 };
 
 // * * * * * * * * * * * * * * * * * * * * * * * * *

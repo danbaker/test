@@ -91,3 +91,17 @@ exports.putBots_id = function(req, res) {
         res.send(404);
     }
 };
+exports.deleteBots_id = function(req, res) {
+    var id = req.params.id;
+    if (id) {
+        utdb.deleteDoc(utdb.collection_bots(), collName, {query:{_id:id}}, doc, function(ok) {
+            if (ok) {
+                helper.sendJson(res, {response:true, message:"deleteBots OK"});
+            } else {
+                res.send(404);
+            }
+        });
+    } else {
+        res.send(404);
+    }
+};
