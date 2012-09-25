@@ -35,7 +35,7 @@ exports.postContests = function(req,res) {
         longDesc: "get a collection"
     })) {
         if (helper.isAuth(req, 0x04)) {
-            var doc = helper.getParam(res, "doc");
+            var doc = helper.getParam(req, "doc");
             doc = helper.parseToObject(doc);
             if (!doc) {
                 // error .. didn't pass in a document to store as a contest
