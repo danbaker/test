@@ -75,7 +75,7 @@ exports.getBots_id = function(req, res) {
         res.send(404);
     }
 };
-exports.putContests_id = function(req, res) {
+exports.putBots_id = function(req, res) {
     var id = req.params.id;
     var doc = helper.getParam(req, "doc");
     doc = helper.parseToObject(doc);
