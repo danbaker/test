@@ -36,6 +36,7 @@ exports.postContests = function(req,res) {
     })) {
         if (helper.isAuth(req, 0x04)) {
             var doc = helper.getParam(res, "doc");
+            doc = helper.parseToObject(doc);
             if (!doc) {
                 // error .. didn't pass in a document to store as a contest
                 res.send(404);
@@ -78,9 +79,7 @@ exports.getContests_id = function(req, res) {
 exports.putContests_id = function(req, res) {
     var id = req.params.id;
     var doc = helper.getParam(req, "doc");
-    console.log("putContest_id="+id+"   doc_string=", doc);
     doc = helper.parseToObject(doc);
-    console.log("putContest_id="+id+"   doc=%j", doc);
     if (id && doc) {
         utdb.putContests({query:{_id:id}}, doc, function(ok) {
             if (ok) {

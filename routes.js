@@ -339,11 +339,9 @@ module.exports = function(app){
         routesContests.getContests(req, res);
     });
     app.get('/apis/:version/contests/:id', function(req, res) {
-        console.log("GET contests/id");
         routesContests.getContests_id(req, res);
     });
     app.put('/apis/:version/contests/:id', function(req, res) {
-        console.log("PUT contests/id");
         routesContests.putContests_id(req, res);
     });
 
