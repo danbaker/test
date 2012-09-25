@@ -18,6 +18,7 @@ exports.parseToObject = function(str) {
     try {
         obj = JSON.parse(str);
     } catch (e) {
+        console.log("parseToObject("+str+") ERROR: %j", e);
         return undefined;
     }
     return obj;
