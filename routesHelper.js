@@ -12,6 +12,17 @@ exports.getParam = function(req,name) {
     return undefined;
 };
 
+// parse a string into a JSON object
+exports.parseToObject = function(str) {
+    var obj;
+    try {
+        obj = JSON.parse(str);
+    } catch (e) {
+        return undefined;
+    }
+    return obj;
+};
+
 exports.sendJson = function(res, json) {
     res.writeHead(200, {'Content-Type': 'application/json'});
     res.end(JSON.stringify(json));
