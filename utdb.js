@@ -372,6 +372,21 @@ exports.deleteContests = function(options, fnc) {
     delete_collection(contestsCollection, options, fnc, "deleteContests");
 };
 
+exports.collection_contests = function() { return contestsCollection };
+
+exports.getDocs = function(coll, collName, options, fnc) {
+    get_collection(coll, options, fnc, "get"+collName);
+};
+exports.postDocs = function(coll, collName, doc, fnc) {
+    post_collection(coll, doc, fnc, "post"+collName);
+};
+exports.putDoc = function(coll, collName, options, doc, fnc) {
+    put_collection(coll, options, doc, fnc, "put"+collName);
+};
+exports.deleteDoc = function(coll, collName, options, fnc) {
+    delete_collection(coll, options, fnc, "delete"+collName);
+};
+
 
 // * * * * * * * * * * * * * * * * * * * * * * * * *
 // *

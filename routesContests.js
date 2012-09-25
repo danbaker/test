@@ -13,7 +13,7 @@ var utdb = require('./utdb');
 // GET /apis/:version/contests ? fields=id,name & query=name:Dan & limit=3 & offset=10
 exports.getContests = function(req, res) {
     var options = helper.makeOptions(req);
-    utdb.getContests(options, function(docs) {
+    utdb.getDocs(utdb.collection_contests(), "contests", options, function(docs) {
         if (docs) {
             helper.sendJson(res, docs);
         } else {
@@ -41,7 +41,7 @@ exports.postContests = function(req,res) {
                 // error .. didn't pass in a document to store as a contest
                 res.send(404);
             } else {
-                utdb.postContests(doc, function(ok) {
+                utdb.postDocs(utdb.collection_contests(), "contests", doc, function(ok) {
                     if (ok) {
                         helper.sendJson(res, {response:true, message:"postContests OK"});
                     } else {
@@ -65,7 +65,7 @@ exports.getContests_id = function(req, res) {
         var options = helper.makeOptions(req);
         if (!options.query) options.query = {};
         options.query._id = id;
-        utdb.getContests(options, function(docs) {
+        utdb.getDocs(utdb.collection_contests(), "contests", options, function(docs) {
             if (docs && docs.length === 1) {
                 helper.sendJson(res, docs);
             } else {
@@ -81,7 +81,7 @@ exports.putContests_id = function(req, res) {
     var doc = helper.getParam(req, "doc");
     doc = helper.parseToObject(doc);
     if (id && doc) {
-        utdb.putContests({query:{_id:id}}, doc, function(ok) {
+        utdb.putDoc(utdb.collection_contests(), "contests", {query:{_id:id}}, doc, function(ok) {
             if (ok) {
                 helper.sendJson(res, {response:true, message:"putContests OK"});
             } else {

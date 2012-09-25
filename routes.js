@@ -350,11 +350,17 @@ module.exports = function(app){
     //
     //  bots
 
+    app.post('/apis/:version/bots', function(req, res) {
+        routesBots.postBots(req, res);
+    });
     app.get('/apis/:version/bots', function(req, res) {
         routesBots.getBots(req, res);
     });
     app.get('/apis/:version/bots/:id', function(req, res) {
         routesBots.getBots_id(req, res);
+    });
+    app.put('/apis/:version/bots/:id', function(req, res) {
+        routesBots.putBots_id(req, res);
     });
 
 
