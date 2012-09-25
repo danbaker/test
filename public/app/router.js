@@ -1,10 +1,11 @@
 define([
   // Application.
   "app",
-    'LoginView'
+    'LoginView',
+    'ContestView'
 ],
 
-function(app, LoginView) {
+function(app, LoginView, ContestView) {
 
   // Defining the application router, you can attach sub routers here.
   var Router = Backbone.Router.extend({
@@ -18,6 +19,9 @@ function(app, LoginView) {
 
             var loginView = new LoginView({el: '.login-slot'});
             loginView.render();
+
+            var contestView = new ContestView({el: '.contest-list'});
+//            contestView.render();
 
         });
 
