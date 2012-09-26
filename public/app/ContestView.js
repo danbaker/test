@@ -35,7 +35,7 @@ define([
                     html += '</div><div class="row-fluid">';
                 }
                 html += '<div class="span4">';
-                html += '<h2>' + (contest.name || 'No description') + '</h2>';
+                html += '<h2>' + (!!contest.name ? contest.name : 'No description') + '</h2>';
                 html += '<p>' + contest.description + '</p>';
                 html += '<p><a class="btn" href="' + ['/contests/', contest._id].join('') + '">View details &raquo;</a></p>';
                 html += '</div>';
