@@ -355,7 +355,6 @@ module.exports = function(app){
     });
     // create bot for a contest (for current logged in user)
     app.post('/apis/:version/contests/:id/bots', function(req, res) {
-        console.log("- - POST contest and bot");
         if (!showCollectionHelp(req, res, "POST", "bots")) {
             if (helper.isLoggedIn(req)) {
                 req.params.doc.contest_id = helper.getParam(req, "id");         // contest_id specified on the URL -- is put into the document
@@ -383,6 +382,8 @@ module.exports = function(app){
     // put one bot for a contest
     app.put('/apis/:version/contests/:contest_id/bots/:id', function(req, res) {
         if (!showCollectionHelp(req, res, "PUT", "bots")) {
+            req.params.doc.contest_id = helper.getParam(req, "contest_id"); // contest_id specified on the URL -- is put into the document
+            req.params.doc.user_id = helper.getUserId(req);                 // user_id is put into the document
             routesBots.putBots_id(req, res);
         }
     });
