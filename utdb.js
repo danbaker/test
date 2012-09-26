@@ -362,11 +362,10 @@ exports.getCode = function(uid, fnc) {
 // *
 // *            contests collection
 // *
+exports.collection_contests = function() { return contestsCollection };
+exports.collection_bots = function() { return botsCollection };
 
-
-// get a collection of contests
-// in:  fnc     = callback(string) --or-- callback(undefined)
-// out: fnc([]) or fnc(undefined)
+// contests
 exports.getContests = function(options, fnc) {
     get_collection(contestsCollection, options, fnc, "getContests");
 };
@@ -380,9 +379,7 @@ exports.deleteContests = function(options, fnc) {
     delete_collection(contestsCollection, options, fnc, "deleteContests");
 };
 
-exports.collection_contests = function() { return contestsCollection };
-exports.collection_bots = function() { return botsCollection };
-
+// bots
 exports.getDocs = function(coll, collName, options, fnc) {
     get_collection(coll, options, fnc, "get"+collName);
 };
@@ -407,9 +404,9 @@ var getQueryOption = function(options) {
     if (query) {
         for(var key in query){
             if (query.hasOwnProperty(key)) {
-                if (key === "_id") {                                // @TODO: fix ANY keys that end with "_id" (bot_id, contest_id ...)
+                // if the key ENDS in "_id" then convert it into a MongoDB "id"
+                if (key.length && key.substr && key.substr(key.length-3, 3) === "_id") {
                     query[key] = new BSON.ObjectID(query[key]);
-                    break;
                 }
             }
         }
@@ -530,19 +527,11 @@ var delete_collection = function(coll, options, fnc, msgName) {
             console.log("delete_collection ERROR: %j", err);
                 fnc(undefined);
         } else {
+            // @TODO: determine how to KNOW that the delete happened ... "removed" seems to come back undefined
             console.log("delete_collection OK: %j", removed);
             fnc(true);
         }
     });
-//    get_collection(coll, options, function(docs) {
-//        if (!docs) {
-//            // error: didn't find doc(s) to delete
-//            console.log(""+msgName+": error didn't find doc to delete");
-//            fnc();
-//        } else {
-//
-//        }
-//    }, msgName);
 };
 
 // * * * * * * * * * * * * * * * * * * * * * * * * *

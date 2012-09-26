@@ -24,6 +24,7 @@ module.exports = function(app){
         var uobj = {};
         uobj.name = username;                   // username the user supplied
         uobj.id = result.id;                    // id of the logged in user
+        uobj._id = result._id;                  // id of the logged in user
         uobj.auth = result.auth | 1;            // authorization level for the logged in user (ensure logged-in)
         console.log("login: %j", uobj);
         // save this newly created user object in the session
@@ -333,19 +334,28 @@ module.exports = function(app){
     //  contests
 
     app.post('/apis/:version/contests', function(req, res) {
-        routesContests.postContests(req, res);
+        if (!showCollectionHelp(req, res, "POST", "contests")) routesContests.postContests(req, res);
     });
     app.get('/apis/:version/contests', function(req, res) {
-        routesContests.getContests(req, res);
+        if (!showCollectionHelp(req, res, "GET", "contests")) routesContests.getContests(req, res);
     });
     app.get('/apis/:version/contests/:id', function(req, res) {
-        routesContests.getContests_id(req, res);
+        if (!showCollectionHelp(req, res, "GET", "contests")) routesContests.getContests_id(req, res);
     });
     app.put('/apis/:version/contests/:id', function(req, res) {
-        routesContests.putContests_id(req, res);
+        if (!showCollectionHelp(req, res, "PUT", "contests")) routesContests.putContests_id(req, res);
     });
     app.delete('/apis/:version/contests/:id', function(req, res) {
-        routesContests.deleteContests_id(req, res);
+        if (!showCollectionHelp(req, res, "DELETE", "contests")) routesContests.deleteContests_id(req, res);
+    });
+    app.post('/apis/:version/contests/:id/bots', function(req, res) {
+        if (!showCollectionHelp(req, res, "POST", "contests")) {
+            if (helper.isLoggedIn()) {
+                req.params.doc.contest_id = helper.getParam("id");                  // contest_id specified on the URL -- is put into the document
+                req.params.doc.user_id = helper.getUserId();                        // user_id is put into the document
+                routesContests.postBots(req, res);
+            }
+        }
     });
 
 
@@ -354,24 +364,58 @@ module.exports = function(app){
     //  bots
 
     app.post('/apis/:version/bots', function(req, res) {
-        routesBots.postBots(req, res);
+        if (!showCollectionHelp(req, res, "POST", "bots")) routesBots.postBots(req, res);
     });
     app.get('/apis/:version/bots', function(req, res) {
-        routesBots.getBots(req, res);
+        if (!showCollectionHelp(req, res, "GET", "bots")) routesBots.getBots(req, res);
     });
     app.get('/apis/:version/bots/:id', function(req, res) {
-        routesBots.getBots_id(req, res);
+        if (!showCollectionHelp(req, res, "GET", "bots")) routesBots.getBots_id(req, res);
     });
     app.put('/apis/:version/bots/:id', function(req, res) {
-        routesBots.putBots_id(req, res);
+        if (!showCollectionHelp(req, res, "PUT", "bots", idParam)) routesBots.putBots_id(req, res);
     });
     app.delete('/apis/:version/bots/:id', function(req, res) {
-        routesBots.deleteBots_id(req, res);
+        if (!showCollectionHelp(req, res, "DELETE", "bots", idParam)) routesBots.deleteBots_id(req, res);
     });
 
 
+    var idParam = "id --- the id of the bot";
+    var showCollectionHelp = function(req, res, method, collName, id1) {
+        // convert and clean up the "doc" parameter
+        var doc = helper.getParam(req, "doc");
+        doc = helper.parseToObject(doc);
+        req.params.doc = doc;
+
+        var obj = {
+            version: 1,
+            api: collName,
+            method: method,
+            description: "",
+            urlparams: [
+            ],
+            params: [
+            ],
+            longDesc: "get a collection"
+        };
+        if (id1) obj.urlparams.push(id1);
+        if (method === "POST") {
+            obj.params.push("doc --- the entire document to add as a "+collName);
+            obj.description = "create a new "+collName;
+        }
+        if (method === "PUT") {
+            obj.params.push("doc --- the entire document to replace the old "+collName);
+            obj.description = "replace a "+collName+" with a new one";
+        }
+        if (method === "GET") {
+            obj.params.push("doc --- the entire document to replace the old "+collName);
+            obj.description = "replace a "+collName+" with a new one";
+        }
+        return helper.showDocs(req,res, obj);
+    };
+
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-        // Note: anyone allowed to ask for documentation
+    // Note: anyone allowed to ask for documentation
     var docs = function(req, res) {
         var msg = "";
         msg += "Documentation of all known endpoint routes<br>";

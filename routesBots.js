@@ -21,38 +21,24 @@ exports.getBots = function(req, res) {
     });
 };
 exports.postBots = function(req,res) {
-    if (!helper.showDocs(req,res, {
-        version: 1,
-        api: collName,
-        method: "POST",
-        description: "create a new bot",
-        urlparams: [
-        ],
-        params: [
-            "doc --- the entire document to add"
-        ],
-        longDesc: "get a collection"
-    })) {
-        if (helper.isAuth(req, 0x04)) {
-            var doc = helper.getParam(req, "doc");
-            doc = helper.parseToObject(doc);
-            if (!doc) {
-                // error .. didn't pass in a document to store as a contest
-                res.send(404);
-            } else {
-                utdb.postDocs(utdb.collection_bots(), collName, doc, function(ok) {
-                    if (ok) {
-                        helper.sendJson(res, {response:true, message:"postBots OK"});
-                    } else {
-                        // error creating a new contest
-                        res.send(404);
-                    }
-                });
-            }
-        } else {
-            // not authorized
+    if (helper.isAuth(req, 0x04)) {
+        var doc = helper.getParam(req, "doc");
+        if (!doc) {
+            // error .. didn't pass in a document to store as a contest
             res.send(404);
+        } else {
+            utdb.postDocs(utdb.collection_bots(), collName, doc, function(ok) {
+                if (ok) {
+                    helper.sendJson(res, {response:true, message:"postBots OK"});
+                } else {
+                    // error creating a new contest
+                    res.send(404);
+                }
+            });
         }
+    } else {
+        // not authorized
+        res.send(404);
     }
 };
 
@@ -78,7 +64,6 @@ exports.getBots_id = function(req, res) {
 exports.putBots_id = function(req, res) {
     var id = req.params.id;
     var doc = helper.getParam(req, "doc");
-    doc = helper.parseToObject(doc);
     if (id && doc) {
         utdb.putDoc(utdb.collection_bots(), collName, {query:{_id:id}}, doc, function(ok) {
             if (ok) {

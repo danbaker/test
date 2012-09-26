@@ -23,38 +23,24 @@ exports.getContests = function(req, res) {
     });
 };
 exports.postContests = function(req,res) {
-    if (!helper.showDocs(req,res, {
-        version: 1,
-        api: collName,
-        method: "POST",
-        description: "create a new contest",
-        urlparams: [
-        ],
-        params: [
-            "doc --- the entire document to add as a contest"
-        ],
-        longDesc: "get a collection"
-    })) {
-        if (helper.isAuth(req, 0x04)) {
-            var doc = helper.getParam(req, "doc");
-            doc = helper.parseToObject(doc);
-            if (!doc) {
-                // error .. didn't pass in a document to store as a contest
-                res.send(404);
-            } else {
-                utdb.postDocs(utdb.collection_contests(), collName, doc, function(ok) {
-                    if (ok) {
-                        helper.sendJson(res, {response:true, message:"postContests OK"});
-                    } else {
-                        // error creating a new contest
-                        res.send(404);
-                    }
-                });
-            }
+    if (helper.isAuth(req, 0x04)) {
+        var doc = helper.getParam(req, "doc");
+        if (!doc) {
+            // error .. didn't pass in a document to store as a contest
+            res.send(404);
         } else {
-            // not authorized
-            res.send(401);
+            utdb.postDocs(utdb.collection_contests(), collName, doc, function(ok) {
+                if (ok) {
+                    helper.sendJson(res, {response:true, message:"postContests OK"});
+                } else {
+                    // error creating a new contest
+                    res.send(404);
+                }
+            });
         }
+    } else {
+        // not authorized
+        res.send(401);
     }
 };
 
@@ -80,7 +66,6 @@ exports.getContests_id = function(req, res) {
 exports.putContests_id = function(req, res) {
     var id = req.params.id;
     var doc = helper.getParam(req, "doc");
-    doc = helper.parseToObject(doc);
     if (id && doc) {
         utdb.putDoc(utdb.collection_contests(), collName, {query:{_id:id}}, doc, function(ok) {
             if (ok) {

@@ -42,12 +42,21 @@ exports.isAuth = function(req, n) {
     return false;
 };
 
+exports.getUserId = function(req) {
+    if (!req) console.log("ERROR: Did you forget to pass in req object to getUserId?");
+    if (req && req.session && req.session.user)
+        return req.session.user._id;
+    return undefined;
+};
+
+
 // check if user requested docs -- return docs (and return "true")
 exports.showDocs = function(req,res,docs) {
     if (utdb.isLocal()) {
         var uobj = {};
         uobj.name = "LocalDANB";
         uobj.id = 12345;
+        uobj._id = "123abc";
         uobj.auth = 255;
         req.session.user = uobj;
     }
