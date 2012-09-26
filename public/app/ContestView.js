@@ -36,8 +36,8 @@ define([
                 }
                 html += '<div class="span4">';
                 html += '<h2>' + contest.name + '</h2>';
-                html += '<p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>';
-                html += '<p><a class="btn" href="' + ['/contests/', contest.id].join() + '">View details &raquo;</a></p>';
+                html += '<p>' + contest.description + '</p>';
+                html += '<p><a class="btn" href="' + ['/contests/', contest._id].join() + '">View details &raquo;</a></p>';
                 html += '</div>';
             });
 
