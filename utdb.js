@@ -196,7 +196,7 @@ var getUserDoc = function(obj, fnc) {
                     result.nextObject(function(err, user) {
                         if (user) {
                             // FOUND
-                            var obj = {uname:user.uname, id:user._id, auth:user.auth};
+                            var obj = {uname:user.uname, id:user._id, _id:user._id, auth:user.auth};
                             fnc(obj);
                         } else {
                             // NOT FOUND
