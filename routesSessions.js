@@ -15,6 +15,7 @@ var doLogin = function(req, res, result) {
         var uobj = {};
         uobj.name = username;                   // username the user supplied
         uobj.id = result.id;                    // id of the logged in user
+        uobj._id = result._id;
         uobj.auth = result.auth | 1;            // authorization level for the logged in user (ensure logged-in)
         // save this newly created user object in the session
         req.session.user = uobj;
