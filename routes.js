@@ -15,6 +15,7 @@ module.exports = function(app){
     var routesBots = require('./routesBots');
     var routesContests = require('./routesContests');
     var routesSessions = require('./routesSessions');
+    var routesUsers = require('./routesUsers');
 
     // FUNCTION: perform login of user
     var doLogin = function(req, res, result, msg) {
@@ -368,7 +369,6 @@ module.exports = function(app){
     // get list of all bots for a contest
     app.get('/apis/:version/contests/:contest_id/bots', function(req, res) {
         if (!showCollectionHelp(req, res, "GET", "bots")) {
-//            req.params.contest_id = helper.getParam(req, "id");         // contest_id limits the search
             console.log("- - GET bots for contests="+req.params.contest_id);
             routesBots.getBots(req, res);
         }
@@ -407,6 +407,20 @@ module.exports = function(app){
     });
     app.delete('/apis/:version/bots/:id', function(req, res) {
         if (!showCollectionHelp(req, res, "DELETE", "bots", idParam)) routesBots.deleteBots_id(req, res);
+    });
+
+    // // // // // // // // // // // // //
+    //
+    //  users
+
+    app.get('/apis/:version/users', function(req, res) {
+        if (!showCollectionHelp(req, res, "GET", "users")) routesUsers.getUsers(req, res);
+    });
+    app.get('/apis/:version/users/:id', function(req, res) {
+        if (!showCollectionHelp(req, res, "GET", "users")) routesUsers.getUsers_id(req, res);
+    });
+    app.put('/apis/:version/users/:id', function(req, res) {
+        if (!showCollectionHelp(req, res, "PUT", "users", idParam)) routesUsers.putUsers_id(req, res);
     });
 
 

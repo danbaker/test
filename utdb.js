@@ -9,7 +9,7 @@
             01   = logged in
             02   = can change auth values for all users
             04   = can alter the contests collection
-            08   =
+            08   = can view/manage the "users" collection (highly dangerous)
             10   =
             20   =
             40   =
@@ -362,22 +362,23 @@ exports.getCode = function(uid, fnc) {
 // *
 // *            contests collection
 // *
-exports.collection_contests = function() { return contestsCollection };
-exports.collection_bots = function() { return botsCollection };
+exports.collection_contests = function() { return contestsCollection; };
+exports.collection_bots = function() { return botsCollection; };
+exports.collection_users = function() { return userCollection; };
 
 // contests
-exports.getContests = function(options, fnc) {
-    get_collection(contestsCollection, options, fnc, "getContests");
-};
-exports.postContests = function(doc, fnc) {
-    post_collection(contestsCollection, doc, fnc, "postContests");
-};
-exports.putContests = function(options, doc, fnc) {
-    put_collection(contestsCollection, options, doc, fnc, "putContests");
-};
-exports.deleteContests = function(options, fnc) {
-    delete_collection(contestsCollection, options, fnc, "deleteContests");
-};
+//exports.getContests = function(options, fnc) {
+//    get_collection(contestsCollection, options, fnc, "getContests");
+//};
+//exports.postContests = function(doc, fnc) {
+//    post_collection(contestsCollection, doc, fnc, "postContests");
+//};
+//exports.putContests = function(options, doc, fnc) {
+//    put_collection(contestsCollection, options, doc, fnc, "putContests");
+//};
+//exports.deleteContests = function(options, fnc) {
+//    delete_collection(contestsCollection, options, fnc, "deleteContests");
+//};
 
 // bots
 exports.getDocs = function(coll, collName, options, fnc) {
@@ -392,7 +393,6 @@ exports.putDoc = function(coll, collName, options, doc, fnc) {
 exports.deleteDoc = function(coll, collName, options, fnc) {
     delete_collection(coll, options, fnc, "delete"+collName);
 };
-
 
 // * * * * * * * * * * * * * * * * * * * * * * * * *
 // *
