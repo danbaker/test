@@ -44,6 +44,7 @@ define([
             html += '</div>';
 
             this.$el.html(html);
+            this.$el.fadeIn();
             return this;
 
         }
