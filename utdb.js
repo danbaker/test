@@ -441,11 +441,8 @@ var get_collection = function(coll, options, fnc, msgName) {
                 if (options.offset) cursor.skip(options.offset);
                 cursor.each(function(err, item) {
                     if(!item) {
-                        console.log("about to return collection of "+found.length+" items");
-                        console.log(found);
                         fnc(found);
                     } else {
-                        console.log("item pushing onto return collection");
                         found.push(item);
                     }
                 });
