@@ -422,6 +422,9 @@ module.exports = function(app){
     app.put('/apis/:version/users/:id', function(req, res) {
         if (!showCollectionHelp(req, res, "PUT", "users", idParam)) routesUsers.putUsers_id(req, res);
     });
+    app.delete('/apis/:version/users/:id', function(req, res) {
+        if (!showCollectionHelp(req, res, "DELETE", "users", idParam)) routesUsers.deleteUsers_id(req, res);
+    });
 
 
     var idParam = "id --- the id of the bot";
