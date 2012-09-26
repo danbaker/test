@@ -30,7 +30,7 @@ module.exports = function(app){
         // save this newly created user object in the session
         req.session.user = uobj;
 
-        sendJson(res, {response:true, auth: uobj.auth, name: uobj.name, message:msg});        // return "logged in OK" or "created user OK"
+        sendJson(res, {response:true, id: uobj.id, auth: uobj.auth, name: uobj.name, message:msg});        // return "logged in OK" or "created user OK"
     };
     var sendJson = helper.sendJson;
     var isLoggedIn = helper.isLoggedIn;

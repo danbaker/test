@@ -404,8 +404,8 @@ var getQueryOption = function(options) {
     if (query) {
         for(var key in query){
             if (query.hasOwnProperty(key)) {
-                // if the key ENDS in "_id" then convert it into a MongoDB "id"
-//                if (key.length && key.substr && key.substr(key.length-3, 3) === "_id") {
+                // if the key IS "_id" then convert it into a MongoDB "id"
+                // Note: ONLY the _id field needs altered.  Not if it is copied into other docs as "contest_id"
                 if (key === "_id") {
                     query[key] = new BSON.ObjectID(query[key]);
                 }
