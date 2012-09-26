@@ -162,7 +162,7 @@ exports.makeOptions = function(req) {
     if (x > 0) options.offset = x;
     // QUERY -- a way to narrow which items are selected
     x = exports.getParam(req, "query");                     // query=first_name:Dan,last_name:Baker
-    var contest_id = exports.getParam(req, "contetst_id");  // specified contest ("100ae45f")
+    var contest_id = exports.getParam(req, "contest_id");   // specified contest ("100ae45f")
     if (x || contest_id) {
         options.query = {};
         if (x) {
