@@ -349,11 +349,16 @@ module.exports = function(app){
         if (!showCollectionHelp(req, res, "DELETE", "contests")) routesContests.deleteContests_id(req, res);
     });
     app.post('/apis/:version/contests/:id/bots', function(req, res) {
+        console.log("- - POST contest and bot");
         if (!showCollectionHelp(req, res, "POST", "contests")) {
             if (helper.isLoggedIn()) {
                 req.params.doc.contest_id = helper.getParam("id");                  // contest_id specified on the URL -- is put into the document
+                console.log("- - contest_id="+req.params.doc.contest_id);
                 req.params.doc.user_id = helper.getUserId();                        // user_id is put into the document
-                routesContests.postBots(req, res);
+                console.log("- - user_id="+req.params.doc.user_id);
+                routesBots.postBots(req, res);
+            } else {
+                res.send(401);  // not logged in
             }
         }
     });

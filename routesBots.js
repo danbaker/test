@@ -21,13 +21,16 @@ exports.getBots = function(req, res) {
     });
 };
 exports.postBots = function(req,res) {
+    console.log("- - postBots");
     if (helper.isAuth(req, 0x04)) {
         var doc = helper.getParam(req, "doc");
         if (!doc) {
             // error .. didn't pass in a document to store as a contest
             res.send(404);
         } else {
+            console.log("- - postBots. have doc, about to post doc to database");
             utdb.postDocs(utdb.collection_bots(), collName, doc, function(ok) {
+                console.log("- - postBots. got back from database call. ok="+ok);
                 if (ok) {
                     helper.sendJson(res, {response:true, message:"postBots OK"});
                 } else {
