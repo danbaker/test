@@ -161,19 +161,20 @@ exports.makeOptions = function(req) {
     if (x) x = parseInt(x);
     if (x > 0) options.offset = x;
     // QUERY -- a way to narrow which items are selected
-    x = exports.getParam(req, "query");                  // query=first_name:Dan,last_name:Baker
-    console.log("query="+x);
-    if (x) {
+    x = exports.getParam(req, "query");                     // query=first_name:Dan,last_name:Baker
+    var contest_id = exports.getParam(req, "contetst_id");  // specified contest ("100ae45f")
+    if (x || contest_id) {
         options.query = {};
-        x = x.split(",");                               // ["first_name:Dan", "last_name:Baker"]
-        console.log(x);
-        for(i=0; i<x.length; i++) {
-            var parts = x[i].split(":");                // parts[0] = "first_name", parts[1] = "Dan"
-            console.log(parts);
-            if (parts.length === 2) {
-                options.query[parts[0]] = parts[1];     // { first_name:"Dan", last_name:"Baker" }
+        if (x) {
+            x = x.split(",");                               // ["first_name:Dan", "last_name:Baker"]
+            for(i=0; i<x.length; i++) {
+                var parts = x[i].split(":");                // parts[0] = "first_name", parts[1] = "Dan"
+                if (parts.length === 2) {
+                    options.query[parts[0]] = parts[1];     // { first_name:"Dan", last_name:"Baker" }
+                }
             }
         }
+        options.query.contest_id = contest_id;              // limit search to specified contest (from url)
     }
     return options;
 };

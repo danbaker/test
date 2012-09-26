@@ -333,33 +333,44 @@ module.exports = function(app){
     //
     //  contests
 
+    // create contest
     app.post('/apis/:version/contests', function(req, res) {
         if (!showCollectionHelp(req, res, "POST", "contests")) routesContests.postContests(req, res);
     });
+    // get list of all contests
     app.get('/apis/:version/contests', function(req, res) {
         if (!showCollectionHelp(req, res, "GET", "contests")) routesContests.getContests(req, res);
     });
+    // get one contest
     app.get('/apis/:version/contests/:id', function(req, res) {
         if (!showCollectionHelp(req, res, "GET", "contests")) routesContests.getContests_id(req, res);
     });
+    // update one contest
     app.put('/apis/:version/contests/:id', function(req, res) {
         if (!showCollectionHelp(req, res, "PUT", "contests")) routesContests.putContests_id(req, res);
     });
+    // delete one contest
     app.delete('/apis/:version/contests/:id', function(req, res) {
         if (!showCollectionHelp(req, res, "DELETE", "contests")) routesContests.deleteContests_id(req, res);
     });
+    // create bot for a contest (for current logged in user)
     app.post('/apis/:version/contests/:id/bots', function(req, res) {
         console.log("- - POST contest and bot");
-        if (!showCollectionHelp(req, res, "POST", "contests")) {
+        if (!showCollectionHelp(req, res, "POST", "bots")) {
             if (helper.isLoggedIn(req)) {
                 req.params.doc.contest_id = helper.getParam(req, "id");         // contest_id specified on the URL -- is put into the document
-                console.log("- - contest_id="+req.params.doc.contest_id);
                 req.params.doc.user_id = helper.getUserId(req);                 // user_id is put into the document
-                console.log("- - user_id="+req.params.doc.user_id);
                 routesBots.postBots(req, res);
             } else {
                 res.send(401);  // not logged in
             }
+        }
+    });
+    // get list of all bots for a contest
+    app.get('/apis/:version/contests/:id/bots', function(req, res) {
+        if (!showCollectionHelp(req, res, "GET", "bots")) {
+            req.params.contest_id = helper.getParam(req, "id");         // contest_id limits the search
+            routesBots.getBots(req, res);
         }
     });
 
