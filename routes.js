@@ -367,11 +367,23 @@ module.exports = function(app){
         }
     });
     // get list of all bots for a contest
-    app.get('/apis/:version/contests/:id/bots', function(req, res) {
+    app.get('/apis/:version/contests/:contest_id/bots', function(req, res) {
         if (!showCollectionHelp(req, res, "GET", "bots")) {
-            req.params.contest_id = helper.getParam(req, "id");         // contest_id limits the search
+//            req.params.contest_id = helper.getParam(req, "id");         // contest_id limits the search
             console.log("- - GET bots for contests="+req.params.contest_id);
             routesBots.getBots(req, res);
+        }
+    });
+    // get one bot for a contest
+    app.get('/apis/:version/contests/:contest_id/bots/:id', function(req, res) {
+        if (!showCollectionHelp(req, res, "GET", "bots")) {
+            routesBots.getBots_id(req, res);
+        }
+    });
+    // put one bot for a contest
+    app.put('/apis/:version/contests/:contest_id/bots/:id', function(req, res) {
+        if (!showCollectionHelp(req, res, "PUT", "bots")) {
+            routesBots.putBots_id(req, res);
         }
     });
 
