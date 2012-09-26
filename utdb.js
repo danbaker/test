@@ -527,11 +527,11 @@ var delete_collection = function(coll, options, fnc, msgName) {
     var query = getQueryOption(options);            // select query:  { name:"Dan" } means "select documents where name = "Dan"
     coll.remove(query, function(err, removed) {
         if (err) {
-            console.log("delete_collection ERROR: %j", err)
+            console.log("delete_collection ERROR: %j", err);
                 fnc(undefined);
         } else {
-            console.log("delete_collection OK: %j", removed)
-            fnc(removed);
+            console.log("delete_collection OK: %j", removed);
+            fnc(true);
         }
     });
 //    get_collection(coll, options, function(docs) {
