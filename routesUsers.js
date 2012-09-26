@@ -86,7 +86,7 @@ exports.deleteUsers_id = function(req, res) {
         if (id) {
             // delete the exact document
             var options = {query:{_id:id}};
-            utdb.deleteDoc(utdb.collection_bots(), collName, options, function(ok) {
+            utdb.deleteDoc(utdb.collection_users(), collName, options, function(ok) {
                 if (ok) {
                     helper.sendJson(res, {response:true, message:"deleteUsers OK"});
                 } else {
