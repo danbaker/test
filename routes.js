@@ -370,6 +370,7 @@ module.exports = function(app){
     app.get('/apis/:version/contests/:id/bots', function(req, res) {
         if (!showCollectionHelp(req, res, "GET", "bots")) {
             req.params.contest_id = helper.getParam(req, "id");         // contest_id limits the search
+            console.log("- - GET bots for contests="+req.params.contest_id);
             routesBots.getBots(req, res);
         }
     });

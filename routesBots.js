@@ -12,6 +12,7 @@ var collName = "bots";
 // GET /apis/:version/bots ? fields=id,name & query=name:Dan & limit=3 & offset=10
 exports.getBots = function(req, res) {
     var options = helper.makeOptions(req);
+    console.log("- - getBots.  options=%j", options);
     utdb.getDocs(utdb.collection_bots(), collName, options, function(docs) {
         if (docs) {
             helper.sendJson(res, docs);
