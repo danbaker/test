@@ -94,7 +94,7 @@ exports.putBots_id = function(req, res) {
 exports.deleteBots_id = function(req, res) {
     var id = req.params.id;
     if (id) {
-        utdb.deleteDoc(utdb.collection_bots(), collName, {query:{_id:id}}, doc, function(ok) {
+        utdb.deleteDoc(utdb.collection_bots(), collName, {query:{_id:id}}, function(ok) {
             if (ok) {
                 helper.sendJson(res, {response:true, message:"deleteBots OK"});
             } else {
