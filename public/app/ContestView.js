@@ -33,11 +33,11 @@ define([
                 html.push( data.description );
                 html.push( '</p>' );
 
-                html.push( '<div id="editor" class="span8" style="height: 400px;">');
+                html.push( '<div id="editor" class="span8" style="height: 800px;">');
                 html.push( data.code || 'function yourcodehere() {\n\n}\n' );
                 html.push( '</div>');
 
-                html.push( '<button class="btn btn-primary" type="button">Save Code</button>' );
+                html.push( '<button class="btn btn-primary" type="button" style="padding-top:820px;">Save Code</button>' );
 
                 this.$el.html( html.join('') );
                 this.$el.show();
