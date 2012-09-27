@@ -511,5 +511,9 @@ module.exports = function(app){
         docs(req, res);
     });
 
+    app.get('/contests/:contestid', function(req, res) {
+        res.sendfile('./public/index.html');
+    });
+
 
 };
