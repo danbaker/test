@@ -74,6 +74,21 @@ exports.getRuns = function(req, res) {
 exports.postRuns = function(req,res) {
     if (checkAuth(req, res)) {
         helper.sendJson(res, {message:"Contest run started"});
+        var myid = helper.getUserId(req);
+        var doc = {};
+        doc.bots_id = [];
+        doc.bots_id[0] = "my bot id";
+        doc.bots_id[1] = "other bot id";
+        doc.users_id = [];
+        doc.users_id[0] = myid;
+        doc.users_id[1] = "other user id";
+        doc.logs = [];
+        doc.logs[0] = ["first log for player 0"];
+        doc.logs[1] = ["first log for player 1"];
+        utdb.postDocs(utdb.collection_runs(), collName, doc, function(ok) {
+            // do what here ?? (would be nice to get back the _id for the new document)
+            console.log("postRun added a doc");
+        });
 //        var doc = helper.getParam(req, "doc");
 //        if (!doc) {
 //            // error .. didn't pass in a document to store as a bot
