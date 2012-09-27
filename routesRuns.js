@@ -134,12 +134,12 @@ exports.postRuns = function(req,res) {
                         });
                     } else {
                         jsonError.missing="bot1_id";
-                        res.sendJson(jsonError);
+                        helper.sendJson(res, jsonError);
                     }
                 });
             } else {
                 jsonError.missing="contest_id";
-                res.sendJson(jsonError);
+                helper.sendJson(res, jsonError);
             }
         });
 

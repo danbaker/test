@@ -31,7 +31,8 @@ var turnN;
 //        doc.logs[1] = ["first log for player 2"];
 var queueContestToStart = function(doc) {
     if (runDoc) {
-        return undefined;
+        // sorry ... a contest is already running (maybe one day, we'll queue them up for later)
+        return false;
     }
 
     // reset all state for running a new contest
@@ -41,6 +42,7 @@ var queueContestToStart = function(doc) {
     setTimeout(function() {
         finishContest();
     }, 100);
+    // Contest queued to start soon
     return true;
 };
 
