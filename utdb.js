@@ -372,7 +372,7 @@ exports.setAuth = function(name, auth, fnc) {
 // *
 exports.collection_bots = function() { return botsCollection; };
 exports.collection_contests = function() { return contestsCollection; };
-exports.collection_runs = function() { return runCollection; };
+exports.collection_runs = function() { return runsCollection; };
 exports.collection_users = function() { return userCollection; };
 
 

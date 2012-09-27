@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b163e181-c391-49fa-b20a-b6034a2cbb74" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/app/ContestView.js" afterPath="$PROJECT_DIR$/public/app/ContestView.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/index.html" afterPath="$PROJECT_DIR$/public/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/utdb.js" afterPath="$PROJECT_DIR$/utdb.js" />
     </list>
     <ignored path="h1.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -51,7 +49,7 @@
       <file leaf-file-name="utdb.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/utdb.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="40" column="2" selection-start="1431" selection-end="1431" vertical-scroll-proportion="0.21986607">
+            <state line="374" column="50" selection-start="12594" selection-end="12594" vertical-scroll-proportion="0.43080357">
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -378,7 +376,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/utdb.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="40" column="2" selection-start="1431" selection-end="1431" vertical-scroll-proportion="0.21986607">
+        <state line="374" column="50" selection-start="12594" selection-end="12594" vertical-scroll-proportion="0.43080357">
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
