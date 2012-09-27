@@ -35,15 +35,16 @@ define([
                     html += '</div><div class="row-fluid">';
                 }
                 html += '<div class="span4">';
-                html += '<h2>' + contest.name + '</h2>';
-                html += '<p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>';
-                html += '<p><a class="btn" href="#">View details &raquo;</a></p>';
+                html += '<h2>' + (!!contest.name ? contest.name : 'No name') + '</h2>';
+                html += '<p>' + (!!contest.description ? contest.description : 'No description') + '</p>';
+                html += '<p><a class="btn" href="' + ['/contests/', contest._id].join('') + '">View details &raquo;</a></p>';
                 html += '</div>';
             });
 
             html += '</div>';
 
             this.$el.html(html);
+            this.$el.fadeIn();
             return this;
 
         }
