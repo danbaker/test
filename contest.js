@@ -36,10 +36,12 @@ var queueContestToStart = function(doc) {
     }
 
     // reset all state for running a new contest
+    console.log("queuContestToStart ... queueing");
     runDoc = doc;
     turnN = 1;
     // start running the contest (soon)
     setTimeout(function() {
+        console.log("queuContestToStart ... timer fired ... starting");
         finishContest();
     }, 100);
     // Contest queued to start soon
@@ -47,6 +49,7 @@ var queueContestToStart = function(doc) {
 };
 
 var finishContest = function() {
+    console.log("contest: finished. posting to runs collection: %j", runDoc);
     utdb.postDocs(utdb.collection_runs(), "runs", runDoc, function(ok) {
         // don't know what to do with the return info ...
         runDoc = undefined;
