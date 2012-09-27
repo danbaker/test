@@ -2,6 +2,7 @@
 //  handle all routes related to the "runs" collection
 //  a "run" is a single contest played with 2 (or more) bots
 //      _id
+//      contest_id  = "123abcd76500002"
 //      bots_id     = [ ID_BOT1, ID_BOT2 ... ]
 //      users_id    = [ ID_USER1,ID_USER2 ... ]
 //      logs        = [ { log from bot 1 }, { log from bot 2 } ... ]
@@ -10,6 +11,7 @@
 //  /runs/:id               -> ONE run (has more detail than "all runs".  has more details if you are one of the users involved in the "run")
 var helper = require('./routesHelper');
 var utdb = require('./utdb');
+var contest = require('./contest');
 var collName = "runs";
 
 var cleanseRun = function(req, run, myid) {
@@ -73,22 +75,74 @@ exports.getRuns = function(req, res) {
 };
 exports.postRuns = function(req,res) {
     if (checkAuth(req, res)) {
-        helper.sendJson(res, {message:"Contest run started"});
-        var myid = helper.getUserId(req);
-        var doc = {};
-        doc.bots_id = [];
-        doc.bots_id[0] = "my bot id";
-        doc.bots_id[1] = "other bot id";
-        doc.users_id = [];
-        doc.users_id[0] = myid;
-        doc.users_id[1] = "other user id";
-        doc.logs = [];
-        doc.logs[0] = ["first log for player 0"];
-        doc.logs[1] = ["first log for player 1"];
-        utdb.postDocs(utdb.collection_runs(), collName, doc, function(ok) {
-            // do what here ?? (would be nice to get back the _id for the new document)
-            console.log("postRun added a doc");
+        var jsonError = {response:false, message:"Starting a contest is complex.  ?contest_id=1234abc0001&bot1_id=123a&bot2_id=123b"};
+        var contest_id = helper.getParam(req, "contest_id");        // contest
+        var bot1_id = helper.getParam(req, "bot1_id");              // bot1
+        var bot2_id = helper.getParam(req, "bot2_id");              // bot2
+        var user1_id = undefined;
+        var user2_id = undefined;
+        var contestDoc = undefined;
+        var bot1Doc = undefined;
+        var bot2Doc = undefined;
+
+        var options = {};
+        options.query = {};
+        options.query._id = contest_id;
+        utdb.getDocs(utdb.collection_contests(), "contests", options, function(docs) {
+            if (docs && docs.length === 1) {
+                // contest requested found
+                var contestDoc = docs[0];
+                var options = {};
+                options.query = {};
+                options.query._id = bot1_id;
+                utdb.getDocs(utdb.collection_bots(), "bots", options, function(docs) {
+                    if (docs && docs.length === 1) {
+                        // bot requested found
+                        var bot1Doc = docs[0];
+                        user1_id = bot1Doc.user_id;
+                        var options = {};
+                        options.query = {};
+                        options.query._id = bot2_id;
+                        utdb.getDocs(utdb.collection_bots(), "bots", options, function(docs) {
+                            if (docs && docs.length === 1) {
+                                // bot requested found
+                                var bot2Doc = docs[0];
+                                user2_id = bot1Doc.user_id;
+
+                                // @TODO: work here ...
+                                var myid = helper.getUserId(req);
+                                var doc = {};
+                                doc.contest_id = contest_id;
+                                doc.bots_id = [];
+                                doc.bots_id[0] = bot1_id;
+                                doc.bots_id[1] = bot2_id;
+                                doc.users_id = [];
+                                doc.users_id[0] = user1_id;
+                                doc.users_id[1] = user2_id;
+                                doc.logs = [];
+                                doc.logs[0] = ["first log for player 1"];
+                                doc.logs[1] = ["first log for player 2"];
+                                if (contest.queueContestToStart(doc)) {
+                                    helper.sendJson(res, {response:true, message:"Contest started"});
+                                } else {
+                                    helper.sendJson(res, {response:false, message:"Contest NOT started"});
+                                }
+                            } else {
+                                jsonError.missing="bot2_id";
+                                res.sendJson(jsonError);
+                            }
+                        });
+                    } else {
+                        jsonError.missing="bot1_id";
+                        res.sendJson(jsonError);
+                    }
+                });
+            } else {
+                jsonError.missing="contest_id";
+                res.sendJson(jsonError);
+            }
         });
+
 //        var doc = helper.getParam(req, "doc");
 //        if (!doc) {
 //            // error .. didn't pass in a document to store as a bot

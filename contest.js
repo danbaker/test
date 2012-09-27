@@ -3,6 +3,7 @@
     CONTEST
 
 */
+var utdb = require('./utdb');
 var Sandbox = require('./sand2/sandbox');
 var mainHandler = require('./sand2/mainHandler');
 var logMsg = require('./sand2/log').log;
@@ -10,10 +11,45 @@ var log = function(msg) {
     logMsg("CONTEST.T"+turnN+": "+msg);
 };
 
-
+var runDoc = undefined;             // undefined means: a contest is NOT currently running
 var sand1;
 var sand2;
 var turnN;
+
+
+// request to queue a contest to start running soon
+// in:  doc = "runs" document:
+//        doc.contest_id = contest_id;
+//        doc.bots_id = [];
+//        doc.bots_id[0] = bot1_id;
+//        doc.bots_id[1] = bot2_id;
+//        doc.users_id = [];
+//        doc.users_id[0] = user1_id;
+//        doc.users_id[1] = user2_id;
+//        doc.logs = [];
+//        doc.logs[0] = ["first log for player 1"];     // @TODO: Maybe move all "logs" to their own collection (so we can keep them "under control"
+//        doc.logs[1] = ["first log for player 2"];
+var queueContestToStart = function(doc) {
+    if (runDoc) {
+        return undefined;
+    }
+
+    // reset all state for running a new contest
+    runDoc = doc;
+    turnN = 1;
+    // start running the contest (soon)
+    setTimeout(function() {
+        finishContest();
+    }, 100);
+    return true;
+};
+
+var finishContest = function() {
+    utdb.postDocs(utdb.collection_runs(), "runs", runDoc, function(ok) {
+        // don't know what to do with the return info ...
+        runDoc = undefined;
+    });
+};
 
 var startPlayer = function(pn, fnc) {
     var s = new Sandbox({pn:pn});
@@ -37,7 +73,7 @@ var startPlayer = function(pn, fnc) {
     js += "contestAPI.runNextTurn = function() {";
     js +=   "setTimeout(function() {";
     js +=       "var rn=Math.floor(Math.random()*3);";              // 0,1,2
-    js +=       "var rps=(rn===0? 'r' : rn===1? 'p' : 's');"        // r,p,s
+    js +=       "var rps=(rn===0? 'r' : rn===1? 'p' : 's');";       // r,p,s
     js +=       "console.log('calling submitTurn with pick='+rps);";
     js +=       "contestAPI.submitTurn({pick:rps});";
     js +=       "pickN++;";
@@ -92,3 +128,5 @@ exports.submitTurn = function(json, sand, sandOther) {
         turnN++;
     }
 };
+
+exports.queueContestToStart = queueContestToStart;
