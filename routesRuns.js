@@ -129,7 +129,7 @@ exports.postRuns = function(req,res) {
                                 }
                             } else {
                                 jsonError.missing="bot2_id";
-                                res.sendJson(jsonError);
+                                helper.sendJson(res, jsonError);
                             }
                         });
                     } else {
