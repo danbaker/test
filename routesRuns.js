@@ -28,7 +28,7 @@ var cleanseRun = function(req, run, myid) {
         // remove logs that current user doesn't own
         for(i=0; i<run.users_id.length; i++) {
             if (i !== botN) {
-                run.logs[i] = {};
+                run.logs[i] = [];       // return an empty log array for non-me bots
             }
         }
     }
