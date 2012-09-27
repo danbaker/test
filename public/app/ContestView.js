@@ -37,7 +37,7 @@ define([
                 html.push( data.code || 'function yourcodehere() {\n\n}\n' );
                 html.push( '</div>');
 
-                html.push( '<button class="btn btn-primary" type="button" style="padding-top:820px;">Save Code</button>' );
+                html.push( '<div style="padding-top:820px;"><button class="btn btn-primary" type="button">Save Code</button></div>' );
 
                 this.$el.html( html.join('') );
                 this.$el.show();
