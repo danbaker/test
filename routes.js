@@ -14,6 +14,7 @@ module.exports = function(app){
     var helper = require('./routesHelper');
     var routesBots = require('./routesBots');
     var routesContests = require('./routesContests');
+    var routesRuns = require('./routesRuns');
     var routesSessions = require('./routesSessions');
     var routesUsers = require('./routesUsers');
 
@@ -426,6 +427,20 @@ module.exports = function(app){
         if (!showCollectionHelp(req, res, "DELETE", "users", idParam)) routesUsers.deleteUsers_id(req, res);
     });
 
+
+    // // // // // // // // // // // // //
+    //
+    //  runs
+
+    app.post('/apis/:version/runs', function(req, res) {
+        if (!showCollectionHelp(req, res, "POST", "runs")) routesRuns.postRuns(req, res);
+    });
+    app.get('/apis/:version/runs', function(req, res) {
+        if (!showCollectionHelp(req, res, "GET", "runs")) routesRuns.getRuns(req, res);
+    });
+    app.get('/apis/:version/runs/:id', function(req, res) {
+        if (!showCollectionHelp(req, res, "GET", "runs")) routesRuns.getRuns_id(req, res);
+    });
 
     var idParam = "id --- the id of the bot";
     var showCollectionHelp = function(req, res, method, collName, id1) {

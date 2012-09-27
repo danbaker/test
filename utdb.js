@@ -37,11 +37,11 @@ if (!isLocal) {
 
 
 // * * * * * * * * * * * * * * * *
-var userCollection;             // the "users" collection
-var codeCollection;             // the "code" collection (each code-document is related to a user-id)
-var contestsCollection;         // the "contests" collection
 var botsCollection;             // the "bots" collection (each bot is related to a user and a contest)
-
+//var codeCollection;             // the "code" collection (each code-document is related to a user-id)
+var contestsCollection;         // the "contests" collection
+var userCollection;             // the "users" collection
+var runsCollection;             // the "runs" collection
 
 
 var theClient = undefined;              // the database-client-connection object
@@ -102,13 +102,13 @@ if (isLocal) {
             });
         });
 
-        db.createCollection('code', function(err, collection) {
-            if (err) console.log("createCollection code error: %j", err);
-            db.collection('users', function(err, collection) {
-                if (err) console.log("collection code error: %j", err);
-                codeCollection = collection;
-            });
-        });
+//        db.createCollection('code', function(err, collection) {
+//            if (err) console.log("createCollection code error: %j", err);
+//            db.collection('users', function(err, collection) {
+//                if (err) console.log("collection code error: %j", err);
+//                codeCollection = collection;
+//            });
+//        });
 
         db.createCollection('contests', function(err, collection) {
             if (err) console.log("createCollection code error: %j", err);
@@ -123,6 +123,14 @@ if (isLocal) {
             db.collection('bots', function(err, collection) {
                 if (err) console.log("collection code error: %j", err);
                 botsCollection = collection;
+            });
+        });
+
+        db.createCollection('runs', function(err, collection) {
+            if (err) console.log("createCollection code error: %j", err);
+            db.collection('runs', function(err, collection) {
+                if (err) console.log("collection code error: %j", err);
+                runsCollection = collection;
             });
         });
 
@@ -300,87 +308,74 @@ exports.setAuth = function(name, auth, fnc) {
 // in:  uid     = user-id
 //      game-id = (FUTURE) game-id, which game the code is for
 //      code    = the actual javascript code (string)
-exports.setCode = function(uid, code, fnc) {
-    if (codeCollection && fnc) {
-        codeCollection.find({uid:uid}, function(err, result) {
-            if (err || !result) {
-                // error
-                fnc();
-            } else {
-                result.nextObject(function(err, doc) {
-                    if (doc) {
-                        // FOUND existing code ... update it
-                        doc.code = code;
-                        codeCollection.save(doc);
-                        fnc(true);
-                    } else {
-                        // code NOT FOUND ... insert it
-                        codeCollection.insert({uid:uid, code:code}, function(err, result) {
-                            if (err) console.log("setCode: insert error: %j", err);
-                            if (result) {
-                                fnc(true);
-                            } else {
-                                fnc();
-                            }
-                        });
-                    }
-                });
-            }
-        });
-    }
-};
+//exports.setCode = function(uid, code, fnc) {
+//    if (codeCollection && fnc) {
+//        codeCollection.find({uid:uid}, function(err, result) {
+//            if (err || !result) {
+//                // error
+//                fnc();
+//            } else {
+//                result.nextObject(function(err, doc) {
+//                    if (doc) {
+//                        // FOUND existing code ... update it
+//                        doc.code = code;
+//                        codeCollection.save(doc);
+//                        fnc(true);
+//                    } else {
+//                        // code NOT FOUND ... insert it
+//                        codeCollection.insert({uid:uid, code:code}, function(err, result) {
+//                            if (err) console.log("setCode: insert error: %j", err);
+//                            if (result) {
+//                                fnc(true);
+//                            } else {
+//                                fnc();
+//                            }
+//                        });
+//                    }
+//                });
+//            }
+//        });
+//    }
+//};
 
 // get the code-document for a given user
 // in:  uid     = user-id
 //      game-id = (FUTURE) game-id, which game the code is for
 //      fnc     = callback(string) --or-- callback(undefined)
 // out: code    = the actual javascript code (string)
-exports.getCode = function(uid, fnc) {
-    if (codeCollection && fnc) {
-        codeCollection.find({uid:uid}, function(err, result) {
-            if (err || !result) {
-                if (err) console.log("getcode: error: %j", err);
-                // error
-                fnc();
-            } else {
-                result.nextObject(function(err, doc) {
-                    if (doc) {
-                        // FOUND existing code ... return it
-                        fnc(doc.code);
-                    } else {
-                        // code NOT FOUND ... return empty
-                        fnc("");
-                    }
-                });
-            }
-        });
-    }
-};
+//exports.getCode = function(uid, fnc) {
+//    if (codeCollection && fnc) {
+//        codeCollection.find({uid:uid}, function(err, result) {
+//            if (err || !result) {
+//                if (err) console.log("getcode: error: %j", err);
+//                // error
+//                fnc();
+//            } else {
+//                result.nextObject(function(err, doc) {
+//                    if (doc) {
+//                        // FOUND existing code ... return it
+//                        fnc(doc.code);
+//                    } else {
+//                        // code NOT FOUND ... return empty
+//                        fnc("");
+//                    }
+//                });
+//            }
+//        });
+//    }
+//};
 
 
 // * * * * * * * * * * * * * * * * * * * * * * * * *
 // *
-// *            contests collection
+// *            collections
 // *
-exports.collection_contests = function() { return contestsCollection; };
 exports.collection_bots = function() { return botsCollection; };
+exports.collection_contests = function() { return contestsCollection; };
+exports.collection_runs = function() { return runCollection; };
 exports.collection_users = function() { return userCollection; };
 
-// contests
-//exports.getContests = function(options, fnc) {
-//    get_collection(contestsCollection, options, fnc, "getContests");
-//};
-//exports.postContests = function(doc, fnc) {
-//    post_collection(contestsCollection, doc, fnc, "postContests");
-//};
-//exports.putContests = function(options, doc, fnc) {
-//    put_collection(contestsCollection, options, doc, fnc, "putContests");
-//};
-//exports.deleteContests = function(options, fnc) {
-//    delete_collection(contestsCollection, options, fnc, "deleteContests");
-//};
 
-// bots
 exports.getDocs = function(coll, collName, options, fnc) {
     get_collection(coll, options, fnc, "get"+collName);
 };
