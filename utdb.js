@@ -402,7 +402,11 @@ var getQueryOption = function(options) {
                 // if the key IS "_id" then convert it into a MongoDB "id"
                 // Note: ONLY the _id field needs altered.  Not if it is copied into other docs as "contest_id"
                 if (key === "_id") {
-                    query[key] = new BSON.ObjectID(query[key]);
+                    try {
+                        query[key] = new BSON.ObjectID(query[key]);
+                    } catch (e) {
+                        console.log("_id error: %j", e)
+                    }
                 }
             }
         }
