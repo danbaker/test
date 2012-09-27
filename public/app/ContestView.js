@@ -2,9 +2,10 @@ define([
 
     "jquery",
     "underscore",
-    "backbone"
+    "backbone",
+    "ace"
 
-], function($, _, Backbone) {
+], function($, _, Backbone, ace) {
 
     return Backbone.View.extend({
 
@@ -19,9 +20,32 @@ define([
             console.log(data);
 
             if ( data.status == 404 ) {
+
                 this.$el.html(data.statusText);
+
             } else {
-                this.$el.html(['<p>', data.name, '</p><p>', data.description, '</p>'].join(''));
+
+                var html = [];
+
+                html.push( '<p>' );
+                html.push( data.name );
+                html.push( '</p><p>' );
+                html.push( data.description );
+                html.push( '</p>' );
+
+                html.push( '<div id="editor" class="span8" style="position: relative; height: 400px;">');
+                html.push( data.code || 'function yourcodehere() {\n\n}\n' );
+                html.push( '</div>');
+
+                html.push( '&nbsp;<button class="btn btn-primary" type="button">Save Code</button>' );
+
+                this.$el.html( html.join('') );
+                this.$el.show();
+
+                var editor = ace.edit("editor");
+                editor.setTheme("ace/theme/monokai");
+                editor.getSession().setMode("ace/mode/javascript");
+
             }
             this.$el.fadeIn();
 
