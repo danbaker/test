@@ -11,7 +11,8 @@ require.config({
         jquery:"../vendor/js/jquery-1.8.1.min",
         underscore:"../vendor/js/underscore-min",
         backbone:"../vendor/js/backbone-min",
-        bootstrap:"../vendor/js/bootstrap.min"
+        bootstrap:"../vendor/js/bootstrap.min",
+        ace: "../vendor/js/ace/ace"
 
     },
 
@@ -28,6 +29,10 @@ require.config({
 
         bootstrap: {
             deps: ["jquery"]
+        },
+
+        ace: {
+            exports: "ace"
         }
 
     }
