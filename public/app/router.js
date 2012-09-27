@@ -38,7 +38,7 @@ function(app, MainView, LoginView, ContestView) {
         $.ajax({
             url: [ '/apis/1/contests', contestid ].join('/')
         }).done(function(data) {
-                contestView.render(data);
+                contestView.render(data[0]);
             }).fail(function(data) {
                 contestView.render(data);
             });

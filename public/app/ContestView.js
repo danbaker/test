@@ -20,10 +20,10 @@ define([
 
             if ( data.status == 404 ) {
                 this.$el.html(data.statusText);
-                this.$el.fadeIn();
             } else {
-
+                this.$el.html(['<p>', data.name, '</p><p>', data.description, '</p>'].join(''));
             }
+            this.$el.fadeIn();
 
 //            var html = '<div class="row-fluid">';
 //
