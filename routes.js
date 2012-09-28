@@ -359,36 +359,14 @@ module.exports = function(app){
     app.post('/apis/:version/contests/:id/bots', function(req, res) {
         if (!showCollectionHelp(req, res, "POST", "bots")) {
             if (helper.isLoggedIn(req)) {
-                var doc = helper.getParam(req, "doc");                  // doc is a string:  "{code:"var a=1;}"
-                if (!doc) {                                             // contest_id specified on the URL -- is put into the document
+                var doc = helper.getParam(req, "doc");                  // doc is suppose to be an object
+                if (!doc || typeof doc !== "object") {
                     sendJson(res, {response:false, message:"POST bot failed.  missing doc"});
                 } else {
                     // Note: doc is a STRING at this point
-                    try {
-                        console.log("---0.0--- doc got: %j", doc);
-                        console.log("---0.0--- typeof(doc) = %j", (typeof doc));
-                        var DANB_obj = {code:"echo(\"a\");",other:123};
-                        var DANB_str = JSON.stringify(DANB_obj);
-                        var DANB_o2  = JSON.parse(DANB_str);
-                        console.log("--0.A-- object : %j", DANB_obj);
-                        console.log("--0.B-- object to string: %j", DANB_str);
-                        console.log("--0.C-- string to object: %j", DANB_o2);
-                        var TEST_str = "{\"code\":\"echo(\\\"a\\\");\",\"other\":123}";
-                        var TEST_obj = JSON.parse(TEST_str);
-                        console.log("--0.D-- parsed string OK: %j",TEST_str);
-                        console.log("--1--POST bot.  original doc string: %j",doc);
-                        doc = JSON.parse(doc);                              // doc is a real object
-                        console.log("--2--POST bot.  doc obj=%j", doc);
-                        doc.contest_id = helper.getParam(req, "id");        // force the contest_id in the doc
-                        console.log("--3--POST bot.  doc obj=%j", doc);
-                        doc = JSON.stringify(doc);                          // doc is back to a string
-                        console.log("--4--POST bot.  new doc string="+doc);
-                        var failed = helper.setParam(req, "doc", doc);
-                        routesBots.postBots(req, res);
-                    } catch (e) {
-                        console.log("POST bot failed.  ERROR: %j",e);
-                        sendJson(res, {response:false, message:"POST bot failed.  bad doc"});
-                    }
+                    doc.contest_id = helper.getParam(req, "id");        // force the contest_id in the doc
+                    helper.setParam(req, "doc", doc);
+                    routesBots.postBots(req, res);
                 }
             } else {
                 res.send(401);  // not logged in

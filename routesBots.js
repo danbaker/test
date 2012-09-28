@@ -56,30 +56,28 @@ exports.getBots = function(req, res) {
 exports.postBots = function(req,res) {
     if (checkAuth(req, res)) {
         var doc = helper.getParam(req, "doc");                      // doc is a string
-        if (!doc) {
-            // error .. didn't pass in a document to store as a bot
-            res.send(404);
+        if (!doc || typeof doc !== "object") {
+            // error .. didn't pass in a valid document to store as a bot
+            helper.sendJson(res, {response:false, message:"POST bot failed.  bad doc"});
         } else {
             try {
-                doc = JSON.parse(doc);                              // doc is a real object
                 doc.user_id = helper.getUserId(req);                // force the user_id into the object
                 if (!doc.contest_id) {
                     helper.sendJson(res, {response:false, message:"POST bot failed.  missing contest_id"});
                 } else {
                     // @TODO: validate the contest_id
-                    doc = JSON.stringify(doc);                          // doc is back to a string
                     utdb.postDocs(utdb.collection_bots(), collName, doc, function(ok) {
                         if (ok) {
                             helper.sendJson(res, {response:true, message:"postBots OK"});
                         } else {
-                            // error creating a new contest
-                            res.send(404);
+                            // error creating a new bot document
+                            helper.sendJson(res, {response:false, message:"postBots FAILED"});
                         }
                     });
                 }
             } catch (e) {
                 console.log("postBots failed ERR: %j",e);
-                helper.sendJson(res, {response:false, message:"POST bot failed.  bad doc"});
+                helper.sendJson(res, {response:false, message:"POST bot failed with error: "+e});
             }
         }
     }
