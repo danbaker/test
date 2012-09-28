@@ -376,7 +376,6 @@ module.exports = function(app){
     // get list of all bots for a contest
     app.get('/apis/:version/contests/:contest_id/bots', function(req, res) {
         if (!showCollectionHelp(req, res, "GET", "bots")) {
-            console.log("- - GET bots for contests="+req.params.contest_id);
             routesBots.getBots(req, res);
         }
     });
@@ -397,6 +396,16 @@ module.exports = function(app){
                 routesBots.putBots_id(req, res);
             }
         }
+    });
+    // get runs for a contest
+    app.get('/apis/:version/contests/:contest_id/runs', function(req, res) {
+        if (!showCollectionHelp(req, res, "GET", "runs")) {
+            routesRuns.getRuns(req, res);
+        }
+    });
+    // post a new run for a contest (start running a contest)
+    app.post('/apis/:version/contests/:contest_id/runs', function(req, res) {
+        if (!showCollectionHelp(req, res, "POST", "runs")) routesRuns.postRuns(req, res);
     });
 
 
