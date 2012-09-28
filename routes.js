@@ -359,8 +359,10 @@ module.exports = function(app){
     app.post('/apis/:version/contests/:id/bots', function(req, res) {
         if (!showCollectionHelp(req, res, "POST", "bots")) {
             if (helper.isLoggedIn(req)) {
+                if (!req.params) req.params = {};
+                if (!req.params.doc) req.params.doc = {};
                 req.params.doc.contest_id = helper.getParam(req, "id");         // contest_id specified on the URL -- is put into the document
-                req.params.doc.user_id = helper.getUserId(req);                 // user_id is put into the document
+//                req.params.doc.user_id = helper.getUserId(req);                 // user_id is put into the document
                 routesBots.postBots(req, res);
             } else {
                 res.send(401);  // not logged in

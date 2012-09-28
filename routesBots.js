@@ -62,6 +62,7 @@ exports.postBots = function(req,res) {
         } else {
             // unless special auth, force the logged-in user_id into the doc
             doc.user_id = helper.getUserId(req);
+//            console.log("POST bot doc: %j", doc);
             utdb.postDocs(utdb.collection_bots(), collName, doc, function(ok) {
                 if (ok) {
                     helper.sendJson(res, {response:true, message:"postBots OK"});
