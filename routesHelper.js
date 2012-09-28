@@ -12,6 +12,10 @@ exports.getParam = function(req,name) {
     return undefined;
 };
 
+exports.setParam = function(req, name, value) {
+    req.params[name] = value;
+};
+
 // parse a string into a JSON object
 exports.parseToObject = function(str) {
     var obj;

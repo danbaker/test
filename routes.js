@@ -359,11 +359,12 @@ module.exports = function(app){
     app.post('/apis/:version/contests/:id/bots', function(req, res) {
         if (!showCollectionHelp(req, res, "POST", "bots")) {
             if (helper.isLoggedIn(req)) {
-                if (!req.params || !req.params.doc) {
+                var doc = helper.getParam(req, "doc");
+                if (!doc) {                                             // contest_id specified on the URL -- is put into the document
                     sendJson(res, {response:false, message:"POST bot failed.  missing doc"});
                 } else {
-                    req.params.doc.contest_id = helper.getParam(req, "id");         // contest_id specified on the URL -- is put into the document
-    //                req.params.doc.user_id = helper.getUserId(req);                 // user_id is put into the document
+                    doc.contest_id = helper.getParam(req, "id");        // force the contest_id in the doc
+                    var failed = helper.setParam(req, "doc", doc);
                     routesBots.postBots(req, res);
                 }
             } else {
