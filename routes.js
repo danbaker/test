@@ -371,8 +371,11 @@ module.exports = function(app){
                         console.log("--0.A-- object : %j", DANB_obj);
                         console.log("--0.B-- object to string: %j", DANB_str);
                         console.log("--0.C-- string to object: %j", DANB_o2);
-                        console.log("--1--POST bot.  original doc string="+doc);
-                        doc = JSON.parse(doc);                          // doc is a real object
+                        var TEST_str = "{\"code\":\"echo(\\\"a\\\");\",\"other\":123}";
+                        var TEST_obj = JSON.parse(TEST_str);
+                        console.log("--0.D-- parsed string OK: %j",TEST_str);
+                        console.log("--1--POST bot.  original doc string: %j",doc);
+                        doc = JSON.parse(doc);                              // doc is a real object
                         console.log("--2--POST bot.  doc obj=%j", doc);
                         doc.contest_id = helper.getParam(req, "id");        // force the contest_id in the doc
                         console.log("--3--POST bot.  doc obj=%j", doc);
