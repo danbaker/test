@@ -366,13 +366,14 @@ module.exports = function(app){
                     // Note: doc is a STRING at this point
                     try {
                         doc = JSON.parse(doc);                          // doc is a real object
+                        doc.contest_id = helper.getParam(req, "id");        // force the contest_id in the doc
+                        doc = JSON.stringify(doc);                          // doc is back to a string
+                        var failed = helper.setParam(req, "doc", doc);
+                        routesBots.postBots(req, res);
                     } catch (e) {
+                        console.log("JSON.parse failed bot doc: %j",doc);
                         sendJson(res, {response:false, message:"POST bot failed.  bad doc"});
                     }
-                    doc.contest_id = helper.getParam(req, "id");        // force the contest_id in the doc
-                    doc = JSON.stringify(doc);                          // doc is back to a string
-                    var failed = helper.setParam(req, "doc", doc);
-                    routesBots.postBots(req, res);
                 }
             } else {
                 res.send(401);  // not logged in
