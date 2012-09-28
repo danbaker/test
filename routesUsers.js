@@ -8,6 +8,7 @@
 var helper = require('./routesHelper');
 var utdb = require('./utdb');
 var collName = "users";
+var routesSessions = require('./routesSessions');
 
 // check if user is logged in AND has special authoriziation to the entire users collection
 var checkAuth = function(req, res) {
@@ -34,9 +35,23 @@ exports.getUsers = function(req, res) {
 };
 // create a new user
 exports.postUsers = function(req,res) {
-    // get username
-    // get password
-    // create new user
+    var username = helper.getParam(req, "username");
+    var password = helper.getParam(req, "password");
+    if (!username || !password) {
+        helper.sendJson(res, {response:false, message:"POST users failed. missing username or password"});
+    } else {
+        utdb.addUser(username, password, function(result) {
+            if (!result) {
+                console.log("added new user "+req.params.username+" FAILED");
+                helper.sendJson(res, {response:false, message:"POST users failed (username may already exist)"});
+            } else {
+                // user created ... now try to log them in
+                routesSessions.postSessions(req, res);
+    //            console.log("added new user "+req.params.username+" OK: id="+result.id);
+    //            helper.doLogin(req, res, result, "createuser ok");
+            }
+        });
+    }
 };
 
 // GET one user info
