@@ -359,11 +359,18 @@ module.exports = function(app){
     app.post('/apis/:version/contests/:id/bots', function(req, res) {
         if (!showCollectionHelp(req, res, "POST", "bots")) {
             if (helper.isLoggedIn(req)) {
-                var doc = helper.getParam(req, "doc");
+                var doc = helper.getParam(req, "doc");                  // doc is a string:  "{code:"var a=1;}"
                 if (!doc) {                                             // contest_id specified on the URL -- is put into the document
                     sendJson(res, {response:false, message:"POST bot failed.  missing doc"});
                 } else {
+                    // Note: doc is a STRING at this point
+                    try {
+                        doc = JSON.parse(doc);                          // doc is a real object
+                    } catch (e) {
+                        sendJson(res, {response:false, message:"POST bot failed.  bad doc"});
+                    }
                     doc.contest_id = helper.getParam(req, "id");        // force the contest_id in the doc
+                    doc = JSON.stringify(doc);                          // doc is back to a string
                     var failed = helper.setParam(req, "doc", doc);
                     routesBots.postBots(req, res);
                 }
