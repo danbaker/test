@@ -123,9 +123,15 @@ exports.deleteBots_id = function(req, res) {
     if (checkAuth(req, res)) {
         var id = req.params.id;
         if (id) {
-            // delete the exact document IFF is owned by current user
             var userid = helper.getUserId(req);
-            var options = {query:{_id:id, user_id:userid}};
+            var options;
+            if(checkAuth(req, res, 0x10)) {
+                // delete the exact document (no matter who owns it)
+                options = {query:{_id:id}};
+            } else {
+                // delete the exact document IFF is owned by current user
+                options = {query:{_id:id, user_id:userid}};
+            }
             utdb.deleteDoc(utdb.collection_bots(), collName, options, function(ok) {
                 if (ok) {
                     helper.sendJson(res, {response:true, message:"deleteBots OK"});

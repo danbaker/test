@@ -8,9 +8,9 @@
             0    = default auth. "normal" user (has no special authorization)
             01   = logged in
             02   = can change auth values for all users
-            04   = can alter the contests collection
+            04   = can alter the "contests" collection
             08   = can view/manage the "users" collection (highly dangerous)
-            10   =
+            10   = can manage the entire "bots" collection (can delete bots that you don't own)
             20   =
             40   =
             80   =
