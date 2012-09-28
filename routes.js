@@ -381,7 +381,7 @@ module.exports = function(app){
                         var failed = helper.setParam(req, "doc", doc);
                         routesBots.postBots(req, res);
                     } catch (e) {
-                        console.log("JSON.parse failed bot doc: %j",doc);
+                        console.log("POST bot failed.  ERROR: %j",e);
                         sendJson(res, {response:false, message:"POST bot failed.  bad doc"});
                     }
                 }

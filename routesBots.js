@@ -78,7 +78,7 @@ exports.postBots = function(req,res) {
                     });
                 }
             } catch (e) {
-                console.log("JSON.parse failed bot doc: %j",doc);
+                console.log("postBots failed ERR: %j",e);
                 helper.sendJson(res, {response:false, message:"POST bot failed.  bad doc"});
             }
         }
