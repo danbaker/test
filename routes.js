@@ -365,9 +365,13 @@ module.exports = function(app){
                 } else {
                     // Note: doc is a STRING at this point
                     try {
+                        console.log("--1--POST bot.  original doc string="+doc);
                         doc = JSON.parse(doc);                          // doc is a real object
+                        console.log("--2--POST bot.  doc obj=%j", doc);
                         doc.contest_id = helper.getParam(req, "id");        // force the contest_id in the doc
+                        console.log("--3--POST bot.  doc obj=%j", doc);
                         doc = JSON.stringify(doc);                          // doc is back to a string
+                        console.log("--4--POST bot.  new doc string="+doc);
                         var failed = helper.setParam(req, "doc", doc);
                         routesBots.postBots(req, res);
                     } catch (e) {

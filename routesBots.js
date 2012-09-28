@@ -55,22 +55,32 @@ exports.getBots = function(req, res) {
 };
 exports.postBots = function(req,res) {
     if (checkAuth(req, res)) {
-        var doc = helper.getParam(req, "doc");
+        var doc = helper.getParam(req, "doc");                      // doc is a string
         if (!doc) {
             // error .. didn't pass in a document to store as a bot
             res.send(404);
         } else {
-            // unless special auth, force the logged-in user_id into the doc
-            doc.user_id = helper.getUserId(req);
-//            console.log("POST bot doc: %j", doc);
-            utdb.postDocs(utdb.collection_bots(), collName, doc, function(ok) {
-                if (ok) {
-                    helper.sendJson(res, {response:true, message:"postBots OK"});
+            try {
+                doc = JSON.parse(doc);                              // doc is a real object
+                doc.user_id = helper.getUserId(req);                // force the user_id into the object
+                if (!doc.contest_id) {
+                    helper.sendJson(res, {response:false, message:"POST bot failed.  missing contest_id"});
                 } else {
-                    // error creating a new contest
-                    res.send(404);
+                    // @TODO: validate the contest_id
+                    doc = JSON.stringify(doc);                          // doc is back to a string
+                    utdb.postDocs(utdb.collection_bots(), collName, doc, function(ok) {
+                        if (ok) {
+                            helper.sendJson(res, {response:true, message:"postBots OK"});
+                        } else {
+                            // error creating a new contest
+                            res.send(404);
+                        }
+                    });
                 }
-            });
+            } catch (e) {
+                console.log("JSON.parse failed bot doc: %j",doc);
+                helper.sendJson(res, {response:false, message:"POST bot failed.  bad doc"});
+            }
         }
     }
 };
