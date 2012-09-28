@@ -365,6 +365,8 @@ module.exports = function(app){
                 } else {
                     // Note: doc is a STRING at this point
                     try {
+                        console.log("---0.0--- doc got: %j", doc);
+                        console.log("---0.0--- typeof(doc) = %j", (typeof doc));
                         var DANB_obj = {code:"echo(\"a\");",other:123};
                         var DANB_str = JSON.stringify(DANB_obj);
                         var DANB_o2  = JSON.parse(DANB_str);
