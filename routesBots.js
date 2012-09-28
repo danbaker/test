@@ -106,6 +106,7 @@ exports.putBots_id = function(req, res) {
         if (id && doc && userid) {
             // update the exact document IFF is owned by current user
             var options = {query:{_id:id, user_id:userid}};
+            doc.user_id = userid;
             utdb.putDoc(utdb.collection_bots(), collName, options, doc, function(ok) {
                 if (ok) {
                     helper.sendJson(res, {response:true, message:"putBots OK"});
