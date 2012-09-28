@@ -56,16 +56,19 @@ exports.getBots = function(req, res) {
 exports.postBots = function(req,res) {
     if (checkAuth(req, res)) {
         var doc = helper.getParam(req, "doc");                      // doc is a string
+        console.log("---3--- doc: %j", doc);
         if (!doc || typeof doc !== "object") {
             // error .. didn't pass in a valid document to store as a bot
             helper.sendJson(res, {response:false, message:"POST bot failed.  bad doc"});
         } else {
             try {
                 doc.user_id = helper.getUserId(req);                // force the user_id into the object
+                console.log("---4--- doc: %j", doc);
                 if (!doc.contest_id) {
                     helper.sendJson(res, {response:false, message:"POST bot failed.  missing contest_id"});
                 } else {
                     // @TODO: validate the contest_id
+                    console.log("---5--- doc: %j", doc);
                     utdb.postDocs(utdb.collection_bots(), collName, doc, function(ok) {
                         if (ok) {
                             helper.sendJson(res, {response:true, message:"postBots OK"});
