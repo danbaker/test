@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b163e181-c391-49fa-b20a-b6034a2cbb74" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routes.js" afterPath="$PROJECT_DIR$/routes.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routesHelper.js" afterPath="$PROJECT_DIR$/routesHelper.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routesBots.js" afterPath="$PROJECT_DIR$/routesBots.js" />
     </list>
     <ignored path="h1.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -25,10 +24,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="routes.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="routes.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/routes.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="367" column="50" selection-start="15707" selection-end="15707" vertical-scroll-proportion="0.43638393">
+            <state line="367" column="50" selection-start="15707" selection-end="15707" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -47,10 +46,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="routesBots.js" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="routesBots.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/routesBots.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="109" column="0" selection-start="3841" selection-end="3841" vertical-scroll-proportion="0.0">
+            <state line="126" column="47" selection-start="4435" selection-end="4435" vertical-scroll-proportion="0.6395089">
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -86,9 +85,9 @@
         <option value="$PROJECT_DIR$/utdb.js" />
         <option value="$PROJECT_DIR$/routesRuns.js" />
         <option value="$PROJECT_DIR$/contest.js" />
-        <option value="$PROJECT_DIR$/routesBots.js" />
         <option value="$PROJECT_DIR$/routesHelper.js" />
         <option value="$PROJECT_DIR$/routes.js" />
+        <option value="$PROJECT_DIR$/routesBots.js" />
       </list>
     </option>
   </component>
@@ -357,15 +356,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routesBots.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="109" column="0" selection-start="3841" selection-end="3841" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/routesHelper.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="13" column="0" selection-start="488" selection-end="488" vertical-scroll-proportion="0.0">
@@ -377,7 +367,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/routes.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="367" column="50" selection-start="15707" selection-end="15707" vertical-scroll-proportion="0.43638393">
+        <state line="367" column="50" selection-start="15707" selection-end="15707" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routesBots.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="126" column="47" selection-start="4435" selection-end="4435" vertical-scroll-proportion="0.6395089">
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
