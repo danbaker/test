@@ -365,7 +365,12 @@ module.exports = function(app){
                 } else {
                     // Note: doc is a STRING at this point
                     try {
-                        console.log("--0-- object to string: %j", JSON.stringify({code:"echo(\"a\");",other:123}));
+                        var DANB_obj = {code:"echo(\"a\");",other:123};
+                        var DANB_str = JSON.stringify(DANB_obj);
+                        var DANB_o2  = JSON.parse(DANB_str);
+                        console.log("--0.A-- object : %j", DANB_obj);
+                        console.log("--0.B-- object to string: %j", DANB_str);
+                        console.log("--0.C-- string to object: %j", DANB_o2);
                         console.log("--1--POST bot.  original doc string="+doc);
                         doc = JSON.parse(doc);                          // doc is a real object
                         console.log("--2--POST bot.  doc obj=%j", doc);
