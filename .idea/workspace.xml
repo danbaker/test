@@ -4,6 +4,7 @@
     <list default="true" id="b163e181-c391-49fa-b20a-b6034a2cbb74" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routes.js" afterPath="$PROJECT_DIR$/routes.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routesBots.js" afterPath="$PROJECT_DIR$/routesBots.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/utdb.js" afterPath="$PROJECT_DIR$/utdb.js" />
     </list>
     <ignored path="h1.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -28,7 +29,7 @@
       <file leaf-file-name="routes.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/routes.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="370" column="0" selection-start="15784" selection-end="15784" vertical-scroll-proportion="0.0">
+            <state line="367" column="0" selection-start="15638" selection-end="15638" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -50,7 +51,7 @@
       <file leaf-file-name="routesBots.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/routesBots.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="70" column="37" selection-start="2631" selection-end="2631" vertical-scroll-proportion="0.6171875">
+            <state line="58" column="46" selection-start="1995" selection-end="1995" vertical-scroll-proportion="0.42745537">
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -61,7 +62,18 @@
       <file leaf-file-name="utdb.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/utdb.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="462" column="4" selection-start="16257" selection-end="16257" vertical-scroll-proportion="0.0">
+            <state line="405" column="2" selection-start="13690" selection-end="13690" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="routesContests.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/routesContests.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="64" column="0" selection-start="1724" selection-end="2187" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -97,8 +109,8 @@
         <option value="$PROJECT_DIR$/routesRuns.js" />
         <option value="$PROJECT_DIR$/contest.js" />
         <option value="$PROJECT_DIR$/routesHelper.js" />
-        <option value="$PROJECT_DIR$/utdb.js" />
         <option value="$PROJECT_DIR$/routes.js" />
+        <option value="$PROJECT_DIR$/utdb.js" />
         <option value="$PROJECT_DIR$/routesBots.js" />
       </list>
     </option>
@@ -341,15 +353,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routesContests.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="72" column="0" selection-start="2446" selection-end="2527" vertical-scroll-proportion="0.4497768">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/contest.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="38" column="48" selection-start="1215" selection-end="1215" vertical-scroll-proportion="0.39285713">
@@ -368,18 +371,27 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/utdb.js">
+    <entry file="file://$PROJECT_DIR$/routes.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="462" column="4" selection-start="16257" selection-end="16257" vertical-scroll-proportion="0.0">
+        <state line="367" column="0" selection-start="15638" selection-end="15638" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routes.js">
+    <entry file="file://$PROJECT_DIR$/routesContests.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="370" column="0" selection-start="15784" selection-end="15784" vertical-scroll-proportion="0.0">
+        <state line="64" column="0" selection-start="1724" selection-end="2187" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utdb.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="405" column="2" selection-start="13690" selection-end="13690" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
@@ -388,7 +400,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/routesBots.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="70" column="37" selection-start="2631" selection-end="2631" vertical-scroll-proportion="0.6171875">
+        <state line="58" column="46" selection-start="1995" selection-end="1995" vertical-scroll-proportion="0.42745537">
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>

@@ -388,6 +388,22 @@ exports.putDoc = function(coll, collName, options, doc, fnc) {
 exports.deleteDoc = function(coll, collName, options, fnc) {
     delete_collection(coll, options, fnc, "delete"+collName);
 };
+exports.getDoc = function(coll, collName, id, fnc, options) {
+    options = options || {};
+    if (id) {
+        if (!options.query) options.query = {};
+        options.query._id = id;
+        exports.getDocs(coll, collName, options, function(docs) {
+            if (docs && docs.length === 1) {
+                fnc(docs[0]);
+            } else {
+                fnc(undefined);
+            }
+        });
+    } else {
+        fnc(undefined);
+    }
+};
 
 // * * * * * * * * * * * * * * * * * * * * * * * * *
 // *
