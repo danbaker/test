@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b163e181-c391-49fa-b20a-b6034a2cbb74" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routesUsers.js" afterPath="$PROJECT_DIR$/routesUsers.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routes.js" afterPath="$PROJECT_DIR$/routes.js" />
     </list>
     <ignored path="h1.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -24,10 +24,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="routes.js" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="routes.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/routes.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="115" column="0" selection-start="3966" selection-end="4518" vertical-scroll-proportion="0.0">
+            <state line="426" column="0" selection-start="18169" selection-end="18169" vertical-scroll-proportion="0.45535713">
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -68,10 +68,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="routesUsers.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="routesUsers.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/routesUsers.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="48" column="54" selection-start="1827" selection-end="1827" vertical-scroll-proportion="0.55022323">
+            <state line="48" column="54" selection-start="1827" selection-end="1827" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -128,10 +128,10 @@
         <option value="$PROJECT_DIR$/routesRuns.js" />
         <option value="$PROJECT_DIR$/contest.js" />
         <option value="$PROJECT_DIR$/routesHelper.js" />
-        <option value="$PROJECT_DIR$/routes.js" />
         <option value="$PROJECT_DIR$/utdb.js" />
         <option value="$PROJECT_DIR$/routesBots.js" />
         <option value="$PROJECT_DIR$/routesUsers.js" />
+        <option value="$PROJECT_DIR$/routes.js" />
       </list>
     </option>
   </component>
@@ -400,15 +400,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routes.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="115" column="0" selection-start="3966" selection-end="4518" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/routesSessions.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="60" column="0" selection-start="2132" selection-end="2152" vertical-scroll-proportion="0.0">
@@ -420,7 +411,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/routesUsers.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="48" column="54" selection-start="1827" selection-end="1827" vertical-scroll-proportion="0.55022323">
+        <state line="48" column="54" selection-start="1827" selection-end="1827" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="426" column="0" selection-start="18169" selection-end="18169" vertical-scroll-proportion="0.45535713">
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>

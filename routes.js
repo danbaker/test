@@ -212,73 +212,73 @@ module.exports = function(app){
     //
     //  user contest code
 
-    // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-    app.post('/apis/:version/setcode', function(req, res) {
-        setcode(req, res);
-    });
-    app.get('/apis/:version/setcode', function(req, res) {
-        setcode(req, res);
-    });
-    var setcode = function(req, res) {
-        // apis/<version>/set the code for the current logged-in user (later, we will need to know which contest)
-        if (!showDocs(req,res, {
-            version: 1,
-            api: "setcode",
-            description: "Set the code for the contest",
-            urlparams: [
-            ],
-            longDesc: "POST/GET a variable called 'code' with the string value for the code to set<br>" +
-                        " Example:  /apis/1/setcode?code=var a=1;"
-        })) {
-            // Note: Must be logged in
-            if (isAuth(req, 0x01)) {
-                // user ALLOWED to set the code
-                console.log(req.params);
-                var code = req.params.code;
-                if (!code) code = req.query.code;
-                if (!code) code = req.body.code;
-                utdb.setCode(req.session.user.id, code, function(result) {
-                    if (result) {
-                        sendJson(res, {response:true, message:"setcode ok"});
-                    } else {
-                        sendJson(res, {response:false, message:"setcode failed"});
-                    }
-                });
-            } else {
-                sendJson(res, {response:false, message:"setcode failed.  not logged in."});
-            }
-        }
-    };
-
-    // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-    app.get('/apis/:version/getcode', function(req, res) {
-        getcode(req, res);
-    });
-    var getcode = function(req, res) {
-        // apis/<version>/get the code for the current logged-in user (later, we will need to know which contest)
-        if (!showDocs(req,res, {
-            version: 1,
-            api: "getcode",
-            description: "Get the code for the contest",
-            urlparams: [
-            ],
-            longDesc: "Returns the current contest code as {code:CODE}<br>"
-        })) {
-            // Note: Must be logged in
-            if (isAuth(req, 0x01)) {
-                // user ALLOWED to get the code
-                utdb.getCode(req.session.user.id, function(result) {
-                    if (result != undefined) {
-                        sendJson(res, {response:true, code:result});
-                    } else {
-                        sendJson(res, {response:false, message:"getcode failed"});
-                    }
-                });
-            } else {
-                sendJson(res, {response:false, message:"getcode failed.  not logged in."});
-            }
-        }
-    };
+//    // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+//    app.post('/apis/:version/setcode', function(req, res) {
+//        setcode(req, res);
+//    });
+//    app.get('/apis/:version/setcode', function(req, res) {
+//        setcode(req, res);
+//    });
+//    var setcode = function(req, res) {
+//        // apis/<version>/set the code for the current logged-in user (later, we will need to know which contest)
+//        if (!showDocs(req,res, {
+//            version: 1,
+//            api: "setcode",
+//            description: "Set the code for the contest",
+//            urlparams: [
+//            ],
+//            longDesc: "POST/GET a variable called 'code' with the string value for the code to set<br>" +
+//                        " Example:  /apis/1/setcode?code=var a=1;"
+//        })) {
+//            // Note: Must be logged in
+//            if (isAuth(req, 0x01)) {
+//                // user ALLOWED to set the code
+//                console.log(req.params);
+//                var code = req.params.code;
+//                if (!code) code = req.query.code;
+//                if (!code) code = req.body.code;
+//                utdb.setCode(req.session.user.id, code, function(result) {
+//                    if (result) {
+//                        sendJson(res, {response:true, message:"setcode ok"});
+//                    } else {
+//                        sendJson(res, {response:false, message:"setcode failed"});
+//                    }
+//                });
+//            } else {
+//                sendJson(res, {response:false, message:"setcode failed.  not logged in."});
+//            }
+//        }
+//    };
+//
+//    // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+//    app.get('/apis/:version/getcode', function(req, res) {
+//        getcode(req, res);
+//    });
+//    var getcode = function(req, res) {
+//        // apis/<version>/get the code for the current logged-in user (later, we will need to know which contest)
+//        if (!showDocs(req,res, {
+//            version: 1,
+//            api: "getcode",
+//            description: "Get the code for the contest",
+//            urlparams: [
+//            ],
+//            longDesc: "Returns the current contest code as {code:CODE}<br>"
+//        })) {
+//            // Note: Must be logged in
+//            if (isAuth(req, 0x01)) {
+//                // user ALLOWED to get the code
+//                utdb.getCode(req.session.user.id, function(result) {
+//                    if (result != undefined) {
+//                        sendJson(res, {response:true, code:result});
+//                    } else {
+//                        sendJson(res, {response:false, message:"getcode failed"});
+//                    }
+//                });
+//            } else {
+//                sendJson(res, {response:false, message:"getcode failed.  not logged in."});
+//            }
+//        }
+//    };
 
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     app.get('/apis/:version/playnow/:username', function(req, res) {
@@ -424,6 +424,9 @@ module.exports = function(app){
     //
     //  users
 
+    app.post('/apis/:version/users', function(req, res) {
+        if (!showCollectionHelp(req, res, "POST", "users")) routesUsers.postUsers(req, res);
+    });
     app.get('/apis/:version/users', function(req, res) {
         if (!showCollectionHelp(req, res, "GET", "users")) routesUsers.getUsers(req, res);
     });
