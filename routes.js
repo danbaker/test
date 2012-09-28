@@ -365,6 +365,7 @@ module.exports = function(app){
                 } else {
                     // Note: doc is a STRING at this point
                     try {
+                        console.log("--0-- object to string: %j", JSON.stringify({code:"echo(\"a\");",other:123}));
                         console.log("--1--POST bot.  original doc string="+doc);
                         doc = JSON.parse(doc);                          // doc is a real object
                         console.log("--2--POST bot.  doc obj=%j", doc);
