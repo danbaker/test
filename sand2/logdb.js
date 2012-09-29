@@ -1,6 +1,7 @@
 var mdbURL = process.env.MONGOLAB_URI;   // URL to THE database
 var isLocal = (mdbURL? false : true);
 var mongo;
+
 if (!isLocal) {
     mongo = require('mongodb');
     var nillFunction = function() {
@@ -34,7 +35,7 @@ if (!isLocal) {
     //      doc     = { ... } the document to insert into the collection
     //      fnc     = callback(result_object) --or-- callback(undefined)
     //      msgName = the name of the method that was called (used in error messages)
-    var postLogs = function(doc, fnc) {
+    exports.postLogs = function(doc, fnc) {
         var coll = logsCollection;
         var msgName = "logs";
         if (coll) {
@@ -54,6 +55,7 @@ if (!isLocal) {
     };
 
 
-    exports.postLogs = postLogs;
+} else {
+    exports.postLogs =  function() {};
 }
-exports.postLogs = function() {};
+
