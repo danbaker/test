@@ -19,7 +19,7 @@ var checkAuth = function(req, res, auth) {
 exports.getLogs = function(req, res) {
     if (checkAuth(req, res)) {
         var options = helper.makeOptions(req);
-        utdb.getDocs(utdb.collection_runs(), collName, options, function(docs) {
+        utdb.getDocs(utdb.collection_logs(), collName, options, function(docs) {
             if (docs) {
 //                docs = cleanseRuns(req, docs);      // cleanse the list of runs (remove info current user can't see, like pther users logs)
                 helper.sendJson(res, docs);         // return the cleansed list
@@ -39,7 +39,7 @@ exports.getLogs_id = function(req, res) {
             var options = helper.makeOptions(req);
             if (!options.query) options.query = {};
             options.query._id = id;
-            utdb.getDocs(utdb.collection_runs(), collName, options, function(docs) {
+            utdb.getDocs(utdb.collection_logs(), collName, options, function(docs) {
                 if (docs && docs.length === 1) {
                     var myid = helper.getUserId(req);       // current logged-in user (ok to return extra info for them)
 //                    docs = cleanseRuns(req, docs, myid);    // cleanse the list of runs (remove info current user can't see, like logs)
