@@ -16,7 +16,7 @@ var collName = "runs";
 
 var cleanseRun = function(req, run, myid) {
     // remove several pieces of info
-    if (run && run.users_id) {
+    if (run && run.logs && run.users_id) {
         var botN = -1;
         var i;
         for(i=0; i<run.users_id.length; i++) {
