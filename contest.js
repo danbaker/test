@@ -16,7 +16,10 @@ var run_id = "0";                   // run_id for current running contest
 var sand1;                          // sandbox for P1
 var sand2;
 var turnN;                          // which turn# running
-var sandboxesDone;                  // total sanboxes that have finished/ended/done
+var maxTurns = 7;                   // max turns each player gets (1 turn === each player submit)
+var p1_win = 0;
+var p2_win = 0;
+var sandboxesDone = 0;              // total sanboxes that have finished/ended/done
 
 
 // request to queue a contest to start running soon
@@ -59,20 +62,6 @@ var queueContestToStart = function(doc) {
 // contest is DONE.  both players code has exited.
 var finishContest = function() {
     runDoc = undefined;
-//    // read in the logs from disk, and separate based on player number
-//    require('./sand2/log').getLogMessages(function(logMessages) {
-//        if (runDoc) {
-//            runDoc.logs = logMessages;
-//            // @TODO: move all logs to their own database collection ("logs") -- maybe in chunks of 50 log messages per document
-//            utdb.postDocs(utdb.collection_runs(), "runs", runDoc, function(ok) {
-//                // don't know what to do with the return info ...
-//                runDoc = undefined;
-//            });
-//        } else {
-//            console.log("CONTEST DONE.  Logs: %j", logMessages[0]);
-//            console.log("CONTEST DONE.  Logs: %j", logMessages[1]);
-//        }
-//    });
 };
 
 var makeSetPlayerCall = function(pIndex) {
@@ -99,12 +88,6 @@ var startPlayer = function(pIndex, fnc) {
     js += "console.log('DANB Hello world ... client JavaScript is RUNNING');";
     js += "console.log('DANB R='+Math.floor(Math.random()*3));";
     js += makeSetPlayerCall(pIndex);
-    // @TODO: pass the contest_id and user_id over (so they can use it to log to the logs collection)
-    js += userjs;                                   // run player code
-//    js += "setTimeout(function() {";
-//    js +=   "console.log('from the timeout 1');";
-//    js += "}, 100);";
-//    js += "console.log('end of code');";
     // server calls the "contestAPI.runNextTurn" function when it is time to run a turn
     js += "var pickN = 1;";
     js += "contestAPI.runNextTurn = function() {";
@@ -116,12 +99,6 @@ var startPlayer = function(pIndex, fnc) {
     js +=       "pickN++;";
     js +=    "}, 100);";
     js += "};";
-    // IF this is player-1 ... kick-start it running
-//    if (pn === "P1") {
-//        js += "setTimeout(function() {";
-//            js += "contestAPI.runNextTurn();";
-//        js += "}, 500);"
-//    }
     s.run( pn, js, function( output ) {
         // this sanbox ended.  is done running code.
         sandboxesDone++;
@@ -137,10 +114,13 @@ var startPlayer = function(pIndex, fnc) {
 
 // start running a contest between P1 and P2 (call callback fnc when done)
 exports.runContest = function(id_p1, id_p2, fnc) {
+    // * * * * * * * * * * * * * * * * *
     // RESET EVERYTHING FOR A NEW CONTEST
     require('./sand2/log').resetLogFile();
     turnN = 1;
     sandboxesDone = 0;
+    p1_win = 0;
+    p2_win = 0;
 
     // START UP PLAYER 1
     sand1 = startPlayer(0, function(output) {
@@ -154,22 +134,38 @@ exports.runContest = function(id_p1, id_p2, fnc) {
     mainHandler.startContest(require('./contest'));
 };
 
+// NOTE: An external node.js "player" just submitted their turn
+// in:  json    = { }  === turn data object
+//      sand    = the sandbox that submitted this turn
 exports.submitTurn = function(json, sand, sandOther) {
-    sand.savedTurn = json;
-    if (sand == sand2) {
-        // we have P1 and P2 turns ... check winner
-        var p1 = sand1.savedTurn.pick;
-        var p2 = sand2.savedTurn.pick;
-        var p1Win = false;
-        var p2Win = false;
-        if ((p1 == 'r' && p2 == 's') || (p1 == 'p' && p2 == 'r') || (p1 == 's' && p2 == 'p')) {
-            p1Win = true;
+    if (turnN <= maxTurns) {
+        sand.savedTurn = json;
+        if (sand == sand2) {
+            // we have P1 and P2 turns ... check winner
+            var p1 = sand1.savedTurn.pick;
+            var p2 = sand2.savedTurn.pick;
+            var p1Win = false;
+            var p2Win = false;
+            if ((p1 == 'r' && p2 == 's') || (p1 == 'p' && p2 == 'r') || (p1 == 's' && p2 == 'p')) {
+                p1Win = true;
+                p1_win++;
+            }
+            if ((p2 == 'r' && p1 == 's') || (p2 == 'p' && p1 == 'r') || (p2 == 's' && p1 == 'p')) {
+                p2Win = true;
+                p2_win++;
+            }
+            log("p1="+p1+"  p2="+p2+"  p1Win="+p1Win+"  p2Win="+p2Win);
+            turnN++;
         }
-        if ((p2 == 'r' && p1 == 's') || (p2 == 'p' && p1 == 'r') || (p2 == 's' && p1 == 'p')) {
-            p2Win = true;
+    } else {
+        // contest over ... shut them down
+        if (p1_win > p2_win) {
+            log("CONTEST OVER: Player1 WIN P1("+p1_win+") to P2("+p2_win+")");
+        } else if (p2_win > p1_win) {
+            log("CONTEST OVER: Player2 WIN P1("+p1_win+") to P2("+p2_win+")");
+        } else {
+            log("CONTEST OVER: TIE P1("+p1_win+") to P2("+p2_win+")");
         }
-        log("p1="+p1+"  p2="+p2+"  p1Win="+p1Win+"  p2Win="+p2Win);
-        turnN++;
     }
 };
 
