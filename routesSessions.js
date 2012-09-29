@@ -12,11 +12,13 @@ var doLogin = function(req, res, result) {
         // assume we have already created the login session info ... since "local testing"
     } else {
         var username = helper.getParam('username');
+        console.log("1---- doLogin username="+username);
         var uobj = {};
         uobj.name = username;                   // username the user supplied
         uobj.id = result.id;                    // id of the logged in user
         uobj._id = result._id;
         uobj.auth = result.auth | 1;            // authorization level for the logged in user (ensure logged-in)
+        console.log("2---- uobj: %j", uobj);
         // save this newly created user object in the session
         req.session.user = uobj;
     }
@@ -25,7 +27,8 @@ var doLogin = function(req, res, result) {
 // return an object describing the current-logged-in-user
 var returnLoginInfo = function(req, res, msg) {
     var uobj = req.session.user;
-    helper.sendJson(res, {response:true, id: uobj.id, auth: uobj.auth, name: uobj.uname, message:msg});
+    console.log("3---- uobj: %j", uobj);
+    helper.sendJson(res, {response:true, id: uobj.id, auth: uobj.auth, name: uobj.name, message:msg});
 };
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
