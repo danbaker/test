@@ -15,10 +15,11 @@ console = {};
     var log = require('./log').log;
     var logDoc = require('./log').logDoc;
     var playerN = "P0";                                     // "P1" or "P2"å
-    var pinfo = {};                                         // { contest_id, bot_id, user_id, run_id, pn }
-    // client code calls this to set their own player#
+    var pinfo = undefined;                                  // { contest_id, bot_id, user_id, run_id, pn }
+
+    // client code calls this to set their own player# (NOTE: can only call this ONCE)
     contestAPI.setPlayer = function(pinfoX) {
-        if (pinfo) {
+        if (pinfoX && !pinfo) {
             pinfo = pinfoX;
             playerN = pinfo.pn;
         }
@@ -32,9 +33,11 @@ console = {};
         var doc = {};
         doc.msg = msg;
         // copy entire player-info object into log document
-        for(var key in pinfo) {
-            if (pinfo.hasOwnProperty(key)) {
-                doc[key] = pinfo[key];
+        if (pinfo) {
+            for(var key in pinfo) {
+                if (pinfo.hasOwnProperty(key)) {
+                    doc[key] = pinfo[key];
+                }
             }
         }
         logDoc(doc);
