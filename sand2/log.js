@@ -22,7 +22,11 @@ var setPrefix = function(str) {
 };
 
 var resetLogFile = function() {
-    fs.unlinkSync(logfile);
+    try {
+        fs.unlinkSync(logfile);
+    } catch (e) {
+        // ignore error (assume file-not-found)
+    }
     log("- - - - - - - NEW CONTEST STARTING - - - - - -");
 };
 
