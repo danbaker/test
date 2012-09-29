@@ -43,8 +43,6 @@ exports.postContests = function(req,res) {
         res.send(401);
     }
 };
-
-
 // GET /apis/:version/contests/:id
 exports.getContests_id = function(req, res) {
     var id = req.params.id;
@@ -78,7 +76,6 @@ exports.putContests_id = function(req, res) {
         res.send(404);
     }
 };
-
 exports.deleteContests_id = function(req, res) {
     var id = req.params.id;
     if (id) {

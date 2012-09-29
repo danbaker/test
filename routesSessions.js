@@ -25,7 +25,7 @@ var doLogin = function(req, res, result) {
 // return an object describing the current-logged-in-user
 var returnLoginInfo = function(req, res, msg) {
     var uobj = req.session.user;
-    helper.sendJson(res, {response:true, id: uobj.id, auth: uobj.auth, name: uobj.name, message:msg});
+    helper.sendJson(res, {response:true, id: uobj.id, auth: uobj.auth, name: uobj.uname, message:msg});
 };
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
