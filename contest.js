@@ -17,6 +17,7 @@ var sand1;                          // sandbox for P1
 var sand2;
 var turnN;                          // which turn# running
 var maxTurns = 7;                   // max turns each player gets (1 turn === each player submit)
+var isOver = false;                 // true means: contest is over
 var p1_win = 0;
 var p2_win = 0;
 var sandboxesDone = 0;              // total sanboxes that have finished/ended/done
@@ -118,6 +119,7 @@ exports.runContest = function(id_p1, id_p2, fnc) {
     // RESET EVERYTHING FOR A NEW CONTEST
     require('./sand2/log').resetLogFile();
     turnN = 1;
+    isOver = false;
     sandboxesDone = 0;
     p1_win = 0;
     p2_win = 0;
@@ -138,7 +140,7 @@ exports.runContest = function(id_p1, id_p2, fnc) {
 // in:  json    = { }  === turn data object
 //      sand    = the sandbox that submitted this turn
 exports.submitTurn = function(json, sand, sandOther) {
-    if (turnN <= maxTurns) {
+    if (!isOver) {
         sand.savedTurn = json;
         if (sand == sand2) {
             // we have P1 and P2 turns ... check winner
@@ -156,17 +158,21 @@ exports.submitTurn = function(json, sand, sandOther) {
             }
             log("p1="+p1+"  p2="+p2+"  p1Win="+p1Win+"  p2Win="+p2Win);
             turnN++;
-        }
-    } else {
-        // contest over ... shut them down
-        if (p1_win > p2_win) {
-            log("CONTEST OVER: Player1 WIN P1("+p1_win+") to P2("+p2_win+")");
-        } else if (p2_win > p1_win) {
-            log("CONTEST OVER: Player2 WIN P1("+p1_win+") to P2("+p2_win+")");
-        } else {
-            log("CONTEST OVER: TIE P1("+p1_win+") to P2("+p2_win+")");
+            if (turnN > maxTurns) {
+                // contest over ... shut them down
+                isOver = true;
+                if (p1_win > p2_win) {
+                    log("CONTEST OVER: Player1 WIN P1("+p1_win+") to P2("+p2_win+")");
+                } else if (p2_win > p1_win) {
+                    log("CONTEST OVER: Player2 WIN P1("+p1_win+") to P2("+p2_win+")");
+                } else {
+                    log("CONTEST OVER: TIE P1("+p1_win+") to P2("+p2_win+")");
+                }
+                // @TODO: push "winning info" into the run document
+            }
         }
     }
+    return isOver;
 };
 
 exports.queueContestToStart = queueContestToStart;

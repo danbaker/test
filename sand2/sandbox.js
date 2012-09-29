@@ -29,6 +29,8 @@ function Sandbox(options) {
     var childStdin;
     var self = this;
     var playerN = "0";
+    var child;
+    var timer;
 
 
     // return the stream to send packet data to for this child-sandbox-app
@@ -45,9 +47,9 @@ function Sandbox(options) {
     this.run = function(pn, jscode, fnc) {
         playerN = pn;
         log("Sandbox.run -- starting", playerN);
-        var timer;
+        timer;
         var stdoutTxt = '';
-        var child = spawn( this.options.node, [this.options.shovel] );
+        child = spawn( this.options.node, [this.options.shovel] );
         var fnStdout = function(data) {
             if (!!data) {
                 stdoutTxt += data;
@@ -97,7 +99,13 @@ function Sandbox(options) {
             child.kill( 'SIGKILL' );
         }, this.options.timeout );
 
-    }
+    };
+
+    this.signalGameOver = function() {
+        child.stdin.end();
+        child.kill( 'SIGKILL' );
+        clearTimeout( timer );
+    };
 }
 
 // static options

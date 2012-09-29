@@ -22,8 +22,13 @@ var process = function(json, stream, sand) {
     switch(json.op) {
         case "submitTurn":
             log(". . . in mainHandler.process op=submitTurn by player "+json.pn+"=="+sand.getPlayerN()+" nextPlayer="+sandOther.getPlayerN());
-            contest.submitTurn(data, sand, sandOther);
-            packet.sendJson({op:"runNextTurn"}, sandOther.getStream());
+            var isOver = contest.submitTurn(data, sand, sandOther);
+            if (!isOver) {
+                packet.sendJson({op:"runNextTurn"}, sandOther.getStream());
+            } else {
+                sand1.signalGameOver();
+                sand2.signalGameOver();
+            }
             break;
         default:
             log("ERROR: unknown op("+json.op+")");
