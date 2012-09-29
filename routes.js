@@ -14,6 +14,7 @@ module.exports = function(app){
     var helper = require('./routesHelper');
     var routesBots = require('./routesBots');
     var routesContests = require('./routesContests');
+    var routesLogs = require('./routesLogs');
     var routesRuns = require('./routesRuns');
     var routesSessions = require('./routesSessions');
     var routesUsers = require('./routesUsers');
@@ -497,6 +498,24 @@ module.exports = function(app){
         }
         return helper.showDocs(req,res, obj);
     };
+
+
+
+    // // // // // // // // // // // // //
+    //
+    //  logs
+
+    // get list of all logs
+    app.get('/apis/:version/logs', function(req, res) {
+        if (!showCollectionHelp(req, res, "GET", "logs")) routesLogs.getLogs(req, res);
+    });
+    // get one contest
+    app.get('/apis/:version/logs/:id', function(req, res) {
+        if (!showCollectionHelp(req, res, "GET", "logs")) routesLogs.getLogs_id(req, res);
+    });
+
+
+
 
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
     // Note: anyone allowed to ask for documentation

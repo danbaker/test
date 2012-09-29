@@ -80,6 +80,7 @@ var startPlayer = function(pn, fnc) {
     js += "console.log('DANB R='+Math.floor(Math.random()*3));";
     js += "contestAPI.setPlayer('"+pn+"');";        // tell the API which player I am
     js += "contestAPI.setPlayer = undefined;";      // remove the "setPlayer" function
+    // @TODO: pass the contest_id and user_id over (so they can use it to log to the logs collection)
     js += userjs;                                   // run player code
 //    js += "setTimeout(function() {";
 //    js +=   "console.log('from the timeout 1');";

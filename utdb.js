@@ -41,7 +41,8 @@ var botsCollection;             // the "bots" collection (each bot is related to
 //var codeCollection;             // the "code" collection (each code-document is related to a user-id)
 var contestsCollection;         // the "contests" collection
 var userCollection;             // the "users" collection
-var runsCollection;             // the "runs" collection
+var runsCollection;             // the "runs" collection (each contest has several "runs" between two bots on that contest)
+var logsCollection;             // the "logs" collection (each "run" has many logs for each bot)
 
 
 var theClient = undefined;              // the database-client-connection object
@@ -131,6 +132,14 @@ if (isLocal) {
             db.collection('runs', function(err, collection) {
                 if (err) console.log("collection code error: %j", err);
                 runsCollection = collection;
+            });
+        });
+
+        db.createCollection('logs', function(err, collection) {
+            if (err) console.log("createCollection code error: %j", err);
+            db.collection('logs', function(err, collection) {
+                if (err) console.log("collection code error: %j", err);
+                logsCollection = collection;
             });
         });
 
@@ -372,6 +381,7 @@ exports.setAuth = function(name, auth, fnc) {
 // *
 exports.collection_bots = function() { return botsCollection; };
 exports.collection_contests = function() { return contestsCollection; };
+exports.collection_logs = function() { return logsCollection; };
 exports.collection_runs = function() { return runsCollection; };
 exports.collection_users = function() { return userCollection; };
 
