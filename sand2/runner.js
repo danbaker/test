@@ -32,14 +32,19 @@ console = {};
     console.log = function(msg) {
         var doc = {};
         doc.msg = msg;
-        // copy entire player-info object into log document
-        if (pinfo) {
-            for(var key in pinfo) {
-                if (pinfo.hasOwnProperty(key)) {
-                    doc[key] = pinfo[key];
-                }
-            }
-        }
+//        // copy entire player-info object into log document
+//        if (pinfo) {
+//            for(var key in pinfo) {
+//                if (pinfo.hasOwnProperty(key)) {
+//                    doc[key] = pinfo[key];
+//                }
+//            }
+//        }
+        doc.pn = pinfo.pn;
+        doc.bot_id = pinfo.bot_id;
+        doc.user_id = pinfo.user_id;
+        doc.run_id = pinfo.run_id;
+        doc.contest_id = pinfo.contest_id;
         logDoc(doc);
     };
 }());
