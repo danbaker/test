@@ -92,24 +92,26 @@ var startPlayer = function(pIndex, fnc) {
         var contestJS = "";
         if (contestDoc && contestDoc.code) {
             contestJS = contestDoc.code;
+            console.log("GOT CONTEST DEFAULT CODE: "+contestJS);
         }
     // ----------------------------------------------------------------------------------------------
         var userjs = "";
         utdb.getDoc(utdb.collection_bots(), "bots", runDoc.bots_id[pIndex], function(botDoc) {
             if (botDoc && botDoc.code) {
                 userjs = botDoc.code;
+                console.log("GOT BOT CONTEST CODE: "+userjs);
             } else {
                 userjs = contestJS;
             }
             var js = "";
             js += makeSetPlayerCall(pIndex);
             // server calls the "contestAPI.runNextTurn" function when it is time to run a turn
-            js += userjs;
-//            js += "contestAPI.runNextTurn = function() {";
-//            js +=       "var rn = Math.floor(Math.random()*3);";              // 0,1,2
-//            js +=       "var rps = (rn===0? 'r' : rn===1? 'p' : 's');";       // r,p,s
-//            js +=       "contestAPI.submitTurn({pick:rps});";
-//            js += "};";
+//            js += userjs;
+            js += "contestAPI.runNextTurn = function() {";
+            js +=       "var rn = Math.floor(Math.random()*3);";              // 0,1,2
+            js +=       "var rps = (rn===0? 'r' : rn===1? 'p' : 's');";       // r,p,s
+            js +=       "contestAPI.submitTurn({pick:rps});";
+            js += "};";
             s.run( pn, js, function( output ) {
                 // this sanbox ended.  is done running code.
                 sandboxesDone++;
