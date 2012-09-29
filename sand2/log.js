@@ -14,7 +14,7 @@ var isLocal = (mdbURL? false : true);
 
 var fs = require('fs');
 var path = require('path');
-var logdb = require('logsb');
+var logdb = require('./logdb');
 var logfile = path.join(__dirname, "log.txt");
 var prefix = "";
 var logN = 1;
