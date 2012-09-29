@@ -86,25 +86,41 @@ contestAPI.runNextTurn = function() {
 var startPlayer = function(pIndex, fnc) {
     var pn = "P" + (pIndex+1);                  // "P1" or "P2"
     var s = new Sandbox({pn:pn});
-    // contest = the API object
-    var userjs = "";
-    var js = "";
-    js += makeSetPlayerCall(pIndex);
-    // server calls the "contestAPI.runNextTurn" function when it is time to run a turn
-    js += "contestAPI.runNextTurn = function() {";
-    js +=       "var rn = Math.floor(Math.random()*3);";              // 0,1,2
-    js +=       "var rps = (rn===0? 'r' : rn===1? 'p' : 's');";       // r,p,s
-    js +=       "contestAPI.submitTurn({pick:rps});";
-    js += "};";
-    s.run( pn, js, function( output ) {
-        // this sanbox ended.  is done running code.
-        sandboxesDone++;
-        console.log("sandbox ended.  #="+sandboxesDone);
-        if (sandboxesDone >= 2) {
-            console.log("BOTH DONE");
-            finishContest();
+    // ----------------------------------------------------------------------------------------------
+    // get the "default" code (NOTE: we should be able to remove this later) @TODO: remove this code
+    utdb.getDoc(utdb.collection_contests(), "contests", runDoc.contest_id, function(contestDoc) {
+        var contestJS = "";
+        if (contestDoc && contestDoc.code) {
+            contestJS = contestDoc.code;
         }
-        fnc(output);
+    // ----------------------------------------------------------------------------------------------
+        var userjs = "";
+        utdb.getDoc(utdb.collection_bots(), "bots", runDoc.bots_id[pIndex], function(botDoc) {
+            if (botDoc && botDoc.code) {
+                userjs = botDoc.code;
+            } else {
+                userjs = contestJS;
+            }
+            var js = "";
+            js += makeSetPlayerCall(pIndex);
+            // server calls the "contestAPI.runNextTurn" function when it is time to run a turn
+            js += userjs;
+//            js += "contestAPI.runNextTurn = function() {";
+//            js +=       "var rn = Math.floor(Math.random()*3);";              // 0,1,2
+//            js +=       "var rps = (rn===0? 'r' : rn===1? 'p' : 's');";       // r,p,s
+//            js +=       "contestAPI.submitTurn({pick:rps});";
+//            js += "};";
+            s.run( pn, js, function( output ) {
+                // this sanbox ended.  is done running code.
+                sandboxesDone++;
+                console.log("sandbox ended.  #="+sandboxesDone);
+                if (sandboxesDone >= 2) {
+                    console.log("BOTH DONE");
+                    finishContest();
+                }
+                fnc(output);
+            });
+        });
     });
     return s;
 };
@@ -127,7 +143,6 @@ exports.runContest = function(id_p1, id_p2, fnc) {
     sand2 = startPlayer(1, function(output) {
     });
     if (fnc) fnc("contest running...");
-//    continueContest();
     mainHandler.setSandboxes(sand1, sand2);
     mainHandler.startContest(require('./contest'));
 };
