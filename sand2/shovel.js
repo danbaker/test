@@ -51,6 +51,7 @@ var processPacket = function(pkt) {
             case "setPlayer":
                 playerN = pkt.json.pn;
                 packet.setPlayerN(playerN);
+                require('./log').setPrefix("CHILD["+playerN+"]");
                 break;
             default:
                 log("ERROR: unknown op")
@@ -58,7 +59,6 @@ var processPacket = function(pkt) {
     } else if (pkt.str) {
         // got a simple string (for now, assume this is the actual code to run)
         var code = pkt.str;
-        trace("about to run code: "+code);
         var runner = require('./runner');
         runner.runCode(code, process.stdout);
     }

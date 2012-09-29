@@ -12,9 +12,10 @@ var log = function(msg) {
 };
 
 var runDoc = undefined;             // undefined means: a contest is NOT currently running
-var sand1;
+var sand1;                          // sandbox for P1
 var sand2;
-var turnN;
+var turnN;                          // which turn# running
+var sandboxesDone;                  // total sanboxes that have finished/ended/done
 
 
 // request to queue a contest to start running soon
@@ -35,14 +36,13 @@ var queueContestToStart = function(doc) {
         return false;
     }
 
-    // reset all state for running a new contest
-    console.log("queuContestToStart ... queueing");
+    // save the "runDoc" that will be posted to the "runs" collection
     runDoc = doc;
-    turnN = 1;
+
     // start running the contest (soon)
     setTimeout(function() {
-        console.log("queuContestToStart ... timer fired ... starting");
-        finishContest();
+        console.log("queueContestToStart ... timer fired ... starting");
+        exports.runContest();
     }, 100);
     // Contest queued to start soon
     return true;
@@ -50,11 +50,14 @@ var queueContestToStart = function(doc) {
 
 var finishContest = function() {
     console.log("contest: finished. posting to runs collection: %j", runDoc);
+    // @TODO: read in the log file "log.txt" and save it into "runDoc" so people can see their bot's logs
+//    var logMessages = require('./sand2/log').getLogMessages();
     utdb.postDocs(utdb.collection_runs(), "runs", runDoc, function(ok) {
         // don't know what to do with the return info ...
         runDoc = undefined;
     });
 };
+
 
 var startPlayer = function(pn, fnc) {
     var s = new Sandbox({pn:pn});
@@ -65,9 +68,10 @@ var startPlayer = function(pn, fnc) {
 //    userjs += "}";
 
     var js = "";
-    js += "console.log('Hello world ... client JavaScript is RUNNING');";
-    js += "console.log('R='+Math.floor(Math.random()*3));";
+    js += "console.log('DANB Hello world ... client JavaScript is RUNNING');";
+    js += "console.log('DANB R='+Math.floor(Math.random()*3));";
     js += "contestAPI.setPlayer('"+pn+"');";        // tell the API which player I am
+    js += "contestAPI.setPlayer = undefined;";      // remove the "setPlayer" function
     js += userjs;                                   // run player code
 //    js += "setTimeout(function() {";
 //    js +=   "console.log('from the timeout 1');";
@@ -79,7 +83,7 @@ var startPlayer = function(pn, fnc) {
     js +=   "setTimeout(function() {";
     js +=       "var rn=Math.floor(Math.random()*3);";              // 0,1,2
     js +=       "var rps=(rn===0? 'r' : rn===1? 'p' : 's');";       // r,p,s
-    js +=       "console.log('calling submitTurn with pick='+rps);";
+    js +=       "console.log('DANB calling submitTurn with pick='+rps);";
     js +=       "contestAPI.submitTurn({pick:rps});";
     js +=       "pickN++;";
     js +=    "}, 100);";
@@ -91,8 +95,13 @@ var startPlayer = function(pn, fnc) {
 //        js += "}, 500);"
 //    }
     s.run( pn, js, function( output ) {
-        // output.result = returned value
-        // output.console = returned console logs (doesn't seem to work on heroku)
+        // this sanbox ended.  is done running code.
+        sandboxesDone++;
+        console.log("sandbox ended.  #="+sandboxesDone);
+        if (sandboxesDone >= 2) {
+            console.log("BOTH DONE");
+            finishContest();
+        }
         fnc(output);
     });
     return s;
@@ -101,7 +110,9 @@ var startPlayer = function(pn, fnc) {
 // start running a contest between P1 and P2 (call callback fnc when done)
 exports.runContest = function(id_p1, id_p2, fnc) {
     // RESET EVERYTHING FOR A NEW CONTEST
+    require('./sand2/log').resetLogFile();
     turnN = 1;
+    sandboxesDone = 0;
 
     // START UP PLAYER 1
     sand1 = startPlayer("P1", function(output) {
@@ -109,7 +120,7 @@ exports.runContest = function(id_p1, id_p2, fnc) {
     // START UP PLAYER 2
     sand2 = startPlayer("P2", function(output) {
     });
-    fnc("contest running...");
+    if (fnc) fnc("contest running...");
 //    continueContest();
     mainHandler.setSandboxes(sand1, sand2);
     mainHandler.startContest(require('./contest'));

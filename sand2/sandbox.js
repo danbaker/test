@@ -80,7 +80,6 @@ function Sandbox(options) {
         child.on( 'exit', function( code ) {
             log("got an EXIT from child", playerN);
             clearTimeout( timer );
-//            fnc.call( this, JSON.parse( stdoutTxt ) );
             fnc.call( this, {} );
         });
 

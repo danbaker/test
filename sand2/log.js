@@ -21,6 +21,11 @@ var setPrefix = function(str) {
     log("-- set prefix to:"+str);
 };
 
+var resetLogFile = function() {
+    fs.unlinkSync(logfile);
+    log("- - - - - - - NEW CONTEST STARTING - - - - - -");
+};
 
 exports.log = log;
 exports.setPrefix = setPrefix;
+exports.resetLogFile = resetLogFile;

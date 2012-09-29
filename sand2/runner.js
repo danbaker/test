@@ -13,16 +13,17 @@ console = {};
     var packet = require('./packet');
     var log = require('./log').log;
     var playerN = 0;
+    // client code calls this to set their own player#
     contestAPI.setPlayer = function(pn) {
         playerN = pn;
-        console.log("API.setPlayer("+pn+")");
     };
+    // client code calls this to submit their turn data
     contestAPI.submitTurn = function(json) {
-        console.log("API.submitTurn");
         packet.sendJson({op:"submitTurn", pn:playerN, data:json});
     };
+    // client calls this to log
     console.log = function(msg) {
-        log("CODE:"+msg);
+        log("USER_LOG:"+msg);
     };
 }());
 
@@ -31,7 +32,6 @@ console = {};
 // the one-and-only function in this file
 exports.runCode = function(codeStr, stream)
 {
-    console.log("About to run client JavaScript:"+codeStr);
     var packet = require('./packet');
     packet.setStream(stream);
     packet = undefined;
@@ -46,7 +46,6 @@ exports.runCode = function(codeStr, stream)
             var root = undefined;
             var process = undefined;
             var require = undefined;
-            console.log("going to call fnc");
             fnc();
         } catch (e) {
             console.log("EXCEPTION: "+e);
