@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b163e181-c391-49fa-b20a-b6034a2cbb74" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/contest.js" afterPath="$PROJECT_DIR$/contest.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sand2/log.js" afterPath="$PROJECT_DIR$/sand2/log.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sand2/packet.js" afterPath="$PROJECT_DIR$/sand2/packet.js" />
     </list>
     <ignored path="h1.iws" />
@@ -51,7 +49,7 @@
       <file leaf-file-name="packet.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/sand2/packet.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="61" column="13" selection-start="1802" selection-end="1802" vertical-scroll-proportion="0.79848486">
+            <state line="34" column="23" selection-start="1049" selection-end="1049" vertical-scroll-proportion="0.1030303">
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -401,7 +399,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/sand2/packet.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="61" column="13" selection-start="1802" selection-end="1802" vertical-scroll-proportion="0.79848486">
+        <state line="34" column="23" selection-start="1049" selection-end="1049" vertical-scroll-proportion="0.1030303">
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>

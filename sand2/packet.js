@@ -32,7 +32,7 @@ var setStream = function(stream) {
 var sendString = function(str, stream) {
     stream = stream || theStream;
     if (!stream) {
-        log("ERROR -- You forgot to pass the stream in!");
+        log("ERROR --  You forgot to pass the stream in!");
     }
     if (str && stream) {
         var n = str.length;
