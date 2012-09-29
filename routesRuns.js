@@ -13,7 +13,6 @@ var helper = require('./routesHelper');
 var utdb = require('./utdb');
 var contest = require('./contest');
 var collName = "runs";
-var logdb = require('./sand2/logdb');
 
 var cleanseRun = function(req, run, myid) {
     // remove several pieces of info
@@ -120,12 +119,9 @@ exports.postRuns = function(req,res) {
                                 doc.users_id = [];
                                 doc.users_id[0] = user1_id;
                                 doc.users_id[1] = user2_id;
-                                doc.logs = [];
-                                doc.logs[0] = ["first log for player 1"];
-                                doc.logs[1] = ["first log for player 2"];
-                                logdb.postLogs({msg:"about to start contest", contest_id:contest_id, user_id:user1_id}, function() {
-                                    console.log("returned from postLogs");
-                                });
+//                                doc.logs = [];
+//                                doc.logs[0] = ["first log for player 1"];
+//                                doc.logs[1] = ["first log for player 2"];
                                 if (contest.queueContestToStart(doc)) {
                                     helper.sendJson(res, {response:true, message:"Contest started"});
                                 } else {

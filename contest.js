@@ -12,6 +12,7 @@ var log = function(msg) {
 };
 
 var runDoc = undefined;             // undefined means: a contest is NOT currently running
+var run_id = "0";                   // run_id for current running contest
 var sand1;                          // sandbox for P1
 var sand2;
 var turnN;                          // which turn# running
@@ -39,31 +40,34 @@ var queueContestToStart = function(doc) {
     // save the "runDoc" that will be posted to the "runs" collection
     runDoc = doc;
 
-    // start running the contest (soon)
-    setTimeout(function() {
-        console.log("queueContestToStart ... timer fired ... starting");
+    // POST runDoc to "runs" collection (and get back the run_id)
+    utdb.postDocs(utdb.collection_runs(), "runs", runDoc, function(ok) {
+        // don't know what to do with the return info ...
+        run_id = "RunIdGoesHere";   // @TODO: GET RUN ID BACK FROM utdb call
         exports.runContest();
-    }, 100);
+    });
+
     // Contest queued to start soon
     return true;
 };
 
 // contest is DONE.  both players code has exited.
 var finishContest = function() {
-    // read in the logs from disk, and separate based on player number
-    require('./sand2/log').getLogMessages(function(logMessages) {
-        if (runDoc) {
-            runDoc.logs = logMessages;
-            // @TODO: move all logs to their own database collection ("logs") -- maybe in chunks of 50 log messages per document
-            utdb.postDocs(utdb.collection_runs(), "runs", runDoc, function(ok) {
-                // don't know what to do with the return info ...
-                runDoc = undefined;
-            });
-        } else {
-            console.log("CONTEST DONE.  Logs: %j", logMessages[0]);
-            console.log("CONTEST DONE.  Logs: %j", logMessages[1]);
-        }
-    });
+    runDoc = undefined;
+//    // read in the logs from disk, and separate based on player number
+//    require('./sand2/log').getLogMessages(function(logMessages) {
+//        if (runDoc) {
+//            runDoc.logs = logMessages;
+//            // @TODO: move all logs to their own database collection ("logs") -- maybe in chunks of 50 log messages per document
+//            utdb.postDocs(utdb.collection_runs(), "runs", runDoc, function(ok) {
+//                // don't know what to do with the return info ...
+//                runDoc = undefined;
+//            });
+//        } else {
+//            console.log("CONTEST DONE.  Logs: %j", logMessages[0]);
+//            console.log("CONTEST DONE.  Logs: %j", logMessages[1]);
+//        }
+//    });
 };
 
 var makeSetPlayerCall = function(pIndex) {
@@ -74,7 +78,7 @@ var makeSetPlayerCall = function(pIndex) {
             js += ",contest_id:'"   +runDoc.contest_id          +"'";
             js += ",bot_id:'"       +runDoc.bots_id[pIndex]     +"'";
             js += ",user_id:'"      +runDoc.users_id[pIndex]    +"'";
-            js += ",run_id:'"       +0                          +"'";
+            js += ",run_id:'"       +run_id                     +"'";
         }
     js += "});";
     js += "contestAPI.setPlayer = undefined;";      // remove the "setPlayer" function
