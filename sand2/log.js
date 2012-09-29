@@ -29,6 +29,7 @@ var log = function(msg) {
         // @TODO: ONLY record if:  CHILD[P1] or CHILD[P2]
         var doc = {};
         doc.date = "" + (new Date().toString());
+        doc.prefix = prefix;
         doc.msg = msg;
         doc.logNumber = logN++;
         logdb.postLogs(doc);
