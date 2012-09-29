@@ -26,12 +26,17 @@ var log = function(msg) {
             fs.appendFileSync(logfile, str);
         }
     } else {
-        // @TODO: ONLY record if:  CHILD[P1] or CHILD[P2]
         var doc = {};
-        doc.date = "" + (new Date().toString());
-        doc.prefix = prefix;
         doc.msg = msg;
+        logDoc(doc);
+    }
+};
+var logDoc = function(doc) {
+    if (!isLocal) {
         doc.logNumber = logN++;
+        doc.date = "" + (new Date().toString());
+        // @TODO: once working, only log "CHILD[P1]" or "CHILD[P2]" prefix items
+        doc.prefix = prefix;
         logdb.postLogs(doc);
     }
 };
@@ -119,6 +124,7 @@ var readLines = function(input, func) {
 
 
 exports.log = log;
+exports.logDoc = logDoc;
 exports.setPrefix = setPrefix;
 exports.resetLogFile = resetLogFile;
 exports.getLogMessages = getLogMessages;

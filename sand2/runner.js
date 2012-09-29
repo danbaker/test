@@ -1,5 +1,6 @@
 // runner.js
 //  a calm place to run 3rd party code in
+//  NOTE: This runs in the sandboxed external node.js process
 // usage:
 //  var runner = require('runner');
 //  runner.runCode(code);
@@ -12,7 +13,12 @@ console = {};
     // hidden variables
     var packet = require('./packet');
     var log = require('./log').log;
+    var logDoc = require('./log').logDoc;
     var playerN = 0;
+    var contest_id = 0;
+    var user_id = 0;
+    var bot_id = 0;
+    var run_id = 0;
     // client code calls this to set their own player#
     contestAPI.setPlayer = function(pn) {
         playerN = pn;
@@ -23,7 +29,14 @@ console = {};
     };
     // client calls this to log
     console.log = function(msg) {
-        log("USER_LOG:"+msg);
+        var doc = {};
+        doc.msg = msg;
+        doc.playerN = playerN;
+        doc.contest_id = contest_id;
+        doc.user_id = user_id;
+        doc.bot_id = bot_id;
+        doc.run_id = run_id;
+        logDoc(doc);
     };
 }());
 
