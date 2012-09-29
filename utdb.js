@@ -464,7 +464,7 @@ var get_collection = function(coll, options, fnc, msgName) {
                 if (options.limit) cursor.limit(options.limit);
                 if (options.offset) cursor.skip(options.offset);
                 cursor.each(function(err, item) {
-                        console.log("= = = get_collection("+msgName+"): item=%j",item);
+                    //console.log("= = = get_collection("+msgName+"): item=%j",item);
                     if(!item) {
                         fnc(found);
                     } else {
