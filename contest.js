@@ -66,20 +66,30 @@ var finishContest = function() {
     });
 };
 
+var makeSetPlayerCall = function(pIndex) {
+    var js = "";
+    js += "contestAPI.setPlayer({";                 // tell API about this contest and my player info
+        js += "pn:'P"+(pIndex+1)+"'";               // playerNumber (P1 or P2)
+        if (runDoc) {
+            js += ",contest_id:"+runDoc.contest_id;
+            js += ",bot_id:"+runDoc.bots_id[pIndex];
+            js += ",user_id:"+runDoc.users_id[pIndex];
+            js += ",run_id:"+0;
+        }
+    js += "});";
+    js += "contestAPI.setPlayer = undefined;";      // remove the "setPlayer" function
+    return js;
+};
 
-var startPlayer = function(pn, fnc) {
+var startPlayer = function(pIndex, fnc) {
+    var pn = "P" + (pIndex+1);                  // "P1" or "P2"
     var s = new Sandbox({pn:pn});
     // contest = the API object
     var userjs = "";
-//    userjs += "function runTurn() {";
-//    userjs +=   "contestAPI.submitTurn({});";
-//    userjs += "}";
-
     var js = "";
     js += "console.log('DANB Hello world ... client JavaScript is RUNNING');";
     js += "console.log('DANB R='+Math.floor(Math.random()*3));";
-    js += "contestAPI.setPlayer('"+pn+"');";        // tell the API which player I am
-    js += "contestAPI.setPlayer = undefined;";      // remove the "setPlayer" function
+    js += makeSetPlayerCall(pIndex);
     // @TODO: pass the contest_id and user_id over (so they can use it to log to the logs collection)
     js += userjs;                                   // run player code
 //    js += "setTimeout(function() {";
@@ -124,10 +134,10 @@ exports.runContest = function(id_p1, id_p2, fnc) {
     sandboxesDone = 0;
 
     // START UP PLAYER 1
-    sand1 = startPlayer("P1", function(output) {
+    sand1 = startPlayer(0, function(output) {
     });
     // START UP PLAYER 2
-    sand2 = startPlayer("P2", function(output) {
+    sand2 = startPlayer(1, function(output) {
     });
     if (fnc) fnc("contest running...");
 //    continueContest();

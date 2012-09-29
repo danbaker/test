@@ -15,13 +15,17 @@ console = {};
     var log = require('./log').log;
     var logDoc = require('./log').logDoc;
     var playerN = 0;
-    var contest_id = 0;
-    var user_id = 0;
-    var bot_id = 0;
-    var run_id = 0;
+    var pinfo = {};
+//    var contest_id = 0;
+//    var user_id = 0;
+//    var bot_id = 0;
+//    var run_id = 0;
     // client code calls this to set their own player#
-    contestAPI.setPlayer = function(pn) {
-        playerN = pn;
+    contestAPI.setPlayer = function(pinfo) {
+        if (pinfo) {
+            playerN = pinfo.pn;
+            pinfo = pinfo;
+        }
     };
     // client code calls this to submit their turn data
     contestAPI.submitTurn = function(json) {
@@ -32,10 +36,16 @@ console = {};
         var doc = {};
         doc.msg = msg;
         doc.playerN = playerN;
-        doc.contest_id = contest_id;
-        doc.user_id = user_id;
-        doc.bot_id = bot_id;
-        doc.run_id = run_id;
+        // copy entire player-info object into log document
+        for(var key in pinfo) {
+            if (pinfo.hasOwnProperty(key)) {
+                doc[key] = pinfo[key];
+            }
+        }
+//        doc.contest_id = pinfo.contest_id;
+//        doc.user_id = pinfo.user_id;
+//        doc.bot_id = bot_id;
+//        doc.run_id = run_id;
         logDoc(doc);
     };
 }());
