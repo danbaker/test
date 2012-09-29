@@ -43,9 +43,13 @@ var queueContestToStart = function(doc) {
     // POST runDoc to "runs" collection (and get back the run_id)
     utdb.postDocs(utdb.collection_runs(), "runs", runDoc, function(ok) {
         // don't know what to do with the return info ...
-        console.log(" = = = = = = = post run result: %j", ok);
-        run_id = "RunIdGoesHere";   // @TODO: GET RUN ID BACK FROM utdb call
-        exports.runContest();
+        if (ok && ok._id) {
+            run_id = ok._id;
+            exports.runContest();
+        } else {
+            console.log("ERROR: post run result: %j", ok);
+            runDoc = undefined;
+        }
     });
 
     // Contest queued to start soon
