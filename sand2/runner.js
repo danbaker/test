@@ -40,11 +40,13 @@ console = {};
 //                }
 //            }
 //        }
-        doc.pn = pinfo.pn;
-        doc.bot_id = pinfo.bot_id;
-        doc.user_id = pinfo.user_id;
-        doc.run_id = pinfo.run_id;
-        doc.contest_id = pinfo.contest_id;
+        if (pinfo) {
+            doc.pn = pinfo.pn;
+            doc.bot_id = pinfo.bot_id;
+            doc.user_id = pinfo.user_id;
+            doc.run_id = pinfo.run_id;
+            doc.contest_id = pinfo.contest_id;
+        }
         logDoc(doc);
     };
 }());
