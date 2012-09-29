@@ -11,7 +11,7 @@
             04   = can alter the "contests" collection
             08   = can view/manage the "users" collection (highly dangerous)
             10   = can manage the entire "bots" collection (can delete bots that you don't own)
-            20   =
+            20   = can manage the entire "logs" collection (like delete the entire collection)
             40   =
             80   =
             FF   = super-user (can do ANYTHING)

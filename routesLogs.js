@@ -30,6 +30,15 @@ exports.getLogs = function(req, res) {
     }
 };
 
+exports.deleteLogs = function(req, res) {
+    if (checkAuth(req, res, 0x20)) {
+        var options = helper.makeOptions(req);
+        utdb.deleteDoc(utdb.collection_logs(), collName, options, function(nRemoved) {
+            helper.sendJson(res, {message:"removed "+nRemoved});         // return the cleansed list
+        });
+    }
+};
+
 
 // GET /apis/:version/runs/:id
 exports.getLogs_id = function(req, res) {

@@ -513,6 +513,9 @@ module.exports = function(app){
     app.get('/apis/:version/logs/:id', function(req, res) {
         if (!showCollectionHelp(req, res, "GET", "logs")) routesLogs.getLogs_id(req, res);
     });
+    app.delete('/apis/:version/logs', function(req, res) {
+        if (!showCollectionHelp(req, res, "DELETE", "logs")) routesLogs.deleteLogs(req, res);
+    });
 
 
 
