@@ -32,9 +32,6 @@ var sandboxesDone = 0;              // total sanboxes that have finished/ended/d
 //        doc.users_id = [];
 //        doc.users_id[0] = user1_id;
 //        doc.users_id[1] = user2_id;
-//        doc.logs = [];
-//        doc.logs[0] = ["first log for player 1"];     // @TODO: Maybe move all "logs" to their own collection (so we can keep them "under control"
-//        doc.logs[1] = ["first log for player 2"];
 var queueContestToStart = function(doc) {
     if (runDoc) {
         // sorry ... a contest is already running (maybe one day, we'll queue them up for later)
@@ -161,14 +158,28 @@ exports.submitTurn = function(json, sand, sandOther) {
             if (turnN > maxTurns) {
                 // contest over ... shut them down
                 isOver = true;
+                var winner = "tie";        // "tie" or "P1" or "P2"
                 if (p1_win > p2_win) {
                     log("CONTEST OVER: Player1 WIN P1("+p1_win+") to P2("+p2_win+")");
+                    winner = "P1";
                 } else if (p2_win > p1_win) {
                     log("CONTEST OVER: Player2 WIN P1("+p1_win+") to P2("+p2_win+")");
+                    winner = "P2";
                 } else {
                     log("CONTEST OVER: TIE P1("+p1_win+") to P2("+p2_win+")");
+                    winner = "tie";
                 }
                 // @TODO: push "winning info" into the run document
+                utdb.updateDoc(utdb.collection_runs(), "runs", run_id, function(docToUpdate, fnc) {
+                    docToUpdate.winner = winner;
+                    fnc(docToUpdate);
+                }, function(ok) {
+                    if (ok) {
+                        // doc was updated OK
+                    } else {
+                        console.log("ERROR: run failed to update with winner="+winner);
+                    }
+                });
             }
         }
     }

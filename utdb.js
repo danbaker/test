@@ -414,6 +414,10 @@ exports.getDoc = function(coll, collName, id, fnc, options) {
         fnc(undefined);
     }
 };
+exports.updateDoc = function(coll, collName, id, fncUpdateDoc, fncDone) {
+    updateDoc_collection(coll, id, fncUpdateDoc, fncDone, collName);
+};
+
 
 // * * * * * * * * * * * * * * * * * * * * * * * * *
 // *
@@ -555,6 +559,44 @@ var delete_collection = function(coll, options, fnc, msgName) {
         }
     });
 };
+
+// update a single already-existing document in a collection
+// in:  coll            = the collection
+//      id              = the _id of the doc to update
+//      fncUpdateDoc    = fnc(docToUpdate, fnc) -- callback after found the doc to be updated (calls "fnc" with doc when done)
+//      fncDone         = fnc(ok) -- callback after the altered-document has been written back to database collection
+//      msgName         = the name of the collection ("contests")
+var updateDoc_collection = function(coll, id, fncUpdateDoc, fncDone, msgName) {
+    if (coll && msgName && id && fncUpdateDoc) {
+        var options = {};
+        options.query = {_id:id};
+        options.limit = 2;
+        get_collection(coll, options, function(docs) {
+            if (!docs) {
+                // failed to find request doc _id
+                fncDone();
+            } else if (docs.length != 1) {
+                // error ... didn't get exactly 1 document
+                fncDone();
+            } else {
+                // found the document to update
+                var d = docs[0];
+                fncUpdateDoc(d, function(doc) {
+                    coll.save(doc, function(err, result) {
+                        if (err) {
+                            fncDone();
+                        } else {
+                            fncDone(result);
+                        }
+                    });
+                });
+            }
+        }, msgName);
+    } else {
+        fncDone();
+    }
+};
+
 
 // * * * * * * * * * * * * * * * * * * * * * * * * *
 // *
