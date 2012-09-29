@@ -158,20 +158,26 @@ exports.submitTurn = function(json, sand, sandOther) {
             if (turnN > maxTurns) {
                 // contest over ... shut them down
                 isOver = true;
-                var winner = "tie";        // "tie" or "P1" or "P2"
+                var winner = "tie";         // "tie" or "P1" or "P2"
+                var winnerMsg = "unknown";  // "Player 1 won 5 times. Player 2 won 2 times. Tied 3 times"
+                winnerMsg = "Player 1 won "+p1_win+" times.  Player 2 won "+p2_win+" times.";
                 if (p1_win > p2_win) {
                     log("CONTEST OVER: Player1 WIN P1("+p1_win+") to P2("+p2_win+")");
                     winner = "P1";
+                    winnerMsg += "  Player 1 Wins";
                 } else if (p2_win > p1_win) {
                     log("CONTEST OVER: Player2 WIN P1("+p1_win+") to P2("+p2_win+")");
                     winner = "P2";
+                    winnerMsg += "  Player 2 Wins";
                 } else {
                     log("CONTEST OVER: TIE P1("+p1_win+") to P2("+p2_win+")");
                     winner = "tie";
+                    winnerMsg += "  Tie";
                 }
                 // @TODO: push "winning info" into the run document
                 utdb.updateDoc(utdb.collection_runs(), "runs", run_id, function(docToUpdate, fnc) {
                     docToUpdate.winner = winner;
+                    docToUpdate.winnerMsg = winnerMsg;
                     fnc(docToUpdate);
                 }, function(ok) {
                     if (ok) {
