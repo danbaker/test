@@ -71,10 +71,10 @@ var makeSetPlayerCall = function(pIndex) {
     js += "contestAPI.setPlayer({";                 // tell API about this contest and my player info
         js += "pn:'P"+(pIndex+1)+"'";               // playerNumber (P1 or P2)
         if (runDoc) {
-            js += ",contest_id:"+runDoc.contest_id;
-            js += ",bot_id:"+runDoc.bots_id[pIndex];
-            js += ",user_id:"+runDoc.users_id[pIndex];
-            js += ",run_id:"+0;
+            js += ",contest_id:'"   +runDoc.contest_id          +"'";
+            js += ",bot_id:'"       +runDoc.bots_id[pIndex]     +"'";
+            js += ",user_id:'"      +runDoc.users_id[pIndex]    +"'";
+            js += ",run_id:'"       +0                          +"'";
         }
     js += "});";
     js += "contestAPI.setPlayer = undefined;";      // remove the "setPlayer" function

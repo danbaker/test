@@ -128,3 +128,4 @@ exports.logDoc = logDoc;
 exports.setPrefix = setPrefix;
 exports.resetLogFile = resetLogFile;
 exports.getLogMessages = getLogMessages;
+
