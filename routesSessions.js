@@ -11,7 +11,7 @@ var doLogin = function(req, res, result) {
     if (utdb.isLocal()) {
         // assume we have already created the login session info ... since "local testing"
     } else {
-        var username = helper.getParam('username');
+        var username = helper.getParam(req, 'username');
         console.log("1---- doLogin username="+username);
         var uobj = {};
         uobj.name = username;                   // username the user supplied
