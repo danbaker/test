@@ -38,7 +38,9 @@ var sendString = function(str, stream) {
         var n = str.length;
         log("sending "+n+" bytes: "+str);
         try {
-            stream.write("## "+n+" !"+str);
+            if (stream.writable) {
+                stream.write("## "+n+" !"+str);
+            }
         } catch (e) {
             log("ERROR: stream.write failed: "+e.toString());
         }
@@ -55,7 +57,9 @@ var sendJson = function(obj, stream) {
         var n = str.length;
         log("sending "+n+" bytes: "+str);
         try {
-            stream.write("## "+n+" {"+str);
+            if (stream.writable) {
+                stream.write("## "+n+" {"+str);
+            }
         } catch (e) {
             log("ERROR: stream.write failed: "+e.toString());
         }

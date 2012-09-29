@@ -48,13 +48,21 @@ var queueContestToStart = function(doc) {
     return true;
 };
 
+// contest is DONE.  both players code has exited.
 var finishContest = function() {
-    console.log("contest: finished. posting to runs collection: %j", runDoc);
-    // @TODO: read in the log file "log.txt" and save it into "runDoc" so people can see their bot's logs
-//    var logMessages = require('./sand2/log').getLogMessages();
-    utdb.postDocs(utdb.collection_runs(), "runs", runDoc, function(ok) {
-        // don't know what to do with the return info ...
-        runDoc = undefined;
+    // read in the logs from disk, and separate based on player number
+    require('./sand2/log').getLogMessages(function(logMessages) {
+        if (runDoc) {
+            runDoc.logs = logMessages;
+            // @TODO: move all logs to their own database collection ("logs") -- maybe in chunks of 50 log messages per document
+            utdb.postDocs(utdb.collection_runs(), "runs", runDoc, function(ok) {
+                // don't know what to do with the return info ...
+                runDoc = undefined;
+            });
+        } else {
+            console.log("CONTEST DONE.  Logs: %j", logMessages[0]);
+            console.log("CONTEST DONE.  Logs: %j", logMessages[1]);
+        }
     });
 };
 
