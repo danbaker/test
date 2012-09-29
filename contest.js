@@ -83,19 +83,17 @@ var startPlayer = function(pIndex, fnc) {
     // contest = the API object
     var userjs = "";
     var js = "";
-    js += "console.log('DANB Hello world ... client JavaScript is RUNNING');";
-    js += "console.log('DANB R='+Math.floor(Math.random()*3));";
     js += makeSetPlayerCall(pIndex);
     // server calls the "contestAPI.runNextTurn" function when it is time to run a turn
-    js += "var pickN = 1;";
+//    js += "var pickN = 1;";
     js += "contestAPI.runNextTurn = function() {";
-    js +=   "setTimeout(function() {";
-    js +=       "var rn=Math.floor(Math.random()*3);";              // 0,1,2
-    js +=       "var rps=(rn===0? 'r' : rn===1? 'p' : 's');";       // r,p,s
-    js +=       "console.log('DANB calling submitTurn with pick='+rps);";
+//    js +=   "setTimeout(function() {";
+    js +=       "var rn = Math.floor(Math.random()*3);";              // 0,1,2
+    js +=       "var rps = (rn===0? 'r' : rn===1? 'p' : 's');";       // r,p,s
+//    js +=       "console.log('DANB calling submitTurn with pick='+rps);";
     js +=       "contestAPI.submitTurn({pick:rps});";
-    js +=       "pickN++;";
-    js +=    "}, 100);";
+//    js +=       "pickN++;";
+//    js +=    "}, 100);";
     js += "};";
     s.run( pn, js, function( output ) {
         // this sanbox ended.  is done running code.
