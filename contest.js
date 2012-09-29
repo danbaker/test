@@ -76,7 +76,13 @@ var makeSetPlayerCall = function(pIndex) {
     js += "contestAPI.setPlayer = undefined;";      // remove the "setPlayer" function
     return js;
 };
-
+/*
+contestAPI.runNextTurn = function() {
+  var rn = Math.floor(Math.random()*3);         // 0,1,2
+  var rps = (rn===0? 'r' : rn===1? 'p' : 's');  // r,p,s
+  contestAPI.submitTurn({pick:rps});
+};
+ */
 var startPlayer = function(pIndex, fnc) {
     var pn = "P" + (pIndex+1);                  // "P1" or "P2"
     var s = new Sandbox({pn:pn});
@@ -85,15 +91,10 @@ var startPlayer = function(pIndex, fnc) {
     var js = "";
     js += makeSetPlayerCall(pIndex);
     // server calls the "contestAPI.runNextTurn" function when it is time to run a turn
-//    js += "var pickN = 1;";
     js += "contestAPI.runNextTurn = function() {";
-//    js +=   "setTimeout(function() {";
     js +=       "var rn = Math.floor(Math.random()*3);";              // 0,1,2
     js +=       "var rps = (rn===0? 'r' : rn===1? 'p' : 's');";       // r,p,s
-//    js +=       "console.log('DANB calling submitTurn with pick='+rps);";
     js +=       "contestAPI.submitTurn({pick:rps});";
-//    js +=       "pickN++;";
-//    js +=    "}, 100);";
     js += "};";
     s.run( pn, js, function( output ) {
         // this sanbox ended.  is done running code.

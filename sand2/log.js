@@ -32,7 +32,7 @@ var log = function(msg) {
     }
 };
 var logDoc = function(doc) {
-    if (!isLocal) {
+    if (!isLocal && prefix != "MAIN") {
         doc.logNumber = logN++;
         doc.date = "" + (new Date().toString());
         // @TODO: once working, only log "CHILD[P1]" or "CHILD[P2]" prefix items
