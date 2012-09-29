@@ -21,10 +21,10 @@ console = {};
 //    var bot_id = 0;
 //    var run_id = 0;
     // client code calls this to set their own player#
-    contestAPI.setPlayer = function(pinfo) {
+    contestAPI.setPlayer = function(pinfoX) {
         if (pinfo) {
             playerN = pinfo.pn;
-            pinfo = pinfo;
+            pinfo = pinfoX;
         }
     };
     // client code calls this to submit their turn data
