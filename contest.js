@@ -106,7 +106,7 @@ var startPlayer = function(pIndex, fnc) {
             var js = "";
             js += makeSetPlayerCall(pIndex);
             // server calls the "contestAPI.runNextTurn" function when it is time to run a turn
-//            js += userjs;
+            js += userjs;
             js += "contestAPI.runNextTurn = function() {";
             js +=       "var rn = Math.floor(Math.random()*3);";              // 0,1,2
             js +=       "var rps = (rn===0? 'r' : rn===1? 'p' : 's');";       // r,p,s
