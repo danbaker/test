@@ -30,6 +30,7 @@ console = {};
     };
     // client calls this to log
     console.log = function(msg) {
+        log(msg);
         var doc = {};
         doc.msg = msg;
 //        // copy entire player-info object into log document
