@@ -112,7 +112,11 @@ var startPlayer = function(pIndex, fnc) {
             js +=       "var rn = Math.floor(Math.random()*3);";              // 0,1,2
             js +=       "var rps = (rn===0? 'r' : rn===1? 'p' : 's');";       // r,p,s
             js +=       "console.log('bot code: about to call submitTurn');";
-            js +=       "contestAPI.submitTurn({pick:rps});";
+            js +=       "console.log('bot code: submitTurn? '+ (contestAPI.submitTurn? 'yes':'no'));";
+            js +=       "if (contestAPI.submitTurn) {";
+            js +=           "console.log('bot code: calling submitTurn');";
+            js +=           "contestAPI.submitTurn({pick:rps});";
+            js +=       "}";
             js +=       "console.log('bot code: returned after call submitTurn');";
             js += "};";
             s.run( pn, js, function( output ) {
