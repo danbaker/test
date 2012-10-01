@@ -111,7 +111,7 @@ function Sandbox(options) {
 // static options
 Sandbox.options =
 {
-    timeout: 5000,           // allow player code to run N seconds
+    timeout: 10000,           // allow player code to run N seconds
     node: 'node',           // using node as the external app
     shovel: path.join( __dirname, 'shovel.js' )
 };
