@@ -108,6 +108,7 @@ var startPlayer = function(pIndex, fnc) {
             // server calls the "contestAPI.runNextTurn" function when it is time to run a turn
             js += userjs;
             js += "contestAPI.runNextTurn = function() {";
+            js +=       "console.log('started runNextTurn');";
             js +=       "var rn = Math.floor(Math.random()*3);";              // 0,1,2
             js +=       "var rps = (rn===0? 'r' : rn===1? 'p' : 's');";       // r,p,s
             js +=       "contestAPI.submitTurn({pick:rps});";
@@ -153,6 +154,7 @@ exports.runContest = function(id_p1, id_p2, fnc) {
 // in:  json    = { }  === turn data object
 //      sand    = the sandbox that submitted this turn
 exports.submitTurn = function(json, sand, sandOther) {
+    log("contest.submitTurn");
     if (!isOver) {
         sand.savedTurn = json;
         if (sand == sand2) {
