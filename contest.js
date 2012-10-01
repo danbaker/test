@@ -107,19 +107,15 @@ var startPlayer = function(pIndex, fnc) {
             js += makeSetPlayerCall(pIndex);
             // server calls the "contestAPI.runNextTurn" function when it is time to run a turn
             js += userjs;
-            js += "contestAPI.runNextTurn = function() {";
-//            js +=       "console.log('bot code: started runNextTurn');";
-            js +=       "var rn = Math.floor(Math.random()*3);";              // 0,1,2
-            js +=       "var rps = (rn===0? 'r' : rn===1? 'p' : 's');";       // r,p,s
-//            js +=       "console.log('bot code: about to call submitTurn');";
-//            js +=       "console.log('bot code: submitTurn? '+ (contestAPI.submitTurn? 'yes':'no'));";
-//            js +=       "if (contestAPI.submitTurn) {";
-//            js +=           "console.log('bot code: calling submitTurn');";
-            js +=           "console.log('selected '+rps);"
-            js +=           "contestAPI.submitTurn({pick:rps});";
-//            js +=       "}";
-//            js +=       "console.log('bot code: returned after call submitTurn');";
-            js += "};";
+            // @TODO: REMOVE THIS ... for now, IF they don't provide a "runNextTurn" function ... give them one
+            if (userjs.indexOf("runNextTurn") < 0) {
+                js += "contestAPI.runNextTurn = function() {";
+                js +=       "var rn = Math.floor(Math.random()*3);";              // 0,1,2
+                js +=       "var rps = (rn===0? 'r' : rn===1? 'p' : 's');";       // r,p,s
+                js +=       "console.log('selected '+rps);";
+                js +=       "contestAPI.submitTurn({pick:rps});";
+                js += "};";
+            }
             s.run( pn, js, function( output ) {
                 // this sanbox ended.  is done running code.
                 sandboxesDone++;
