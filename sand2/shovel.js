@@ -25,10 +25,11 @@ var trace = function(msg) {
     log(msg);
 };
 var log = function(msg) {
-//    logX("Shovel."+playerN+"."+lastJson.op+": "+msg);
+    logX("Shovel."+playerN+"."+lastJson.op+": "+msg);
 };
 
 trace("loaded shovel.js");
+logx("LOADED SHOVEL.JS");
 
 
 // @TODO: rename this file "childapp.js"

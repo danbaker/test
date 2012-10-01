@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b163e181-c391-49fa-b20a-b6034a2cbb74" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sand2/runner.js" afterPath="$PROJECT_DIR$/sand2/runner.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sand2/shovel.js" afterPath="$PROJECT_DIR$/sand2/shovel.js" />
     </list>
     <ignored path="h1.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -57,10 +57,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="shovel.js" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="shovel.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/sand2/shovel.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="27" column="2" selection-start="773" selection-end="773" vertical-scroll-proportion="0.0">
+            <state line="27" column="0" selection-start="771" selection-end="771" vertical-scroll-proportion="0.2060606">
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -68,10 +68,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="runner.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="runner.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sand2/runner.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="44" column="0" selection-start="1191" selection-end="1458" vertical-scroll-proportion="0.7469697">
+            <state line="14" column="35" selection-start="380" selection-end="380" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -118,9 +118,9 @@
         <option value="$PROJECT_DIR$/utdb.js" />
         <option value="$PROJECT_DIR$/sand2/log.js" />
         <option value="$PROJECT_DIR$/contest.js" />
-        <option value="$PROJECT_DIR$/sand2/shovel.js" />
         <option value="$PROJECT_DIR$/sand2/sandbox.js" />
         <option value="$PROJECT_DIR$/sand2/runner.js" />
+        <option value="$PROJECT_DIR$/sand2/shovel.js" />
       </list>
     </option>
   </component>
@@ -394,9 +394,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sand2/shovel.js">
+    <entry file="file://$PROJECT_DIR$/sand2/log.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="2" selection-start="773" selection-end="773" vertical-scroll-proportion="0.0">
+        <state line="13" column="0" selection-start="351" selection-end="351" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sand2/runner.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="35" selection-start="380" selection-end="380" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
@@ -412,18 +421,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sand2/log.js">
+    <entry file="file://$PROJECT_DIR$/sand2/shovel.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="0" selection-start="351" selection-end="351" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sand2/runner.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="44" column="0" selection-start="1191" selection-end="1458" vertical-scroll-proportion="0.7469697">
+        <state line="27" column="0" selection-start="771" selection-end="771" vertical-scroll-proportion="0.2060606">
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
