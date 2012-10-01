@@ -28,7 +28,7 @@ console = {};
     };
     // client code calls this to submit their turn data
     contestAPI.submitTurn = function(json) {
-        log("runner.submitTurn for "+pn);
+        log("runner.submitTurn for "+pinfo.pn);
         packet.sendJson({op:"submitTurn", pn:playerN, data:json});
     };
     // client calls this to log
