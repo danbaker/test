@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="b163e181-c391-49fa-b20a-b6034a2cbb74" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/contest.js" afterPath="$PROJECT_DIR$/contest.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sand2/sandbox.js" afterPath="$PROJECT_DIR$/sand2/sandbox.js" />
     </list>
     <ignored path="h1.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -28,7 +27,7 @@
       <file leaf-file-name="contest.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/contest.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="10" column="0" selection-start="209" selection-end="209" vertical-scroll-proportion="0.25993884">
+            <state line="10" column="2" selection-start="211" selection-end="211" vertical-scroll-proportion="0.25993884">
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -426,7 +425,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/contest.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="0" selection-start="209" selection-end="209" vertical-scroll-proportion="0.25993884">
+        <state line="10" column="2" selection-start="211" selection-end="211" vertical-scroll-proportion="0.25993884">
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
