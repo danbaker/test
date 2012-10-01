@@ -18,7 +18,7 @@ var packet = require('./packet');
 var mainHandler = require('./mainHandler');
 var logX = require('./log').log;
 var log = function(msg, pn) {
-//    logX("sandbox."+pn+": "+msg);
+    logX("sandbox."+pn+": "+msg);
 };
 
 
@@ -47,7 +47,6 @@ function Sandbox(options) {
     this.run = function(pn, jscode, fnc) {
         playerN = pn;
         log("Sandbox.run -- starting", playerN);
-        timer;
         var stdoutTxt = '';
         child = spawn( this.options.node, [this.options.shovel] );
         var fnStdout = function(data) {

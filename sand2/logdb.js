@@ -2,11 +2,8 @@ var mdbURL = process.env.MONGOLAB_URI;   // URL to THE database
 var isLocal = (mdbURL? false : true);
 var mongo;
 
-console.log("loaded logdb.js");
-
 if (!isLocal) {
 
-    console.log("... NOT local in logdb.js");
     mongo = require('mongodb');
     var nillFunction = function() {
     };
