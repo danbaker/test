@@ -15,9 +15,7 @@ var packet = require('./packet');
 
 
 var result;
-//var consoleA = [];      // REMOVE THIS ... send console data back via stderr(?)
 var sandbox;
-//var Script;
 var stdin;              // stdin (data from main app)
 var stdinStr = "";      // the string collected so far from stdin
 
@@ -25,7 +23,7 @@ var trace = function(msg) {
     log(msg);
 };
 var log = function(msg) {
-    logX("Shovel."+playerN+"."+lastJson.op+": "+msg);
+    logX("!!!Shovel."+playerN+"."+lastJson.op+": "+msg);
 };
 
 trace("loaded shovel.js");
