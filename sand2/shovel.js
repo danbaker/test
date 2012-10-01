@@ -29,7 +29,7 @@ var log = function(msg) {
 };
 
 trace("loaded shovel.js");
-logx("LOADED SHOVEL.JS");
+logX("LOADED SHOVEL.JS");
 
 
 // @TODO: rename this file "childapp.js"
