@@ -52,7 +52,7 @@ function Sandbox(options) {
         child = spawn( this.options.node, [this.options.shovel] );
         var fnStdout = function(data) {
             if (!!data) {
-                log("stdout text send:"+data);
+                log("stdout text sent to sandbox:"+data);
                 stdoutTxt += data;
                 for(var i=0; i<50 && stdoutTxt; i++) {
                     var json = packet.checkStringForCompletePacket(stdoutTxt);

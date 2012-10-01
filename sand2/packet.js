@@ -20,7 +20,7 @@ var theStream = undefined;
 var playerN = "0";
 
 var log = function(msg) {
-//    logX("PACKET."+playerN+": "+msg);
+    logX("PACKET."+playerN+": "+msg);
 };
 
 // set the default stream to use
