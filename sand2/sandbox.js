@@ -47,17 +47,20 @@ function Sandbox(options) {
 
     this.run = function(pn, jscode, fnc) {
         playerN = pn;
-        log("Sandbox.run -- starting", playerN);
+        log("Sandbox.run -- starting " + playerN);
         var stdoutTxt = '';
         child = spawn( this.options.node, [this.options.shovel] );
         var fnStdout = function(data) {
             if (!!data) {
+                log("stdout text send:"+data);
                 stdoutTxt += data;
                 for(var i=0; i<50 && stdoutTxt; i++) {
                     var json = packet.checkStringForCompletePacket(stdoutTxt);
                     stdoutTxt = json.str;
                     if (json.packet) {
+                        log("stdout: got json packet:"+json.packet.str);
                         if (json.packet.json) {
+                            log("stdout sending to mainHandler.process");
                             mainHandler.process(json.packet.json, child.stdin, self);
                         } else if (json.packet.str) {
                             // ??

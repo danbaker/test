@@ -7,7 +7,7 @@ var contest;                                    // set by calling "startContest"
 
 var lastJSON = {};
 var log = function(msg) {
-    logMsg("Player:"+lastJSON.pn+" op:"+lastJSON.op+" --- "+msg);
+    logMsg("mainHandler -- Player:"+lastJSON.pn+" op:"+lastJSON.op+" --- "+msg);
 };
 
 var sand1;
@@ -16,6 +16,7 @@ var sand2;
 // json = object from client
 // stream = stdin for the client (way to send data back to client)
 var process = function(json, stream, sand) {
+    log(". . . process");
     lastJSON = json;
     var data = json.data;
     var sandOther = (sand === sand1? sand2 : sand1);
