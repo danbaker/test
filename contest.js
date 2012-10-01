@@ -108,10 +108,12 @@ var startPlayer = function(pIndex, fnc) {
             // server calls the "contestAPI.runNextTurn" function when it is time to run a turn
             js += userjs;
             js += "contestAPI.runNextTurn = function() {";
-            js +=       "console.log('started runNextTurn');";
+            js +=       "console.log('bot code: started runNextTurn');";
             js +=       "var rn = Math.floor(Math.random()*3);";              // 0,1,2
             js +=       "var rps = (rn===0? 'r' : rn===1? 'p' : 's');";       // r,p,s
+            js +=       "console.log('bot code: about to call submitTurn');";
             js +=       "contestAPI.submitTurn({pick:rps});";
+            js +=       "console.log('bot code: returned after call submitTurn');";
             js += "};";
             s.run( pn, js, function( output ) {
                 // this sanbox ended.  is done running code.

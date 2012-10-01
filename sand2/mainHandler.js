@@ -13,6 +13,8 @@ var log = function(msg) {
 var sand1;
 var sand2;
 
+log("mainHanlder.js loaded");
+
 // json = object from client
 // stream = stdin for the client (way to send data back to client)
 var process = function(json, stream, sand) {
@@ -51,7 +53,7 @@ var startContest = function(theContest) {
     setTimeout(function() {
         log("= = = = = = = startContest = = = = = = =");
         packet.sendJson({op:"runNextTurn"}, sand1.getStream());
-    }, 1000);
+    }, 500);
 };
 
 exports.process = process;
