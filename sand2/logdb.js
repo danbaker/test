@@ -34,27 +34,33 @@ if (!isLocal) {
     // post a new item to a collection
     // in:  coll    = the collection
     //      doc     = { ... } the document to insert into the collection
-    //      fnc     = callback(result_object) --or-- callback(undefined)
     //      msgName = the name of the method that was called (used in error messages)
-    exports.postLogs = function(doc, fnc) {
-        var coll = logsCollection;
-        var msgName = "logs";
-        if (coll) {
-            coll.insert(doc, function(err, result) {
-                if (fnc) {
-                    if (result) {
-                        fnc(result);
-                    } else {
-                        fnc();
-                    }
+    var savedLogs = [];
+    exports.postLogs = function(doc) {
+        if (!exports.isLogReady()) {
+            if (!savedLogs) savedLogs = [];
+            savedLogs.push(doc);
+        } else {
+            if (savedLogs) {
+                for(var i=0; i<savedLogs.length; i++) {
+                    postOneLog(savedLogs[i]);
                 }
-            });
-        } else if (fnc) {
-            // no collection opened
-            fnc();
+                savedLogs = null;
+            }
+            postOneLog(doc);
         }
     };
 
+    var postOneLog = function(doc, fnc) {
+        if (logsCollection) {
+            logsCollection.insert(doc, function(err, result) {
+            });
+        }
+    };
+
+    exports.isLogReady = function() {
+        return !!logsCollection;
+    };
 
 } else {
     exports.postLogs =  function() {};
