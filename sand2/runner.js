@@ -20,7 +20,7 @@ console = {};
 
     // client code calls this to set their own player# (NOTE: can only call this ONCE)
     contestAPI.setPlayer = function(pinfoX) {
-        log("runner.setPlayer for "+pinfoX.pn);
+        //log("runner.setPlayer for "+pinfoX.pn);
         if (pinfoX && !pinfo) {
             pinfo = pinfoX;
             playerN = pinfo.pn;
@@ -28,12 +28,11 @@ console = {};
     };
     // client code calls this to submit their turn data
     contestAPI.submitTurn = function(json) {
-        log("runner.submitTurn for "+pinfo.pn);
+        //log("runner.submitTurn for "+pinfo.pn);
         packet.sendJson({op:"submitTurn", pn:playerN, data:json});
     };
     // client calls this to log
     console.log = function(msg) {
-        log(msg);
         var doc = {};
         doc.msg = msg;
 //        // copy entire player-info object into log document
@@ -66,7 +65,7 @@ exports.runCode = function(codeStr, stream)
 
     (function() {
         try {
-            var fnc = Function('return eval('+JSON.stringify(codeStr+'')+')');
+            var fnc = new Function('return eval('+JSON.stringify(codeStr+'')+')');
 
             // note: redefine all known globals ... so client-code can't access them
             var global = undefined;
