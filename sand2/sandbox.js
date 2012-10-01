@@ -32,6 +32,7 @@ function Sandbox(options) {
     var child;
     var timer;
 
+    log("creating a new Sandbox");
 
     // return the stream to send packet data to for this child-sandbox-app
     this.getStream = function() {
