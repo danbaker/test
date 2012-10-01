@@ -20,6 +20,9 @@ var logX = require('./log').log;
 var log = function(msg, pn) {
 //    logX("sandbox."+pn+": "+msg);
 };
+var trace = function(msg, pn) {
+    logX("sandbox."+pn+": "+msg);
+};
 
 
 // main constructor for creating a sandbox
@@ -32,7 +35,7 @@ function Sandbox(options) {
     var child;
     var timer;
 
-    log("creating a new Sandbox");
+    trace("creating a new Sandbox");
 
     // return the stream to send packet data to for this child-sandbox-app
     this.getStream = function() {
@@ -47,20 +50,20 @@ function Sandbox(options) {
 
     this.run = function(pn, jscode, fnc) {
         playerN = pn;
-        log("Sandbox.run -- starting " + playerN);
+        trace("Sandbox.run -- starting " + playerN);
         var stdoutTxt = '';
         child = spawn( this.options.node, [this.options.shovel] );
         var fnStdout = function(data) {
             if (!!data) {
-                log("stdout text sent to sandbox:"+data);
+                trace("stdout text sent to sandbox:"+data);
                 stdoutTxt += data;
                 for(var i=0; i<50 && stdoutTxt; i++) {
                     var json = packet.checkStringForCompletePacket(stdoutTxt);
                     stdoutTxt = json.str;
                     if (json.packet) {
-                        log("stdout: got json packet:"+json.packet.str);
+                        trace("stdout: got json packet:"+json.packet.str);
                         if (json.packet.json) {
-                            log("stdout sending to mainHandler.process");
+                            trace("stdout sending to mainHandler.process");
                             mainHandler.process(json.packet.json, child.stdin, self);
                         } else if (json.packet.str) {
                             // ??
@@ -89,9 +92,9 @@ function Sandbox(options) {
         });
 
         // send the javascript code TO the new node process as a packet
-        log("sending setPlayer="+playerN, playerN);
+        trace("sending setPlayer="+playerN, playerN);
         packet.sendJson({op:"setPlayer", pn:playerN}, child.stdin);
-        log("sending: "+jscode, playerN);
+        trace("sending: "+jscode, playerN);
         packet.sendString(jscode, child.stdin);
 
         // set up a timeout timer (if node process runs too long, just kill it)

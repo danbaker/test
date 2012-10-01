@@ -14,7 +14,6 @@ console = {};
     var packet = require('./packet');
     var log = require('./log').log;
     var logDoc = require('./log').logDoc;
-    log("This is inside RUNNER.JS");
     var playerN = "P0";                                     // "P1" or "P2"å
     var pinfo = undefined;                                  // { contest_id, bot_id, user_id, run_id, pn }
 
@@ -65,7 +64,7 @@ exports.runCode = function(codeStr, stream)
 
     (function() {
         try {
-            var fnc = new Function('return eval('+JSON.stringify(codeStr+'')+')');
+            var fnc = Function('return eval('+JSON.stringify(codeStr+'')+')');
 
             // note: redefine all known globals ... so client-code can't access them
             var global = undefined;
