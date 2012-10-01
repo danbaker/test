@@ -85,16 +85,17 @@ stdin.on( 'end', function() {
     // shutdown when stdin is closed
 });
 
-//var n = 0;
-//var waiting = function() {
-//    trace("entered waiting.  n="+n);
-//    if (n++ < 2) {
-//        setTimeout(function() {
-//            trace("waiting ... n="+n);
-//            waiting();
-//        }, 100);
-//    }
-//};
+// Note: the following code allows the shovel to stay running (I think)
+var n = 0;
+var waiting = function() {
+    trace("entered waiting.  n="+n);
+    if (n++ < 2) {
+        setTimeout(function() {
+            trace("waiting ... n="+n);
+            waiting();
+        }, 5000);
+    }
+};
 
 //var run2 = function() {
 //    trace("Inside of run2 ... sending packet back");
