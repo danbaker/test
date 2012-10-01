@@ -50,7 +50,7 @@ var startContest = function(theContest) {
     setTimeout(function() {
         log("= = = = = = = startContest = = = = = = =");
         packet.sendJson({op:"runNextTurn"}, sand1.getStream());
-    }, 2000);       // @TODO: this is a debug-wait to allow both sandboxes to establish their databse connection to log file
+    }, 500);
 };
 
 exports.process = process;
