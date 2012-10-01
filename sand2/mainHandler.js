@@ -50,7 +50,7 @@ var startContest = function(theContest) {
     setTimeout(function() {
         log("= = = = = = = startContest = = = = = = =");
         packet.sendJson({op:"runNextTurn"}, sand1.getStream());
-    }, 500);
+    }, 2000);
 };
 
 exports.process = process;
