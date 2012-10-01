@@ -7,7 +7,7 @@ var contest;                                    // set by calling "startContest"
 
 var lastJSON = {};
 var log = function(msg) {
-    logMsg("mainHandler -- Player:"+lastJSON.pn+" op:"+lastJSON.op+" --- "+msg);
+//    logMsg("mainHandler -- Player:"+lastJSON.pn+" op:"+lastJSON.op+" --- "+msg);
 };
 
 var sand1;
