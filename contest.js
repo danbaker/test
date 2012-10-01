@@ -8,7 +8,7 @@ var Sandbox = require('./sand2/sandbox');
 var mainHandler = require('./sand2/mainHandler');
 var logMsg = require('./sand2/log').log;
 var log = function(msg) {
-//    logMsg("CONTEST.T"+turnN+": "+msg);
+    logMsg("CONTEST.T"+turnN+": "+msg);
 };
 
 var runDoc = undefined;             // undefined means: a contest is NOT currently running

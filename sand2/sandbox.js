@@ -18,10 +18,10 @@ var packet = require('./packet');
 var mainHandler = require('./mainHandler');
 var logX = require('./log').log;
 var log = function(msg, pn) {
-//    logX("sandbox."+pn+": "+msg);
+    logX("sandbox."+pn+": "+msg);
 };
 var trace = function(msg, pn) {
-    logX("sandbox."+pn+": "+msg);
+//    logX("sandbox."+pn+": "+msg);
 };
 
 
