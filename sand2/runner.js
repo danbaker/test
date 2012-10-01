@@ -14,6 +14,7 @@ console = {};
     var packet = require('./packet');
     var log = require('./log').log;
     var logDoc = require('./log').logDoc;
+    log("This is inside RUNNER.JS");
     var playerN = "P0";                                     // "P1" or "P2"å
     var pinfo = undefined;                                  // { contest_id, bot_id, user_id, run_id, pn }
 
