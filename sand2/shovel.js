@@ -41,8 +41,8 @@ var processPacket = function(pkt) {
             case "runNextTurn":
                 log("time to run the next turn ...");
                 log("@TODO: HOW do we call/tell the client-code to run?");
-                // @TODO: have this run in the sandbox ... NOT here ... closure access ?
                 if (contestAPI && contestAPI.runNextTurn) {
+                    log("calling contestAPI.runNextTurn ...");
                     contestAPI.runNextTurn();
                 }
                 break;
