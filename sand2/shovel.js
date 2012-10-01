@@ -28,7 +28,6 @@ var log = function(msg) {
 
 trace("loaded shovel.js");
 logX("LOADED SHOVEL.JS");
-consoleX.log("loaded shovel.js");
 
 
 // @TODO: rename this file "childapp.js"
@@ -70,7 +69,7 @@ var processPacket = function(pkt) {
 // Get code passed in from main app
 stdin = processX.openStdin();
 stdin.on('data', function(data) {
-    trace("got data: "+data);
+    trace("stdin.on(data):  got data: "+data);
     stdinStr += data;
     for(var i=0; i<50 && stdinStr; i++) {
         var json = packet.checkStringForCompletePacket(stdinStr);

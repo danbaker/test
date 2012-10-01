@@ -55,8 +55,8 @@ var resetLogFile = function() {
         } catch (e) {
             // ignore error (assume file-not-found)
         }
-        log("- - - - - - - NEW CONTEST STARTING - - - - - -");
     }
+    log("- - - - - - - NEW CONTEST STARTING - - - - - -");
 };
 
 // get all log messages (by player#) -- return array of log messages
