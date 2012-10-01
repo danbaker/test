@@ -28,6 +28,7 @@ var log = function(msg) {
 
 trace("loaded shovel.js");
 logX("LOADED SHOVEL.JS");
+consoleX.log("loaded shovel.js");
 
 
 // @TODO: rename this file "childapp.js"
@@ -58,6 +59,8 @@ var processPacket = function(pkt) {
     } else if (pkt.str) {
         // got a simple string (for now, assume this is the actual code to run)
         var code = pkt.str;
+        consoleX.log("about to load runner from shovel");
+        trace("loading running from within shovel");
         var runner = require('./runner');
         runner.runCode(code, process.stdout);
     }
@@ -85,16 +88,16 @@ stdin.on( 'end', function() {
     // shutdown when stdin is closed
 });
 
-var n = 0;
-var waiting = function() {
-    trace("entered waiting.  n="+n);
-    if (n++ < 2) {
-        setTimeout(function() {
-            trace("waiting ... n="+n);
-            waiting();
-        }, 100);
-    }
-};
+//var n = 0;
+//var waiting = function() {
+//    trace("entered waiting.  n="+n);
+//    if (n++ < 2) {
+//        setTimeout(function() {
+//            trace("waiting ... n="+n);
+//            waiting();
+//        }, 100);
+//    }
+//};
 
 var run2 = function() {
     trace("Inside of run2 ... sending packet back");

@@ -19,6 +19,8 @@ var logfile = path.join(__dirname, "log.txt");
 var prefix = "";
 var logN = 1;
 
+console.log("loaded log.js");
+
 var log = function(msg) {
     if (isLocal) {
         var str = "" + (new Date().toString()) + ": "+prefix+": " + msg + "\n";
