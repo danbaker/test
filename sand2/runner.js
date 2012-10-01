@@ -20,6 +20,7 @@ console = {};
 
     // client code calls this to set their own player# (NOTE: can only call this ONCE)
     contestAPI.setPlayer = function(pinfoX) {
+        log("runner.setPlayer for "+pinfoX.pn);
         if (pinfoX && !pinfo) {
             pinfo = pinfoX;
             playerN = pinfo.pn;
@@ -27,6 +28,7 @@ console = {};
     };
     // client code calls this to submit their turn data
     contestAPI.submitTurn = function(json) {
+        log("runner.submitTurn for "+pn);
         packet.sendJson({op:"submitTurn", pn:playerN, data:json});
     };
     // client calls this to log
