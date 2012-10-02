@@ -20,7 +20,9 @@ exports.setParam = function(req, name, value) {
 exports.parseToObject = function(str) {
     var obj;
     try {
-        obj = JSON.parse(str);
+        if (str) {
+            obj = JSON.parse(str);
+        }
     } catch (e) {
         console.log("parseToObject("+str+") ERROR: %j", e);
         return undefined;
