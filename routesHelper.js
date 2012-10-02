@@ -191,9 +191,9 @@ exports.makeOptions = function(req) {
             var oneSort = [];
             oneSort.push(parts[0]);                     // [ "first_name" ]
             if (parts.length === 2) {
-                oneSort.push(parts[1]);                 // [ "first_name" , "asc" ]
+                oneSort.push(parts[1]);                 // [ "first_name" , "1" ]
             } else if (parts.length === 1) {
-                oneSort.push("asc");
+                oneSort.push("1");
             }
             if (!options.sort) options.sort = [];
             options.sort.push(oneSort);
