@@ -389,8 +389,9 @@ var get_collection = function(coll, options, fnc, msgName) {
                 // error
                 fnc();
             } else {
-                if (options.limit) cursor.limit(options.limit);
-                if (options.offset) cursor.skip(options.offset);
+                if (options.limit) cursor.limit(options.limit);         // options.limit = 100
+                if (options.offset) cursor.skip(options.offset);        // options.offset = 50
+                if (options.sort) cursor.sort(options.sort);            // options.sort = {lastname:1, firstname:1}
                 cursor.each(function(err, item) {
                     //console.log("= = = get_collection("+msgName+"): item=%j",item);
                     if(!item) {
