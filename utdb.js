@@ -368,7 +368,9 @@ exports.updateDoc = function(coll, collName, id, fncUpdateDoc, fncDone) {
 // *
 
 var getQueryOption = function(options) {
+    console.log("1. = = = getQueryOptions");
     var query = options.query || {};        // select query:  { name:"Dan" } means "select documents where name = "Dan"
+    console.log("2. = = = query = %j", query);
     if (query) {
         for(var key in query){
             if (query.hasOwnProperty(key)) {
