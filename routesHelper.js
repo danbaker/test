@@ -143,7 +143,6 @@ exports.cleanItem = function(req, item) {
 
 // generate an "options" object that can be sent to the database object when querying a collection
 exports.makeOptions = function(req) {
-    console.log("1-----makeOptions");
     var options = {};
     var i, x;
     // FIELDS -- specific fields to return
@@ -167,7 +166,6 @@ exports.makeOptions = function(req) {
     if (x > 0) options.offset = x;
     // QUERY -- a way to narrow which items are selected
     x = exports.getParam(req, "query");                     // query=first_name:Dan,last_name:Baker
-    console.log("1-----makeOptions string=%j",x);
     var contest_id = exports.getParam(req, "contest_id");   // specified contest ("100ae45f")
     if (x || contest_id) {
         options.query = {};

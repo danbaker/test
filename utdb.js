@@ -132,24 +132,6 @@ if (isLocal) {
             db.collection('logs', function(err, collection) {
                 if (err) console.log("collection code error: %j", err);
                 logsCollection = collection;
-
-                // DEBUG ... @TODO
-                console.log("--- debugging collection_gets on logs ---");
-                var query = {"pn":"P1"};
-                var fields = {};
-                logsCollection.find(query, fields, function(err, cursor) {
-                    console.log("--- returned from find");
-                    if (err || !cursor) {
-                        if (err) console.log("find error: %j", err);
-                    } else {
-//                        if (options.limit) cursor.limit(options.limit);
-//                        if (options.offset) cursor.skip(options.offset);
-                        cursor.each(function(err, item) {
-                            console.log("--- item=%j",item);
-                        });
-                    }
-                });
-                // DEBUG ...  @TOD
             });
         });
 
@@ -368,9 +350,7 @@ exports.updateDoc = function(coll, collName, id, fncUpdateDoc, fncDone) {
 // *
 
 var getQueryOption = function(options) {
-    console.log("1. = = = getQueryOptions");
     var query = options.query || {};        // select query:  { name:"Dan" } means "select documents where name = "Dan"
-    console.log("2. = = = query = %j", query);
     if (query) {
         for(var key in query){
             if (query.hasOwnProperty(key)) {
@@ -403,24 +383,16 @@ var get_collection = function(coll, options, fnc, msgName) {
         var found = [];
         var fields = options.fields || {};      // specific fields to return:  {id:true, name:true}
         var query = getQueryOption(options);    // select query:  { name:"Dan" } means "select documents where name = "Dan"
-        if (coll === logsCollection) {
-//            query = {pn:"P1"};
-            fields = {};
-            console.log("= = = IS LOGS COLLECTION");
-        }
-        console.log("= = = get_collection("+msgName+"): query=%j",query);
-        console.log("= = = fields=%j", fields);
         coll.find(query, fields, function(err, cursor) {
             if (err || !cursor) {
                 if (err) console.log(""+msgName+": find error: %j", err);
                 // error
                 fnc();
             } else {
-//                if (options.limit) cursor.limit(options.limit);
-//                if (options.offset) cursor.skip(options.offset);
-
+                if (options.limit) cursor.limit(options.limit);
+                if (options.offset) cursor.skip(options.offset);
                 cursor.each(function(err, item) {
-                    console.log("= = = get_collection("+msgName+"): item=%j",item);
+                    //console.log("= = = get_collection("+msgName+"): item=%j",item);
                     if(!item) {
                         fnc(found);
                     } else {
