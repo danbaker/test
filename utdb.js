@@ -103,14 +103,6 @@ if (isLocal) {
             });
         });
 
-//        db.createCollection('code', function(err, collection) {
-//            if (err) console.log("createCollection code error: %j", err);
-//            db.collection('users', function(err, collection) {
-//                if (err) console.log("collection code error: %j", err);
-//                codeCollection = collection;
-//            });
-//        });
-
         db.createCollection('contests', function(err, collection) {
             if (err) console.log("createCollection code error: %j", err);
             db.collection('contests', function(err, collection) {
@@ -140,10 +132,28 @@ if (isLocal) {
             db.collection('logs', function(err, collection) {
                 if (err) console.log("collection code error: %j", err);
                 logsCollection = collection;
+
+                // DEBUG ...
+                console.log("--- debugging collection_gets on logs ---");
+                var query = { pn:"P1" };
+                var fields = {};
+                logsCollection.find(query, fields, function(err, cursor) {
+                    console.log("--- returned from find");
+                    if (err || !cursor) {
+                        if (err) console.log("find error: %j", err);
+                    } else {
+//                        if (options.limit) cursor.limit(options.limit);
+//                        if (options.offset) cursor.skip(options.offset);
+                        cursor.each(function(err, item) {
+                            console.log("--- item=%j",item);
+                        });
+                    }
+                });
+                // DEBUG ...
             });
         });
 
-        // @TODO: create other collections here ...
+        // create other collections here ...
     });
 }
 

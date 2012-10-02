@@ -11,6 +11,7 @@ var log = function(msg) {
 //    logMsg("CONTEST.T"+turnN+": "+msg);
 };
 
+var contestDoc = undefined;         // the doc from contests being run right now
 var runDoc = undefined;             // undefined means: a contest is NOT currently running
 var run_id = "0";                   // run_id for current running contest
 var sand1;                          // sandbox for P1
@@ -46,7 +47,10 @@ var queueContestToStart = function(doc) {
         // don't know what to do with the return info ...
         if (ok && ok[0] && ok[0]._id) {
             run_id = ok[0]._id;
-            exports.runContest();
+            utdb.getDoc(utdb.collection_contests(), "contests", runDoc.contest_id, function(cDoc) {
+                contestDoc = cDoc;
+                exports.runContest();
+            });
         } else {
             console.log("ERROR: post run result: %j", ok);
             runDoc = undefined;
@@ -86,46 +90,40 @@ contestAPI.runNextTurn = function() {
 var startPlayer = function(pIndex, fnc) {
     var pn = "P" + (pIndex+1);                  // "P1" or "P2"
     var s = new Sandbox({pn:pn});
-    // ----------------------------------------------------------------------------------------------
-    // get the "default" code (NOTE: we should be able to remove this later) @TODO: remove this code
-    utdb.getDoc(utdb.collection_contests(), "contests", runDoc.contest_id, function(contestDoc) {
-        var contestJS = "";
-        if (contestDoc && contestDoc.code) {
-            contestJS = contestDoc.code;
-            console.log("GOT CONTEST DEFAULT CODE: "+contestJS);
-        }
-    // ----------------------------------------------------------------------------------------------
+    utdb.getDoc(utdb.collection_bots(), "bots", runDoc.bots_id[pIndex], function(botDoc) {
+        // get the JavaScript to run for this player/user/bot
         var userjs = "";
-        utdb.getDoc(utdb.collection_bots(), "bots", runDoc.bots_id[pIndex], function(botDoc) {
-            if (botDoc && botDoc.code) {
-                userjs = botDoc.code;
-                console.log("GOT BOT CONTEST CODE: "+userjs);
-            } else {
-                userjs = contestJS;
+        if (botDoc && botDoc.code) {
+            // code came from the bot
+            userjs = botDoc.code;
+            console.log("GOT BOT CONTEST CODE: "+userjs);
+        } else if (contestDoc && contestDoc.code) {
+            // bot had no code ... use default code for the contest
+            userjs = contestDoc.code;
+        }
+        // build the entire JavaScript to run for this player/bot
+        var js = "";
+        js += makeSetPlayerCall(pIndex);
+        // server calls the "contestAPI.runNextTurn" function when it is time to run a turn
+        js += userjs;
+        // @TODO: REMOVE THIS ... for now, IF they don't provide a "runNextTurn" function ... give them one
+        if (userjs.indexOf("runNextTurn") < 0) {
+            js += "contestAPI.runNextTurn = function() {";
+            js +=       "var rn = Math.floor(Math.random()*3);";              // 0,1,2
+            js +=       "var rps = (rn===0? 'r' : rn===1? 'p' : 's');";       // r,p,s
+            js +=       "console.log('selected '+rps);";
+            js +=       "contestAPI.submitTurn({pick:rps});";
+            js += "};";
+        }
+        s.run( pn, js, function( output ) {
+            // this sanbox ended.  is done running code.
+            sandboxesDone++;
+            console.log("sandbox ended.  #="+sandboxesDone);
+            if (sandboxesDone >= 2) {
+                console.log("BOTH DONE");
+                finishContest();
             }
-            var js = "";
-            js += makeSetPlayerCall(pIndex);
-            // server calls the "contestAPI.runNextTurn" function when it is time to run a turn
-            js += userjs;
-            // @TODO: REMOVE THIS ... for now, IF they don't provide a "runNextTurn" function ... give them one
-            if (userjs.indexOf("runNextTurn") < 0) {
-                js += "contestAPI.runNextTurn = function() {";
-                js +=       "var rn = Math.floor(Math.random()*3);";              // 0,1,2
-                js +=       "var rps = (rn===0? 'r' : rn===1? 'p' : 's');";       // r,p,s
-                js +=       "console.log('selected '+rps);";
-                js +=       "contestAPI.submitTurn({pick:rps});";
-                js += "};";
-            }
-            s.run( pn, js, function( output ) {
-                // this sanbox ended.  is done running code.
-                sandboxesDone++;
-                console.log("sandbox ended.  #="+sandboxesDone);
-                if (sandboxesDone >= 2) {
-                    console.log("BOTH DONE");
-                    finishContest();
-                }
-                fnc(output);
-            });
+            fnc(output);
         });
     });
     return s;
