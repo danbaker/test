@@ -404,6 +404,12 @@ module.exports = function(app){
             routesRuns.getRuns(req, res);
         }
     });
+    // get one run for a contest
+    app.get('/apis/:version/contests/:contest_id/runs/:id', function(req, res) {
+        if (!showCollectionHelp(req, res, "GET", "rund")) {
+            routesRuns.getRuns_id(req, res);
+        }
+    });
     // post a new run for a contest (start running a contest)
     app.post('/apis/:version/contests/:contest_id/runs', function(req, res) {
         if (!showCollectionHelp(req, res, "POST", "runs")) routesRuns.postRuns(req, res);
