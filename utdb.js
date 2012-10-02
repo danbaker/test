@@ -133,9 +133,9 @@ if (isLocal) {
                 if (err) console.log("collection code error: %j", err);
                 logsCollection = collection;
 
-                // DEBUG ...
+                // DEBUG ... @TODO
                 console.log("--- debugging collection_gets on logs ---");
-                var query = { pn:"P1" };
+                var query = {"pn":"P1"};
                 var fields = {};
                 logsCollection.find(query, fields, function(err, cursor) {
                     console.log("--- returned from find");
@@ -149,7 +149,7 @@ if (isLocal) {
                         });
                     }
                 });
-                // DEBUG ...
+                // DEBUG ...  @TOD
             });
         });
 
