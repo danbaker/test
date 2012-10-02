@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="b163e181-c391-49fa-b20a-b6034a2cbb74" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routesHelper.js" afterPath="$PROJECT_DIR$/routesHelper.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/utdb.js" afterPath="$PROJECT_DIR$/utdb.js" />
     </list>
     <ignored path="h1.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -50,7 +49,7 @@
       <file leaf-file-name="routesHelper.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/routesHelper.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="197" column="95" selection-start="7044" selection-end="7044" vertical-scroll-proportion="0.65">
+            <state line="186" column="23" selection-start="6410" selection-end="6410" vertical-scroll-proportion="0.5">
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -411,7 +410,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/routesHelper.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="197" column="95" selection-start="7044" selection-end="7044" vertical-scroll-proportion="0.65">
+        <state line="186" column="23" selection-start="6410" selection-end="6410" vertical-scroll-proportion="0.5">
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>

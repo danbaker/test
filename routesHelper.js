@@ -184,22 +184,20 @@ exports.makeOptions = function(req) {
     }
     // SORT -- specify sorting:  sort=lastName:1,firstName:-1       sort=lastName,firstName
     x = exports.getParam(req, "sort");
-    if (x) {
+    if (x && x.split) {
         options.sort = {};
-        if (x) {
-            x = x.split(",");                               // ["first_name:1", "last_name:-1"]
-            for(i=0; i<x.length; i++) {
-                var parts = x[i].split(":");                // parts[0] = "first_name", parts[1] = "1"
-                if (parts.length === 2) {
-                    try {
-                        var sortOrder = parseInt(parts[1]);
-                        options.sort[parts[0]] = parts[1];     // { first_name:"1", last_name:"Baker" }
-                    } catch (e) {
-                        console.log("ERROR: sort specified as "+exports.getParam(req, "sort"));
-                    }
-                } else if (parts.length === 1) {
-                    options.sort[parts[0]] = 1;             // { first_name:1 }
+        x = x.split(",");                               // ["first_name:1", "last_name:-1"]
+        for(i=0; i<x.length; i++) {
+            var parts = x[i].split(":");                // parts[0] = "first_name", parts[1] = "1"
+            if (parts.length === 2) {
+                try {
+                    var sortOrder = parseInt(parts[1]);
+                    options.sort[parts[0]] = parts[1];     // { first_name:"1", last_name:"Baker" }
+                } catch (e) {
+                    console.log("ERROR: sort specified as "+exports.getParam(req, "sort"));
                 }
+            } else if (parts.length === 1) {
+                options.sort[parts[0]] = 1;             // { first_name:1 }
             }
         }
     }
