@@ -391,9 +391,7 @@ var get_collection = function(coll, options, fnc, msgName) {
             } else {
                 if (options.limit) cursor.limit(options.limit);         // options.limit = 100
                 if (options.offset) cursor.skip(options.offset);        // options.offset = 50
-                if (options.sort) cursor.sort(options.sort);            // options.sort = {lastname:1, firstname:1}
-                console.log("=== get_collection sort=%j",options.sort);
-//                cursor.sort([["logNumber", "1"]]);
+                if (options.sort) cursor.sort(options.sort);            // options.sort = [["lastname","1"], ["firstname","-1"]]
                 cursor.each(function(err, item) {
                     //console.log("= = = get_collection("+msgName+"): item=%j",item);
                     if(!item) {

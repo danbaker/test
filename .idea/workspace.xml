@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="b163e181-c391-49fa-b20a-b6034a2cbb74" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routesHelper.js" afterPath="$PROJECT_DIR$/routesHelper.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/utdb.js" afterPath="$PROJECT_DIR$/utdb.js" />
     </list>
     <ignored path="h1.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -24,10 +25,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="utdb.js" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="utdb.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/utdb.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="387" column="73" selection-start="13698" selection-end="13698" vertical-scroll-proportion="0.0">
+            <state line="394" column="49" selection-start="14136" selection-end="14136" vertical-scroll-proportion="0.525">
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -35,10 +36,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="routesHelper.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="routesHelper.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/routesHelper.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="11" column="53" selection-start="579" selection-end="579" vertical-scroll-proportion="0.275">
+            <state line="11" column="0" selection-start="478" selection-end="478" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -75,8 +76,8 @@
         <option value="$PROJECT_DIR$/sand2/logdb.js" />
         <option value="$PROJECT_DIR$/contest.js" />
         <option value="$PROJECT_DIR$/contest_rps.js" />
-        <option value="$PROJECT_DIR$/utdb.js" />
         <option value="$PROJECT_DIR$/routesHelper.js" />
+        <option value="$PROJECT_DIR$/utdb.js" />
       </list>
     </option>
   </component>
@@ -368,18 +369,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/utdb.js">
+    <entry file="file://$PROJECT_DIR$/routesHelper.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="387" column="73" selection-start="13698" selection-end="13698" vertical-scroll-proportion="0.0">
+        <state line="11" column="0" selection-start="478" selection-end="478" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routesHelper.js">
+    <entry file="file://$PROJECT_DIR$/utdb.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="53" selection-start="579" selection-end="579" vertical-scroll-proportion="0.275">
+        <state line="394" column="49" selection-start="14136" selection-end="14136" vertical-scroll-proportion="0.525">
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
