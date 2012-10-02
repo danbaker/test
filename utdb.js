@@ -401,6 +401,11 @@ var get_collection = function(coll, options, fnc, msgName) {
         var found = [];
         var fields = options.fields || {};      // specific fields to return:  {id:true, name:true}
         var query = getQueryOption(options);    // select query:  { name:"Dan" } means "select documents where name = "Dan"
+        if (coll === logsCollection) {
+            query = {pn:"P1"};
+            fields = {};
+            console.log("= = = IS LOGS COLLECTION");
+        }
         console.log("= = = get_collection("+msgName+"): query=%j",query);
         console.log("= = = fields=%j", fields);
         coll.find(query, fields, function(err, cursor) {
@@ -411,8 +416,9 @@ var get_collection = function(coll, options, fnc, msgName) {
             } else {
 //                if (options.limit) cursor.limit(options.limit);
 //                if (options.offset) cursor.skip(options.offset);
+                
                 cursor.each(function(err, item) {
-                    //console.log("= = = get_collection("+msgName+"): item=%j",item);
+                    console.log("= = = get_collection("+msgName+"): item=%j",item);
                     if(!item) {
                         fnc(found);
                     } else {
