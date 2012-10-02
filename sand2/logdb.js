@@ -48,13 +48,20 @@ if (!isLocal) {
     };
 
     var popAllSavedLogs = function(fnc) {
-        if (savedLogs) {
-            popOneSavedLog(function() {
-                popAllSavedLogs(fnc);
+        for(var i=0; i<savedLogs.length; i++) {
+            var msg = savedLogs[i];
+            postOneLog(msg, function() {
+
             });
-        } else {
-            fnc();
         }
+        fnc();
+//        if (savedLogs) {
+//            popOneSavedLog(function() {
+//                popAllSavedLogs(fnc);
+//            });
+//        } else {
+//            fnc();
+//        }
     };
     var popOneSavedLog = function(fnc) {
         if (savedLogs && savedLogs.length > 0) {
