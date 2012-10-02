@@ -195,10 +195,9 @@ exports.submitTurn = function(json, sand, sandOther) {
                     winner = "tie";
                     winnerMsg += "  Tie";
                 }
-                // @TODO: REMOVE THIS DEBUG LINE BELOW:
-                setTimeout(function() {
-                    logMsg(winnerMsg);
-                }, 1000);
+
+                logMsg(winnerMsg);      // @TODO: Remove this temp debug line .. so we have a "log" that shows who won
+
                 utdb.updateDoc(utdb.collection_runs(), "runs", run_id, function(docToUpdate, fnc) {
                     docToUpdate.winner = winner;
                     docToUpdate.winnerMsg = winnerMsg;

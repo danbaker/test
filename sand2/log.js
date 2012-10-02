@@ -43,7 +43,7 @@ var logDoc = function(doc) {
 
 var setPrefix = function(str) {
     prefix = str;
-    log("--  set prefix to:"+str);
+    //log("--  set prefix to:"+str);
 };
 
 var resetLogFile = function() {

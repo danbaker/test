@@ -41,19 +41,35 @@ if (!isLocal) {
             if (!savedLogs) savedLogs = [];
             savedLogs.push(doc);
         } else {
-            if (savedLogs) {
-                for(var i=0; i<savedLogs.length; i++) {
-                    postOneLog(savedLogs[i]);
-                }
-                savedLogs = null;
-            }
-            postOneLog(doc);
+            popAllSavedLogs(function() {
+                postOneLog(doc);
+            });
         }
     };
 
+    var popAllSavedLogs = function(fnc) {
+        if (savedLogs) {
+            popOneSavedLog(function() {
+                popAllSavedLogs(fnc);
+            });
+        } else {
+            fnc();
+        }
+    };
+    var popOneSavedLog = function(fnc) {
+        if (savedLogs && savedLogs.length > 0) {
+            var msg = savedLogs[0];
+            savedLogs.splice(0,1);
+            postOneLog(msg, fnc);
+        } else {
+            savedLogs = null;
+            fnc();
+        }
+    };
     var postOneLog = function(doc, fnc) {
         if (logsCollection) {
             logsCollection.insert(doc, function(err, result) {
+                fnc();
             });
         }
     };
