@@ -184,12 +184,7 @@ exports.makeOptions = function(req) {
     }
     // SORT -- specify sorting:  sort=lastName:1,firstName:-1       sort=lastName,firstName
     x = exports.getParam(req, "sort");
-    console.log("=== sort string = %j",x);
-    console.log("req.params = %j", req.params);
-    console.log("req.query = %j", req.query);
-    console.log("req.query[sort] = %j", req.query["sort"]);
     if (x && x.split) {
-        console.log("=== sort split available");
         x = x.split(",");                               // ["first_name:1", "last_name:-1"]
         for(i=0; i<x.length; i++) {
             var parts = x[i].split(":");                // parts[0] = "first_name", parts[1] = "1" or "asc"  or "-1" or "desc"
