@@ -7,9 +7,9 @@ exports.getParam = function(req,name) {
         console.log("ERROR: Did you forget to pass in the req object to getParam");
     }
     console.log("1---getParam("+name+") ... params=%j, query=%j, body=%j",req.params[name], req.query[name], req.body[name]);
-    if (req.params && req.params[name] !== undefined) return req.params[name];
-    if (req.query && req.query[name] !== undefined) return req.query[name];
-    if (req.body && req.body[name] !== undefined) return req.body[name];
+    if (req.params && typeof req.params[name] == "string") return req.params[name];
+    if (req.query && typeof req.query[name] == "string") return req.query[name];
+    if (req.body && typeof req.body[name] == "string") return req.body[name];
     console.log("2---getParam("+name+") not found");
     return undefined;
 };
