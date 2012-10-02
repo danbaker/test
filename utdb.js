@@ -401,15 +401,16 @@ var get_collection = function(coll, options, fnc, msgName) {
         var found = [];
         var fields = options.fields || {};      // specific fields to return:  {id:true, name:true}
         var query = getQueryOption(options);    // select query:  { name:"Dan" } means "select documents where name = "Dan"
-//        console.log("= = = get_collection("+msgName+"): query=%j",query);
+        console.log("= = = get_collection("+msgName+"): query=%j",query);
+        console.log("= = = fields=%j", fields);
         coll.find(query, fields, function(err, cursor) {
             if (err || !cursor) {
                 if (err) console.log(""+msgName+": find error: %j", err);
                 // error
                 fnc();
             } else {
-                if (options.limit) cursor.limit(options.limit);
-                if (options.offset) cursor.skip(options.offset);
+//                if (options.limit) cursor.limit(options.limit);
+//                if (options.offset) cursor.skip(options.offset);
                 cursor.each(function(err, item) {
                     //console.log("= = = get_collection("+msgName+"): item=%j",item);
                     if(!item) {
