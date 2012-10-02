@@ -6,9 +6,11 @@ exports.getParam = function(req,name) {
     if (!name) {
         console.log("ERROR: Did you forget to pass in the req object to getParam");
     }
+    console.log("1---getParam("+name+") ... params=%j, query=%j, body=%j",req.params[name], req.query[name], req.body[name]);
     if (req.params && req.params[name] !== undefined) return req.params[name];
     if (req.query && req.query[name] !== undefined) return req.query[name];
     if (req.body && req.body[name] !== undefined) return req.body[name];
+    console.log("2---getParam("+name+") not found");
     return undefined;
 };
 
@@ -187,6 +189,7 @@ exports.makeOptions = function(req) {
     console.log("=== sort string = %j",x);
     console.log("req.params = %j", req.params);
     console.log("req.query = %j", req.query);
+    console.log("req.query[sort] = %j", req.query["sort"]);
     if (x && x.split) {
         console.log("=== sort split available");
         x = x.split(",");                               // ["first_name:1", "last_name:-1"]
