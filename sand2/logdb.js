@@ -48,13 +48,6 @@ if (!isLocal) {
     };
 
     var popAllSavedLogs = function(fnc) {
-//        for(var i=0; i<savedLogs.length; i++) {
-//            var msg = savedLogs[i];
-//            postOneLog(msg, function() {
-//
-//            });
-//        }
-//        fnc();
         if (savedLogs) {
             popOneSavedLog(function() {
                 popAllSavedLogs(fnc);
@@ -76,7 +69,11 @@ if (!isLocal) {
     var postOneLog = function(doc, fnc) {
         if (logsCollection) {
             logsCollection.insert(doc, function(err, result) {
-                if (fnc) fnc();
+                if (fnc) {
+                    setTimeout(function() {
+                        fnc();
+                    }, 100);
+                }
             });
         }
     };
