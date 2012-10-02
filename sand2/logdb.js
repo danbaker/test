@@ -76,7 +76,7 @@ if (!isLocal) {
     var postOneLog = function(doc, fnc) {
         if (logsCollection) {
             logsCollection.insert(doc, function(err, result) {
-                fnc();
+                if (fnc) fnc();
             });
         }
     };
