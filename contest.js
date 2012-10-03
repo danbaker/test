@@ -22,6 +22,7 @@ var isOver = false;                 // true means: contest is over
 var p1_win = 0;
 var p2_win = 0;
 var sandboxesDone = 0;              // total sanboxes that have finished/ended/done
+var theContest;                     // a runs the known contest interface (see contest_rps)
 
 
 // request to queue a contest to start running soon
@@ -214,3 +215,58 @@ exports.submitTurn = function(json, sand, sandOther) {
 };
 
 exports.queueContestToStart = queueContestToStart;
+
+
+
+// start running a contest between P1 and P2
+exports.___runContest = function() {
+    // * * * * * * * * * * * * * * * * *
+    // RESET EVERYTHING FOR A NEW CONTEST
+    require('./sand2/log').resetLogFile();
+    turnN = 1;
+    isOver = false;
+    sandboxesDone = 0;
+
+    // START UP PLAYER 1
+    sand1 = startPlayer(0, function(output) {
+    });
+    // START UP PLAYER 2
+    sand2 = startPlayer(1, function(output) {
+    });
+    mainHandler.setSandboxes(sand1, sand2);
+    mainHandler.startContest(require('./contest'));
+    theContest.reset(sand1, sand2);
+//    if (fnc) fnc("contest running...");               // @TODO: do this after calling this function
+};
+
+exports.___submitTurn = function(json, sand, sandOther) {
+    if (!isOver) {
+        sand.savedTurn = json;
+        if (sand == sand1) {
+            theContest.submitTurn_p1(json, sand, turnN);
+        } else if (sand == sand2) {
+            theContest.submitTurn_p2(json, sand, turnN);
+            turnN++;
+        } else {
+            console.log("ERROR .. bad sand passed into submitTurn")
+        }
+        if (turnN > theContest.getOptions().maxTurns || theContest.isOverEarly()) {
+            // !! contest just ended !!
+            isOver = true;
+            var results = theContest.getResults();      // { message: , winner: , score: }
+            utdb.updateDoc(utdb.collection_runs(), "runs", run_id, function(docToUpdate, fnc) {
+                docToUpdate.winner = results.winner;
+                docToUpdate.score = results.score;
+                docToUpdate.winnerMsg = results.message;
+                fnc(docToUpdate);
+            }, function(ok) {
+                if (ok) {
+                    // doc was updated OK
+                } else {
+                    console.log("ERROR: run failed to update with winner="+winner);
+                }
+            });
+        }
+    }
+    return isOver;
+};
