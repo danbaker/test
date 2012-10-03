@@ -132,7 +132,7 @@ var startPlayer = function(pIndex, fnc) {
 };
 
 // start running a contest between P1 and P2 (call callback fnc when done)
-exports.runContest = function(id_p1, id_p2, fnc) {
+exports.__OLD__runContest = function(id_p1, id_p2, fnc) {
     // * * * * * * * * * * * * * * * * *
     // RESET EVERYTHING FOR A NEW CONTEST
     require('./sand2/log').resetLogFile();
@@ -156,7 +156,7 @@ exports.runContest = function(id_p1, id_p2, fnc) {
 // NOTE: An external node.js "player" just submitted their turn
 // in:  json    = { }  === turn data object
 //      sand    = the sandbox that submitted this turn
-exports.submitTurn = function(json, sand, sandOther) {
+exports.__OLD__submitTurn = function(json, sand, sandOther) {
     log("contest.submitTurn");
     if (!isOver) {
         sand.savedTurn = json;
@@ -220,7 +220,7 @@ exports.queueContestToStart = queueContestToStart;
 
 
 // start running a contest between P1 and P2
-exports.___runContest = function() {
+exports.runContest = function() {
     // * * * * * * * * * * * * * * * * *
     // RESET EVERYTHING FOR A NEW CONTEST
     require('./sand2/log').resetLogFile();
@@ -240,7 +240,7 @@ exports.___runContest = function() {
 //    if (fnc) fnc("contest running...");               // @TODO: do this after calling this function
 };
 
-exports.___submitTurn = function(json, sand, sandOther) {
+exports.submitTurn = function(json, sand, sandOther) {
     if (!isOver) {
         sand.savedTurn = json;
         if (sand == sand1) {
