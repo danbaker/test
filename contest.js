@@ -67,6 +67,7 @@ var finishContest = function() {
     runDoc = undefined;
 };
 
+//make the js call to "contestAPI.setPlayer" for a known player
 var makeSetPlayerCall = function(pIndex) {
     var js = "";
     js += "contestAPI.setPlayer({";                 // tell API about this contest and my player info
@@ -98,9 +99,9 @@ var startPlayer = function(pIndex, fnc) {
             // code came from the bot
             userjs = botDoc.code;
             console.log("GOT BOT CONTEST CODE: "+userjs);
-        } else if (contestDoc && contestDoc.code) {
+        } else if (contestDoc && contestDoc.defaultCode) {
             // bot had no code ... use default code for the contest
-            userjs = contestDoc.code;
+            userjs = contestDoc.defaultCode;
         }
         // build the entire JavaScript to run for this player/bot
         var js = "";
