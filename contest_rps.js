@@ -25,6 +25,7 @@ var tie_win;
 // --- internal-use only
 var turnN;
 
+// reset for a new contest between two bots, already loaded into sandboxes
 exports.reset = function(s1, s2) {
     sand1 = s1;
     sand2 = s2;
@@ -33,6 +34,7 @@ exports.reset = function(s1, s2) {
     tie_win = 0;
 };
 
+// return the options for this contest
 exports.getOptions = function() {
     return {
         maxTurns: 7

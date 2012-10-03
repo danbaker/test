@@ -256,6 +256,7 @@ exports.submitTurn = function(json, sand, sandOther) {
             isOver = true;
             var results = theContest.getResults();      // { message: , winner: , score: }
             utdb.updateDoc(utdb.collection_runs(), "runs", run_id, function(docToUpdate, fnc) {
+                console.log("About to update run: %j", docToUpdate);
                 docToUpdate.winner = results.winner;
                 docToUpdate.score = results.score;
                 docToUpdate.winnerMsg = results.message;
@@ -264,7 +265,7 @@ exports.submitTurn = function(json, sand, sandOther) {
                 if (ok) {
                     // doc was updated OK
                 } else {
-                    console.log("ERROR: run failed to update with winner="+winner);
+                    console.log("ERROR: run failed to update with winner="+results.winner+" run_id="+run_id);
                 }
             });
         }
