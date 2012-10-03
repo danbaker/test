@@ -23,7 +23,7 @@ var p1_win = 0;
 var p2_win = 0;
 var sandboxesDone = 0;              // total sanboxes that have finished/ended/done
 var theContest;                     // a runs the known contest interface (see contest_rps)
-
+theContest = require("./contest_rps");
 
 // request to queue a contest to start running soon
 // in:  doc = "runs" document:
