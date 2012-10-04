@@ -44,25 +44,38 @@ exports.getOptions = function() {
 
 exports.submitTurn_p1 = function(json, sand, turnN) {
     sand.savedTurn = json;
+    return null;
 };
 
 exports.submitTurn_p2 = function(json, sand, turnN) {
     sand.savedTurn = json;
-    runTurnNow(turnN);
+    return runTurnNow(turnN);
 };
 
 var runTurnNow = function(turnNumber) {
     turnN = turnNumber;
+    var winner = 0;
     var p1 = sand1.savedTurn.pick;
     var p2 = sand2.savedTurn.pick;
     if ((p1 == 'r' && p2 == 's') || (p1 == 'p' && p2 == 'r') || (p1 == 's' && p2 == 'p')) {
         p1_win++;
+        winner = "P1";
     } else  if ((p2 == 'r' && p1 == 's') || (p2 == 'p' && p1 == 'r') || (p2 == 's' && p1 == 'p')) {
         p2_win++;
+        winner = "P2";
     } else {
         tie_win++;
+        winner = "tie";
     }
     //log("p1="+p1+"  p2="+p2+"  p1Win="+p1Win+"  p2Win="+p2Win);
+    return {
+        p1: { pick: sand1.savedTurn.pick },
+        p2: { pick: sand2.savedTurn.pick },
+        winner: winner,
+        p1_score: p1_win,
+        p2_score: p2_win,
+        tie_score: tie_win
+    };
 };
 
 exports.isOverEarly = function() {
