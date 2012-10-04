@@ -7,6 +7,7 @@ var lastJson = {};
 var consoleX = console;         // NOTE: this will send data BACK to server (do NOT use it)
 var processX = process;
 require('./log').setPrefix("CHILD");
+require('./logdb').setMaxLogs(4);
 var logX = require('./log').log;
 var util = require( 'util' );
 var path = require('path');
@@ -50,6 +51,7 @@ var processPacket = function(pkt) {
                 playerN = pkt.json.pn;
                 packet.setPlayerN(playerN);
                 require('./log').setPrefix("CHILD["+playerN+"]");
+                // require('./logdb').setMaxLogs(100);
                 break;
             default:
                 log("ERROR: unknown op")

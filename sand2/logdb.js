@@ -1,6 +1,8 @@
 var mdbURL = process.env.MONGOLAB_URI;   // URL to THE database
 var isLocal = (mdbURL? false : true);
 var mongo;
+var maxLogs = -1;       // maximum logs this user can save
+var logsSaved = 0;      // total logs this user has saved so far
 
 if (!isLocal) {
 
@@ -38,10 +40,13 @@ if (!isLocal) {
     var savedLogs = [];
     exports.postLogs = function(doc) {
         if (!exports.isLogReady()) {
+            // save this log till database is ready to use
             if (!savedLogs) savedLogs = [];
             savedLogs.push(doc);
         } else {
+            // database is ready to use ...
             if (savedLogs) {
+                // send all saved logs to the database
                 for(var i=0; i<savedLogs.length; i++) {
                     postOneLog(savedLogs[i]);
                 }
@@ -52,13 +57,18 @@ if (!isLocal) {
     };
     var postOneLog = function(doc, fnc) {
         if (logsCollection) {
-            logsCollection.insert(doc, function(err, result) {
-                if (fnc) {
-                    setTimeout(function() {
-                        fnc();
-                    }, 100);
-                }
-            });
+            if (maxLogs > 0 && logsSaved >= maxLogs) {
+                // ignore log request ... too many things logged for this user
+            } else {
+                logsSaved++;
+                logsCollection.insert(doc, function(err, result) {
+                    if (fnc) {
+                        setTimeout(function() {
+                            fnc();
+                        }, 100);
+                    }
+                });
+            }
         }
     };
 
@@ -69,4 +79,7 @@ if (!isLocal) {
 } else {
     exports.postLogs =  function() {};
 }
+exports.setMaxLogs = function(nLogs) {
+    maxLogs = nLogs;
+};
 
