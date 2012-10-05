@@ -41,12 +41,9 @@ define([
             $.ajax({
                 type: 'post',
                 url: [ '/apis/1/contests', this.data._id, 'bots' ].join('/'),
-                data: JSON.stringify({
-                    doc: {
-                        name: 'Untitled',
-                        code: self.data.defaultCode
-                    }
-                })
+                data: {
+                    doc: JSON.stringify({ name: 'Untitled', code: self.data.defaultCode})
+                }
             })
             .done(function(bot) {
                     self.render(self.data);
