@@ -16,8 +16,8 @@ define([
         },
 
         events: {
-
-            'click .bot-button': '_botButtonClicked'
+            'click .bot-button': '_botButtonClicked',
+            'click .new-bot-button': '_newBotButtonClicked'
         },
 
         _botButtonClicked: function(e) {
@@ -35,9 +35,29 @@ define([
 
         },
 
+        _newBotButtonClicked: function(e) {
+            var self = this;
+
+            $.ajax({
+                type: 'post',
+                url: [ '/apis/1/contests', this.data._id, 'bots' ].join('/'),
+                data: JSON.stringify({
+                    doc: {
+                        name: 'Untitled',
+                        code: self.data.defaultCode
+                    }
+                })
+            })
+            .done(function(bot) {
+                    self.render(self.data);
+            });
+        },
+
         render: function(data) {
 
             var self = this;
+
+            self.data = data;
 
             if ( data.status == 404 ) {
 
@@ -64,7 +84,7 @@ define([
 
                         html.push( '<div class="btn-group" style="text-align:center;">' );
                         _.each(bots, function(bot) {
-                            if ( bot.name ) {
+                            if ( bot.name && bot.code ) {
                                 html.push( [ '<button class="btn bot-button" data-bot-id="', bot._id, '">', bot.name, '</button>' ].join('') );
                             }
                         });
