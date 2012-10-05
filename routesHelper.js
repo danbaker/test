@@ -11,6 +11,18 @@ exports.getParam = function(req,name) {
     if (req.body && typeof req.body[name] == "string") return req.body[name];
     return undefined;
 };
+exports.getParamAsObject = function(req, name) {
+    var param;
+    if (!name) {
+        console.log("ERROR: Did you forget to pass in the req object to getParam");
+    }
+    if (req.params) { param = req.params[name]; }
+    else if (req.query) { param = req.query[name]; }
+    else if (req.body) { param = req.body[name]; }
+
+    if (typeof param == "object") return param;
+    return exports.parseToObject(param);
+};
 
 exports.setParam = function(req, name, value) {
     req.params[name] = value;

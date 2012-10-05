@@ -55,7 +55,8 @@ exports.getBots = function(req, res) {
 };
 exports.postBots = function(req,res) {
     if (checkAuth(req, res)) {
-        var doc = helper.getParam(req, "doc");          // the bot document:  { code: "var a=1;", name: "winning" }
+        var doc = helper.getParamAsObject(req, "doc");          // the bot document:  { code: "var a=1;", name: "winning" }
+        console.log("doc=%j", doc);
         if (!doc || typeof doc !== "object") {
             // error .. didn't pass in a valid document to store as a bot
             helper.sendJson(res, {response:false, message:"POST bot failed.  bad doc"});

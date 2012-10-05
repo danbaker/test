@@ -118,3 +118,5 @@ packet.test();
 
 var log = require('./sand2/log').log;
 log("- - - - - - - - - - - - - - - - - - - -");
+var hexBoard = require("./contestUtils/hexBoard");
+
