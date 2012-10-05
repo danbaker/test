@@ -24,7 +24,7 @@ var p2_win = 0;
 var sandboxesDone = 0;              // total sanboxes that have finished/ended/done
 var theContest;                     // a runs the known contest interface (see contest_rps)
 var replays = [];                   // the array of all data needed to replay this run
-theContest = require("./contest_rps");      // @TODO: create a differnt "contest_any.js" that will run code from the contest_doc
+//theContest = require("./contest_rps");      // @TODO: create a differnt "contest_any.js" that will run code from the contest_doc
 
 // request to queue a contest to start running soon
 // in:  doc = "runs" document:
@@ -55,9 +55,9 @@ var queueContestToStart = function(doc) {
                 //              .defaultCode = bot code
                 //              .code = contest code
                 if (contestDoc.code) {
-                    console.log("=== about to require contest_sandbox");
                     theContest = require("./contest_sandbox").runCode(contestDoc.code);
-                    console.log("=== got back from require contest_sandbox");
+                } else {
+                    theContest = require("./contest_rps");  // stupid default contest code (@TODO: remove this line)
                 }
                 exports.runContest();
             });
