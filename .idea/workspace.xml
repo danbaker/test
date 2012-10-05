@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b163e181-c391-49fa-b20a-b6034a2cbb74" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sand2/shovel.js" afterPath="$PROJECT_DIR$/sand2/shovel.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/app/ContestView.js" afterPath="$PROJECT_DIR$/public/app/ContestView.js" />
     </list>
     <ignored path="h1.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -19,82 +20,35 @@
   <component name="DaemonCodeAnalyzer">
     <disable_hints />
   </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FavoritesManager">
     <favorites_list name="h1" />
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="contest_rps.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/contest_rps.js">
+      <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="78" column="2" selection-start="2559" selection-end="2559" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="contest.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/contest.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="271" column="33" selection-start="11004" selection-end="11004" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="log.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sand2/log.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="39" column="18" selection-start="1074" selection-end="1074" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="logdb.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sand2/logdb.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="48" column="54" selection-start="1828" selection-end="1828" vertical-scroll-proportion="0.0">
+            <state line="121" column="41" selection-start="6137" selection-end="6137" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="mainHandler.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sand2/mainHandler.js">
+      <file leaf-file-name="router.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/app/router.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="2" selection-start="275" selection-end="275" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
+            <state line="38" column="60" selection-start="790" selection-end="838" vertical-scroll-proportion="0.0">
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="sandbox.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sand2/sandbox.js">
+      <file leaf-file-name="web.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/web.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="25" column="0" selection-start="919" selection-end="919" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="shovel.js" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/sand2/shovel.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="95" selection-start="402" selection-end="402" vertical-scroll-proportion="0.225">
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
+            <state line="24" column="8" selection-start="722" selection-end="722" vertical-scroll-proportion="0.0">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -102,10 +56,57 @@
       <file leaf-file-name="utdb.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/utdb.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="509" column="27" selection-start="18774" selection-end="18774" vertical-scroll-proportion="0.0">
+            <state line="26" column="37" selection-start="1227" selection-end="1239" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ContestView.js" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/public/app/ContestView.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="33" column="24" selection-start="638" selection-end="638" vertical-scroll-proportion="0.43257442">
               <folding>
-                <element signature="n#!!doc" expanded="true" />
+                <marker date="1349397673000" expanded="false" signature="1419:1437" placeholder="..." />
+                <marker date="1349397673000" expanded="true" signature="1870:1884" placeholder="..." />
+                <marker date="1349397673000" expanded="true" signature="2093:2111" placeholder="..." />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MainView.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/app/MainView.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="56" column="3" selection-start="1450" selection-end="1450" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="LoginView.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/app/LoginView.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="43" column="19" selection-start="605" selection-end="1082" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="start.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/app/start.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="14" column="0" selection-start="238" selection-end="238" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="config.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/app/config.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="34" column="26" selection-start="651" selection-end="651" vertical-scroll-proportion="0.0">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -118,43 +119,41 @@
     </FindUsagesManager>
   </component>
   <component name="Git.Settings">
-    <option name="CHECKOUT_INCLUDE_TAGS" value="false" />
-    <option name="UPDATE_CHANGES_POLICY" value="STASH" />
-    <option name="LINE_SEPARATORS_CONVERSION" value="ASK" />
+    <option name="UPDATE_TYPE" value="REBASE" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/routesSessions.js" />
-        <option value="$PROJECT_DIR$/sand2/log.txt" />
-        <option value="$PROJECT_DIR$/routesLogs.js" />
-        <option value="$PROJECT_DIR$/routesRuns.js" />
-        <option value="$PROJECT_DIR$/sand2/mainHandler.js" />
-        <option value="$PROJECT_DIR$/sand2/packet.js" />
         <option value="$PROJECT_DIR$/sand2/runner.js" />
-        <option value="$PROJECT_DIR$/sand2/log.js" />
-        <option value="$PROJECT_DIR$/utdb.js" />
-        <option value="$PROJECT_DIR$/routes.js" />
-        <option value="$PROJECT_DIR$/routesHelper.js" />
-        <option value="$PROJECT_DIR$/contest_rps.js" />
-        <option value="$PROJECT_DIR$/contest.js" />
         <option value="$PROJECT_DIR$/sand2/sandbox.js" />
-        <option value="$PROJECT_DIR$/sand2/logdb.js" />
+        <option value="$PROJECT_DIR$/contest.js" />
+        <option value="$PROJECT_DIR$/sand2/mainHandler.js" />
         <option value="$PROJECT_DIR$/sand2/shovel.js" />
+        <option value="$PROJECT_DIR$/sand2/log.txt" />
+        <option value="$PROJECT_DIR$/public/js/app/config.js" />
+        <option value="$PROJECT_DIR$/public/app/start.js" />
+        <option value="$PROJECT_DIR$/public/app/app.js" />
+        <option value="$PROJECT_DIR$/public/app/LoginView.js" />
+        <option value="$PROJECT_DIR$/routes.js" />
+        <option value="$PROJECT_DIR$/public/app/MainView.js" />
+        <option value="$PROJECT_DIR$/public/app/router.js" />
+        <option value="$PROJECT_DIR$/public/app/config.js" />
+        <option value="$PROJECT_DIR$/public/index.html" />
+        <option value="$PROJECT_DIR$/public/app/ContestView.js" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="34" />
     <option name="y" value="22" />
-    <option name="width" value="1799" />
-    <option name="height" value="1042" />
+    <option name="width" value="2560" />
+    <option name="height" value="1290" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
     <OptionsSetting value="true" id="Remove" />
     <OptionsSetting value="true" id="Checkout" />
-    <OptionsSetting value="true" id="Update" />
+    <OptionsSetting value="false" id="Update" />
     <OptionsSetting value="true" id="Status" />
     <OptionsSetting value="true" id="Edit" />
     <ConfirmationsSetting value="0" id="Add" />
@@ -168,7 +167,7 @@
       <flattenPackages />
       <showMembers />
       <showModules />
-      <showLibraryContents ProjectPane="false" />
+      <showLibraryContents ProjectPane="true" />
       <hideEmptyPackages />
       <abbreviatePackageNames />
       <autoscrollToSource />
@@ -183,8 +182,14 @@
               <option name="myItemId" value="h1" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
+          </PATH>
+          <PATH>
             <PATH_ELEMENT>
               <option name="myItemId" value="h1" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -194,11 +199,69 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="h1" />
+              <option name="myItemId" value="test" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="sand2" />
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="h1" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="vendor" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="h1" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="vendor" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="h1" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -210,12 +273,124 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
   </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/public/js/app" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/public" />
+      <recent name="$PROJECT_DIR$/public/js/app" />
+      <recent name="$PROJECT_DIR$/public/js/clientjs" />
+      <recent name="$PROJECT_DIR$/public/js" />
+    </key>
+  </component>
+  <component name="RestoreUpdateTree">
+    <UpdateInfo date="Moments ago" ActionInfo="_Update">
+      <UpdatedFiles>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Updated from server" />
+          <option name="myStatusName" value="Changed on server" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="CHANGED_ON_SERVER" />
+          <FILE-GROUP>
+            <option name="myUpdateName" value="Updated" />
+            <option name="myStatusName" value="Changed" />
+            <option name="mySupportsDeletion" value="false" />
+            <option name="myCanBeAbsent" value="false" />
+            <option name="myId" value="UPDATED" />
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/.idea/workspace.xml</PATH>
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/sand2/shovel.js</PATH>
+          </FILE-GROUP>
+          <FILE-GROUP>
+            <option name="myUpdateName" value="Created" />
+            <option name="myStatusName" value="Created" />
+            <option name="mySupportsDeletion" value="false" />
+            <option name="myCanBeAbsent" value="false" />
+            <option name="myId" value="CREATED" />
+          </FILE-GROUP>
+          <FILE-GROUP>
+            <option name="myUpdateName" value="Deleted" />
+            <option name="myStatusName" value="Deleted" />
+            <option name="mySupportsDeletion" value="false" />
+            <option name="myCanBeAbsent" value="true" />
+            <option name="myId" value="REMOVED_FROM_REPOSITORY" />
+          </FILE-GROUP>
+          <FILE-GROUP>
+            <option name="myUpdateName" value="Restored" />
+            <option name="myStatusName" value="Will be restored" />
+            <option name="mySupportsDeletion" value="false" />
+            <option name="myCanBeAbsent" value="false" />
+            <option name="myId" value="RESTORED" />
+          </FILE-GROUP>
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Modified" />
+          <option name="myStatusName" value="Modified" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="MODIFIED" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Skipped" />
+          <option name="myStatusName" value="Skipped" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="SKIPPED" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Merged with conflicts" />
+          <option name="myStatusName" value="Will be merged with conflicts" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="MERGED_WITH_CONFLICTS" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Merged with tree conflicts" />
+          <option name="myStatusName" value="Merged with tree conflicts" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="MERGED_WITH_TREE_CONFLICT" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Merged" />
+          <option name="myStatusName" value="Will be merged" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="MERGED" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Not in repository" />
+          <option name="myStatusName" value="Not in repository" />
+          <option name="mySupportsDeletion" value="true" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="UNKNOWN" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Locally added" />
+          <option name="myStatusName" value="Locally added" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="LOCALLY_ADDED" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Locally removed" />
+          <option name="myStatusName" value="Locally removed" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="LOCALLY_REMOVED" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Switched" />
+          <option name="myStatusName" value="Switched" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="SWITCHED" />
+        </FILE-GROUP>
+      </UpdatedFiles>
+    </UpdateInfo>
+  </component>
   <component name="RunManager">
-    <configuration default="true" type="NodeJSConfigurationType" factoryName="Node JS" coffeescript-run="false">
-      <method>
-        <option name="PhingTarget" enabled="false" />
-      </method>
-    </configuration>
     <configuration default="true" type="JavascriptDebugSession" factoryName="Local">
       <JSDebuggerConfigurationSettings>
         <option name="engineId" value="embedded" />
@@ -224,47 +399,195 @@
       <method />
     </configuration>
     <list size="0" />
+    <configuration default="true" type="NodeJSConfigurationType" factoryName="Node JS" coffeescript-run="false">
+      <method>
+        <option name="PhingTarget" enabled="false" />
+      </method>
+    </configuration>
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
+  <component name="SvnConfiguration" maxAnnotateRevisions="500" myUseAcceleration="nothing" myAutoUpdateAfterCommit="false" cleanupOnStartRun="false">
+    <option name="USER" value="" />
+    <option name="PASSWORD" value="" />
+    <option name="mySSHConnectionTimeout" value="30000" />
+    <option name="mySSHReadTimeout" value="30000" />
+    <option name="LAST_MERGED_REVISION" />
+    <option name="MERGE_DRY_RUN" value="false" />
+    <option name="MERGE_DIFF_USE_ANCESTRY" value="true" />
+    <option name="UPDATE_LOCK_ON_DEMAND" value="false" />
+    <option name="IGNORE_SPACES_IN_MERGE" value="false" />
+    <option name="DETECT_NESTED_COPIES" value="true" />
+    <option name="CHECK_NESTED_FOR_QUICK_MERGE" value="false" />
+    <option name="IGNORE_SPACES_IN_ANNOTATE" value="true" />
+    <option name="SHOW_MERGE_SOURCES_IN_ANNOTATE" value="true" />
+    <option name="FORCE_UPDATE" value="false" />
+    <option name="IGNORE_EXTERNALS" value="false" />
+    <myIsUseDefaultProxy>false</myIsUseDefaultProxy>
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="b163e181-c391-49fa-b20a-b6034a2cbb74" name="Default" comment="" />
       <created>1342151392280</created>
       <updated>1342151392280</updated>
     </task>
+    <task id="LOCAL-00001" summary="Re-configure how the client side add works. Should work exactly the same as before this checkin.">
+      <created>1348098961604</created>
+      <updated>1348098961604</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Added simple UI to register and log in.">
+      <created>1348101784501</created>
+      <updated>1348101784502</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Testing endpoint to see if we are logged in.">
+      <created>1348102877448</created>
+      <updated>1348102877448</updated>
+    </task>
+    <task id="LOCAL-00004" summary="If logged in update UI with user menu. Otherwise, show registration and login.">
+      <created>1348103648332</created>
+      <updated>1348103648332</updated>
+    </task>
+    <task id="LOCAL-00005" summary="You should be able to log in now.">
+      <created>1348106008707</created>
+      <updated>1348106008707</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Changed method to type.">
+      <created>1348106228169</created>
+      <updated>1348106228169</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Implemented sign-out.">
+      <created>1348107544946</created>
+      <updated>1348107544946</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Implemented sign-out.">
+      <created>1348107831689</created>
+      <updated>1348107831689</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Allow a new user to register.">
+      <created>1348108446647</created>
+      <updated>1348108446647</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Get list of contests from endpoint and display them.">
+      <created>1348499549430</created>
+      <updated>1348499549430</updated>
+    </task>
+    <task id="LOCAL-00011" summary="View doesn't have get/set. Fixed.">
+      <created>1348499682159</created>
+      <updated>1348499682159</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Debugging live. yeah!">
+      <created>1348499909979</created>
+      <updated>1348499909979</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Render after successful contests get.">
+      <created>1348500014678</created>
+      <updated>1348500014678</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Fix requirejs underscore config.">
+      <created>1348500267991</created>
+      <updated>1348500267991</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Wrap every three contests in div.">
+      <created>1348500441733</created>
+      <updated>1348500441733</updated>
+    </task>
+    <task id="LOCAL-00016" summary="each contest should have a unique link.">
+      <created>1348670508742</created>
+      <updated>1348670508742</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Corrected contest link. Added contest description.">
+      <created>1348670782554</created>
+      <updated>1348670782554</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Minor tweaks.">
+      <created>1348670897936</created>
+      <updated>1348670897936</updated>
+    </task>
+    <task id="LOCAL-00019" summary="Trying to get the no description to show up.">
+      <created>1348671025361</created>
+      <updated>1348671025361</updated>
+    </task>
+    <task id="LOCAL-00020" summary="Trying to get the no description to show up.">
+      <created>1348671134281</created>
+      <updated>1348671134281</updated>
+    </task>
+    <task id="LOCAL-00021" summary="Add a fade in effect.">
+      <created>1348671277339</created>
+      <updated>1348671277339</updated>
+    </task>
+    <task id="LOCAL-00022" summary="Added contest name and description.">
+      <created>1348710698116</created>
+      <updated>1348710698116</updated>
+    </task>
+    <task id="LOCAL-00023" summary="Added editor.">
+      <created>1348713244076</created>
+      <updated>1348713244076</updated>
+    </task>
+    <task id="LOCAL-00024" summary="Added ace editor library.">
+      <created>1348713347359</created>
+      <updated>1348713347359</updated>
+    </task>
+    <task id="LOCAL-00025" summary="Added correct links.">
+      <created>1348713498577</created>
+      <updated>1348713498577</updated>
+    </task>
+    <task id="LOCAL-00026" summary="Remove relative.">
+      <created>1348757751008</created>
+      <updated>1348757751008</updated>
+    </task>
+    <task id="LOCAL-00027" summary="Tweak.">
+      <created>1348757856734</created>
+      <updated>1348757856734</updated>
+    </task>
+    <task id="LOCAL-00028" summary="Tweak.">
+      <created>1348757955955</created>
+      <updated>1348757955955</updated>
+    </task>
+    <task id="LOCAL-00029" summary="Tweak.">
+      <created>1348758107585</created>
+      <updated>1348758107585</updated>
+    </task>
+    <task id="LOCAL-00030" summary="Tweak.">
+      <created>1348758531963</created>
+      <updated>1348758531963</updated>
+    </task>
+    <task id="LOCAL-00031" summary="Displays bots centered on the screen.">
+      <created>1349396478609</created>
+      <updated>1349396478609</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="34" y="22" width="1799" height="1042" extended-state="0" />
-    <editor active="false" />
+    <frame x="0" y="22" width="2560" height="1290" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2340195" sideWeight="0.99943596" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.196509" sideWeight="0.7659805" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19708318" sideWeight="0.6706587" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="JsTestDriver Server" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32934132" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32907075" sideWeight="0.9881087" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32934132" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="JsTestDriver Server" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="true" />
-    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="true" />
-    <option name="CHECK_NEW_TODO" value="true" />
+    <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="false" />
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="CHECK_NEW_TODO" value="false" />
     <option name="myTodoPanelSettings">
       <value>
         <are-packages-shown value="false" />
@@ -280,7 +603,6 @@
     <option name="PERFORM_ADD_REMOVE_IN_BACKGROUND" value="true" />
     <option name="PERFORM_ROLLBACK_IN_BACKGROUND" value="false" />
     <option name="CHECK_LOCALLY_CHANGED_CONFLICTS_IN_BACKGROUND" value="false" />
-    <option name="ENABLE_BACKGROUND_PROCESSES" value="false" />
     <option name="CHANGED_ON_SERVER_INTERVAL" value="60" />
     <option name="SHOW_ONLY_CHANGED_IN_SELECTION_DIFF" value="true" />
     <option name="CHECK_COMMIT_MESSAGE_SPELLING" value="true" />
@@ -290,9 +612,11 @@
     <option name="SOFT_WRAPS_IN_SHORT_DIFF" value="true" />
     <option name="INCLUDE_TEXT_INTO_PATCH" value="false" />
     <option name="INCLUDE_TEXT_INTO_SHELF" value="false" />
-    <option name="CREATE_PATCH_EXPAND_DETAILS_DEFAULT" value="true" />
+    <option name="SHOW_FILE_HISTORY_DETAILS" value="true" />
+    <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" />
+    <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
+    <option name="LAST_COMMIT_MESSAGE" value="Displays bots centered on the screen." />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -305,147 +629,143 @@
     <option name="UPDATE_GROUP_BY_CHANGELIST" value="false" />
     <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
+    <confirmMoveToFailedCommit value="1" />
+    <MESSAGE value="Testing endpoint to see if we are logged in." />
+    <MESSAGE value="If logged in update UI with user menu. Otherwise, show registration and login." />
+    <MESSAGE value="You should be able to log in now." />
+    <MESSAGE value="Changed method to type." />
+    <MESSAGE value="Implemented sign-out." />
+    <MESSAGE value="Allow a new user to register." />
+    <MESSAGE value="Get list of contests from endpoint and display them." />
+    <MESSAGE value="View doesn't have get/set. Fixed." />
+    <MESSAGE value="Debugging live. yeah!" />
+    <MESSAGE value="Render after successful contests get." />
+    <MESSAGE value="Fix requirejs underscore config." />
+    <MESSAGE value="Wrap every three contests in div." />
+    <MESSAGE value="each contest should have a unique link." />
+    <MESSAGE value="Corrected contest link. Added contest description." />
+    <MESSAGE value="Minor tweaks." />
+    <MESSAGE value="Trying to get the no description to show up." />
+    <MESSAGE value="Add a fade in effect." />
+    <MESSAGE value="Render a basic content page." />
+    <MESSAGE value="Added contest name and description." />
+    <MESSAGE value="Added editor." />
+    <MESSAGE value="Added ace editor library." />
+    <MESSAGE value="Added correct links." />
+    <MESSAGE value="Remove relative." />
+    <MESSAGE value="Tweak." />
+    <MESSAGE value="Displays bots centered on the screen." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/routesBots.js">
+    <entry file="file://$PROJECT_DIR$/sand2/shovel.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="100" column="21" selection-start="3960" selection-end="3960" vertical-scroll-proportion="0.0">
+        <state line="37" column="0" selection-start="1167" selection-end="1167" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sand2/log.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="44" selection-start="756" selection-end="756" vertical-scroll-proportion="0.13263525" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sand2/mainHandler.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="24" column="0" selection-start="721" selection-end="721" vertical-scroll-proportion="0.38132635" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/vendor/js/bootstrap.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-32.689354">
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sand/shovel.js">
+    <entry file="file://$PROJECT_DIR$/public/vendor/js/bootstrap.min.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="71" column="10" selection-start="1956" selection-end="1956" vertical-scroll-proportion="2.4688797">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sand2/packet.js">
+    <entry file="file://$PROJECT_DIR$/public/app/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="2" selection-start="765" selection-end="765" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
+        <state line="15" column="0" selection-start="173" selection-end="173" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/app/start.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="0" selection-start="238" selection-end="238" vertical-scroll-proportion="0.0">
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sand2/runner.js">
+    <entry file="file://$PROJECT_DIR$/public/app/MainView.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="55" column="0" selection-start="1766" selection-end="1766" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
+        <state line="56" column="3" selection-start="1450" selection-end="1450" vertical-scroll-proportion="0.0">
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routesLogs.js">
+    <entry file="file://$PROJECT_DIR$/public/app/config.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="34" selection-start="600" selection-end="600" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
+        <state line="34" column="26" selection-start="651" selection-end="651" vertical-scroll-proportion="0.0">
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routes.js">
+    <entry file="file://$PROJECT_DIR$/public/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="401" column="52" selection-start="17277" selection-end="17277" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
+        <state line="121" column="41" selection-start="6137" selection-end="6137" vertical-scroll-proportion="0.0">
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routesHelper.js">
+    <entry file="file://$PROJECT_DIR$/web.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="9" selection-start="749" selection-end="749" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/mongodb/lib/mongodb/collection.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="331" column="64" selection-start="12057" selection-end="12065" vertical-scroll-proportion="0.2527301">
+        <state line="24" column="8" selection-start="722" selection-end="722" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/utdb.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="509" column="27" selection-start="18774" selection-end="18774" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/contest_rps.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="78" column="2" selection-start="2559" selection-end="2559" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/contest.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="271" column="33" selection-start="11004" selection-end="11004" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sand2/log.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="39" column="18" selection-start="1074" selection-end="1074" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sand2/mainHandler.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="2" selection-start="275" selection-end="275" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sand2/sandbox.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="0" selection-start="919" selection-end="919" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sand2/logdb.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="48" column="54" selection-start="1828" selection-end="1828" vertical-scroll-proportion="0.0">
+        <state line="26" column="37" selection-start="1227" selection-end="1239" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sand2/shovel.js">
+    <entry file="file://$PROJECT_DIR$/public/app/LoginView.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="95" selection-start="402" selection-end="402" vertical-scroll-proportion="0.225">
+        <state line="43" column="19" selection-start="605" selection-end="1082" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="565" column="0" selection-start="24158" selection-end="24158" vertical-scroll-proportion="1.2828372" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/app/router.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="38" column="60" selection-start="790" selection-end="838" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/app/ContestView.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="33" column="24" selection-start="638" selection-end="638" vertical-scroll-proportion="0.43257442">
           <folding>
-            <element signature="n#!!doc" expanded="true" />
+            <marker date="1349397673000" expanded="false" signature="1419:1437" placeholder="..." />
+            <marker date="1349397673000" expanded="true" signature="1870:1884" placeholder="..." />
+            <marker date="1349397673000" expanded="true" signature="2093:2111" placeholder="..." />
           </folding>
         </state>
       </provider>

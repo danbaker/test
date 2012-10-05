@@ -15,6 +15,26 @@ define([
 
         },
 
+        events: {
+
+            'click .bot-button': '_botButtonClicked'
+        },
+
+        _botButtonClicked: function(e) {
+            var botId = $(e.target).attr('data-bot-id');
+
+            var code = this.defaultCode;
+
+            _.each(this.bots, function(bot) {
+                if ( botId === bot._id && bot.code ) {
+                    code = bot.code;
+                }
+            });
+
+            alert(code);
+
+        },
+
         render: function(data) {
 
             var self = this;
@@ -34,15 +54,18 @@ define([
                 html.push( '</p>' );
 
                 var defaultCode = data.defaultCode;
+                this.defaultCode = data.defaultCode;
 
                 $.ajax({
                     url: [ '/apis/1/contests', data._id, 'bots' ].join('/')
                 }).done(function(bots) {
 
+                        self.bots = bots;
+
                         html.push( '<div class="btn-group" style="text-align:center;">' );
                         _.each(bots, function(bot) {
                             if ( bot.name ) {
-                                html.push( [ '<button class="btn">', bot.name, '</button>' ].join('') );
+                                html.push( [ '<button class="btn bot-button" data-bot-id="', bot._id, '">', bot.name, '</button>' ].join('') );
                             }
                         });
                         html.push( '</div><br>' );
