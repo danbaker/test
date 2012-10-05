@@ -51,6 +51,14 @@ var queueContestToStart = function(doc) {
             run_id = ok[0]._id;
             utdb.getDoc(utdb.collection_contests(), "contests", runDoc.contest_id, function(cDoc) {
                 contestDoc = cDoc;
+                // contestDoc   .name
+                //              .defaultCode = bot code
+                //              .code = contest code
+                if (contestDoc.code) {
+                    console.log("=== about to require contest_sandbox");
+                    theContest = require("./contest_sandbox").runCode(contestDoc.code);
+                    console.log("=== got back from require contest_sandbox");
+                }
                 exports.runContest();
             });
         } else {
@@ -131,90 +139,6 @@ var startPlayer = function(pIndex, fnc) {
     });
     return s;
 };
-
-//// start running a contest between P1 and P2 (call callback fnc when done)
-//exports.__OLD__runContest = function(id_p1, id_p2, fnc) {
-//    // * * * * * * * * * * * * * * * * *
-//    // RESET EVERYTHING FOR A NEW CONTEST
-//    require('./sand2/log').resetLogFile();
-//    turnN = 1;
-//    isOver = false;
-//    sandboxesDone = 0;
-//    p1_win = 0;
-//    p2_win = 0;
-//
-//    // START UP PLAYER 1
-//    sand1 = startPlayer(0, function(output) {
-//    });
-//    // START UP PLAYER 2
-//    sand2 = startPlayer(1, function(output) {
-//    });
-//    if (fnc) fnc("contest running...");
-//    mainHandler.setSandboxes(sand1, sand2);
-//    mainHandler.startContest(require('./contest'));
-//};
-//
-//// NOTE: An external node.js "player" just submitted their turn
-//// in:  json    = { }  === turn data object
-////      sand    = the sandbox that submitted this turn
-//exports.__OLD__submitTurn = function(json, sand, sandOther) {
-//    log("contest.submitTurn");
-//    if (!isOver) {
-//        sand.savedTurn = json;
-//        if (sand == sand2) {
-//            // we have P1 and P2 turns ... check winner
-//            var p1 = sand1.savedTurn.pick;
-//            var p2 = sand2.savedTurn.pick;
-//            var p1Win = false;
-//            var p2Win = false;
-//            if ((p1 == 'r' && p2 == 's') || (p1 == 'p' && p2 == 'r') || (p1 == 's' && p2 == 'p')) {
-//                p1Win = true;
-//                p1_win++;
-//            }
-//            if ((p2 == 'r' && p1 == 's') || (p2 == 'p' && p1 == 'r') || (p2 == 's' && p1 == 'p')) {
-//                p2Win = true;
-//                p2_win++;
-//            }
-//            log("p1="+p1+"  p2="+p2+"  p1Win="+p1Win+"  p2Win="+p2Win);
-//            turnN++;
-//            if (turnN > maxTurns) {
-//                // contest over ... shut them down
-//                isOver = true;
-//                var winner = "tie";         // "tie" or "P1" or "P2"
-//                var winnerMsg = "unknown";  // "Player 1 won 5 times. Player 2 won 2 times. Tied 3 times"
-//                winnerMsg = "Player 1 won "+p1_win+" times.  Player 2 won "+p2_win+" times.";
-//                if (p1_win > p2_win) {
-//                    log("CONTEST OVER: Player1 WIN P1("+p1_win+") to P2("+p2_win+")");
-//                    winner = "P1";
-//                    winnerMsg += "  Player 1 Wins";
-//                } else if (p2_win > p1_win) {
-//                    log("CONTEST OVER: Player2 WIN P1("+p1_win+") to P2("+p2_win+")");
-//                    winner = "P2";
-//                    winnerMsg += "  Player 2 Wins";
-//                } else {
-//                    log("CONTEST OVER: TIE P1("+p1_win+") to P2("+p2_win+")");
-//                    winner = "tie";
-//                    winnerMsg += "  Tie";
-//                }
-//
-//                logMsg(winnerMsg);      // @TODO: Remove this temp debug line .. so we have a "log" that shows who won
-//
-//                utdb.updateDoc(utdb.collection_runs(), "runs", run_id, function(docToUpdate, fnc) {
-//                    docToUpdate.winner = winner;
-//                    docToUpdate.winnerMsg = winnerMsg;
-//                    fnc(docToUpdate);
-//                }, function(ok) {
-//                    if (ok) {
-//                        // doc was updated OK
-//                    } else {
-//                        console.log("ERROR: run failed to update with winner="+winner);
-//                    }
-//                });
-//            }
-//        }
-//    }
-//    return isOver;
-//};
 
 exports.queueContestToStart = queueContestToStart;
 
