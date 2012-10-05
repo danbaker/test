@@ -104,6 +104,7 @@ exports.runCode = function(codeStr)
     c += "      }";
     c += "};";
     c += "return rtn;";
+    
     codeStr = c;
         try {
             // eval (run) the code-string as code
