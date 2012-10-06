@@ -14,7 +14,7 @@ define([
 
       this._template = $('.login-slot').html();
 
-      Sessions.onUserIdChange(this._loggedInChanges, this);
+      Sessions.onUserIdChange(this._updateUI, this);
 
     },
 
@@ -27,14 +27,13 @@ define([
     render:function () {
 
       this.$el.html(this._template);
-
-      this._loggedInChanges();
+      this._updateUI();
 
       return this;
 
     },
 
-    _loggedInChanges: function() {
+    _updateUI: function() {
 
       if ( Sessions.isUserLoggedIn() ) {
         $('.dropdown.register').hide();
