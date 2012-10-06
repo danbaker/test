@@ -1,116 +1,78 @@
 define([
 
-    "jquery",
-    "underscore",
-    "backbone"
+  "jquery",
+  "underscore",
+  "backbone",
 
-], function($, _, Backbone) {
+  'models/Sessions'
 
-    return Backbone.View.extend({
+], function ($, _, Backbone, Sessions) {
 
-        initialize: function() {
+  return Backbone.View.extend({
 
-            this._template = $('.login-slot').html();
+    initialize:function () {
 
-            this._checkIfLoggedIn();
+      this._template = $('.login-slot').html();
 
-        },
+      Sessions.onUserIdChange(this._loggedInChanges, this);
 
-        events: {
-            'click .register-button': '_register',
-            'click .sign-in-button': '_login',
-            'click .sign-out-menu-item': '_logout'
-        },
+    },
 
-        render: function() {
+    events:{
+      'click .register-button':'_register',
+      'click .sign-in-button':'_login',
+      'click .sign-out-menu-item':'_logout'
+    },
 
-            this.$el.html(this._template);
-            return this;
+    render:function () {
 
-        },
+      this.$el.html(this._template);
 
-        _checkIfLoggedIn: function() {
+      this._loggedInChanges();
 
-            $.ajax({
-                url: '/apis/1/sessions'
-            }).done(function(data) {
-                    $('.dropdown.register').hide();
-                    $('.dropdown.sign-in').hide();
-                    $('.dropdown.user-menu .username').html(data.name);
-                    $('.dropdown.user-menu').show();
-                }).fail(function(data) {
-                    $('.dropdown.register').show();
-                    $('.dropdown.sign-in').show();
-                });
+      return this;
 
-        },
+    },
 
-        _tryLoggingIn: function(email, password) {
+    _loggedInChanges: function() {
 
-            $.ajax({
-                type: 'POST',
-                data: {
-                    username: email,
-                    password: password
-                },
-                url: '/apis/1/sessions'
-            }).done(function(data) {
-                    $('.dropdown.register').hide();
-                    $('.dropdown.sign-in').hide();
-                    $('.dropdown.user-menu .username').html(data.name);
-                    $('.dropdown.user-menu').show();
-                }).fail(function(data) {
-                    $('.dropdown.register').show();
-                    $('.dropdown.sign-in').show();
-                });
+      if ( Sessions.isUserLoggedIn() ) {
+        $('.dropdown.register').hide();
+        $('.dropdown.sign-in').hide();
+        $('.dropdown.user-menu .username').html(Sessions.getEmail());
+        $('.dropdown.user-menu').show();
+      } else {
+        $('.dropdown.register').show();
+        $('.dropdown.sign-in').show();
+        $('.dropdown.user-menu').hide();
+      }
 
-        },
+    },
 
-        _register: function() {
+    _register:function () {
 
-            var email = $('#register-input-email').val();
-            var password = $('#register-input-password').val();
+      var email = $('#register-input-email').val();
+      var password = $('#register-input-password').val();
 
-            $.ajax({
-                type: 'GET',
-                url: '/apis/1/createuser/' + email + '/' + password
-            }).done(function(data) {
-                    $('.dropdown.register').hide();
-                    $('.dropdown.sign-in').hide();
-                    $('.dropdown.user-menu .username').html(data.name);
-                    $('.dropdown.user-menu').show();
-                }).fail(function(data) {
-                    $('.dropdown.register').show();
-                    $('.dropdown.sign-in').show();
-                });
+      Sessions.register(email, password);
 
-        },
+    },
 
-        _login: function() {
+    _login:function () {
 
-            var email = $('#sign-in-input-email').val();
-            var password = $('#sign-in-input-password').val();
+      var email = $('#sign-in-input-email').val();
+      var password = $('#sign-in-input-password').val();
 
-            this._tryLoggingIn(email, password);
+      Sessions.login(email, password);
 
-        },
+    },
 
-        _logout: function() {
+    _logout:function () {
 
-            $.ajax({
-                type: 'DELETE',
-                url: '/apis/1/sessions'
-            }).done(function(data) {
-                    $('.dropdown.register').show();
-                    $('.dropdown.sign-in').show();
-                    $('.dropdown.user-menu').hide();
-                }).fail(function(data) {
-                });
+      Sessions.logout();
 
-        }
+    }
 
-    });
-
-//    return 'Logged in as <a href="#" class="navbar-link">Dan Baker</a>';
+  });
 
 });
