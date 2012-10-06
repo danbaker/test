@@ -367,7 +367,6 @@ module.exports = function(app){
                 } else {
                     // Note: doc is a STRING at this point
                     doc.contest_id = helper.getParam(req, "id");        // force the contest_id in the doc
-                    console.log("typeof(doc)="+(typeof doc)+" doc:%j", doc);
                     helper.setParam(req, "doc", doc);
                     routesBots.postBots(req, res);
                 }
