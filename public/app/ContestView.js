@@ -70,6 +70,9 @@ define([
                 html.push( data.description );
                 html.push( '</p>' );
 
+                html.push( '<div id="editor" class="span8" style="height: 600px;">');
+                html.push( data.code || 'function yourcodehere() {\n\n}\n' );
+                html.push( '</div>');
                 var defaultCode = data.defaultCode;
                 this.defaultCode = data.defaultCode;
 
