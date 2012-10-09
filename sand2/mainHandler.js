@@ -8,7 +8,8 @@ var contest;                                    // set by calling "startContest"
 
 var lastJSON = {};
 var log = function(msg) {
-    logMsg("mainHandler -- Player:"+lastJSON.pn+" op:"+lastJSON.op+" --- "+msg);
+//    logMsg("mainHandler -- Player:"+lastJSON.pn+" op:"+lastJSON.op+" --- "+msg);
+//    console.log("mainHandler -- Player:"+lastJSON.pn+" op:"+lastJSON.op+" --- "+msg);
 };
 
 var sand1;
@@ -20,6 +21,9 @@ log("mainHanlder.js loaded");
 // stream = stdin for the client (way to send data back to client)
 var process = function(json, stream, sand) {
     log(". . . process");
+    console.log("mainHandle.sand=%j", sand);
+    console.log("sand1=%j  equal="+(sand==sand1), sand1);
+    console.log("sand2=%j  equal="+(sand==sand2), sand2);
     lastJSON = json;
     var data = json.data;
     var sandOther = (sand === sand1? sand2 : sand1);
@@ -48,18 +52,21 @@ var process = function(json, stream, sand) {
 };
 
 // set the various sandboxes used in this contest
-var setSandboxes = function(s1,s2) {
+var setSandboxes = function(s1,s2,contestObj) {
     log("setSandboxes");
     sand1 = s1;
     sand2 = s2;
+    contest = contestObj;
 };
 
 // START the contest (with player1 starting)
-var startContest = function(theContest) {
-    contest = theContest;
+var startContest = function(bots_id) {
     // give a brief pause ... so all apps can startup and be ready to run
     setTimeout(function() {
         log("= = = = = = = startContest = = = = = = =");
+        packet.sendJson({op:"prepareForContest", me:bots_id[0], opponent:bots_id[1]}, sand1.getStream());
+        packet.sendJson({op:"prepareForContest", me:bots_id[1], opponent:bots_id[0]}, sand2.getStream());
+        // @TODO: do NOT send "runNextTurn" here ... wait till get a message back stating both bots are "prepared"
         packet.sendJson({op:"runNextTurn"}, sand1.getStream());
     }, 1000);
 };

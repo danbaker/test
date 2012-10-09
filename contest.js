@@ -8,7 +8,7 @@ var Sandbox = require('./sand2/sandbox');
 var mainHandler = require('./sand2/mainHandler');
 var logMsg = require('./sand2/log').log;
 var log = function(msg) {
-    logMsg("CONTEST.T"+turnN+": "+msg);
+//    logMsg("CONTEST.T"+turnN+": "+msg);
 };
 
 var contestDoc = undefined;         // the doc from contests being run right now
@@ -24,7 +24,6 @@ var p2_win = 0;
 var sandboxesDone = 0;              // total sanboxes that have finished/ended/done
 var theContest;                     // a runs the known contest interface (see contest_rps)
 var replays = [];                   // the array of all data needed to replay this run
-//theContest = require("./contest_hex");      // @TODO: create a differnt "contest_any.js" that will run code from the contest_doc
 
 // request to queue a contest to start running soon
 // in:  doc = "runs" document:
@@ -62,7 +61,7 @@ var queueContestToStart = function(doc) {
                 exports.runContest();
             });
         } else {
-            console.log("ERROR: post run result: %j", ok);
+            console.log("ERROR: post runs result: %j", ok);
             runDoc = undefined;
         }
     });
@@ -91,14 +90,8 @@ var makeSetPlayerCall = function(pIndex) {
     js += "contestAPI.setPlayer = undefined;";      // remove the "setPlayer" function
     return js;
 };
-/*
-contestAPI.runNextTurn = function() {
-  var rn = Math.floor(Math.random()*3);         // 0,1,2
-  var rps = (rn===0? 'r' : rn===1? 'p' : 's');  // r,p,s
-  contestAPI.submitTurn({pick:rps});
-};
- */
-var startPlayer = function(pIndex, fnc) {
+
+var startPlayer = function(pIndex, fncPlayerReady) {
     var pn = "P" + (pIndex+1);                  // "P1" or "P2"
     var s = new Sandbox({pn:pn});
     utdb.getDoc(utdb.collection_bots(), "bots", runDoc.bots_id[pIndex], function(botDoc) {
@@ -134,10 +127,9 @@ var startPlayer = function(pIndex, fnc) {
                 console.log("BOTH DONE");
                 finishContest();
             }
-            fnc(output);
         });
     });
-    return s;
+    fncPlayerReady(s);
 };
 
 exports.queueContestToStart = queueContestToStart;
@@ -154,16 +146,25 @@ exports.runContest = function() {
     sandboxesDone = 0;
     replays = [];
 
+    sand1 = undefined;
+    sand2 = undefined;
     // START UP PLAYER 1
-    sand1 = startPlayer(0, function(output) {
+    startPlayer(0, function(s) {
+        sand1 = s;
+        checkIfBothReady();
     });
     // START UP PLAYER 2
-    sand2 = startPlayer(1, function(output) {
+    startPlayer(1, function(s) {
+        sand2 = s;
+        checkIfBothReady();
     });
-    mainHandler.setSandboxes(sand1, sand2);
-    mainHandler.startContest(require('./contest'));
-    theContest.reset(sand1, sand2);
-//    if (fnc) fnc("contest running...");               // @TODO: do this after calling this function
+};
+var checkIfBothReady = function() {
+    if (sand1 && sand2) {
+        mainHandler.setSandboxes(sand1, sand2, require('./contest'));
+        theContest.reset(sand1, sand2);
+        mainHandler.startContest(runDoc.bots_id);
+    }
 };
 
 // one of the bots (sand) is submitting data (json) for their turn
