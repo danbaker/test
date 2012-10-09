@@ -209,10 +209,28 @@ exports.submitTurn = function(json, sand, sandOther) {
 
 // one of the bots is sending info (data) and wants a response (sent back via fnc)
 // usually, this is used for the bot to get previous runs info from the database
-exports.sendAndReturn = function(data, sand, fnc) {
-    log("contest.sendAndReturn -- process request and return data");
-    console.log("in contest.sendAndReturn");
-    var retData = {data1:"Hello", data2:"world"};
+exports.sendAndReturn = function(subop, data, sand, fnc) {
+    log("contest.sendAndReturn -- process request and return data -- subop="+subop);
+    console.log("= = = = = in contest.sendAndReturn -- subop="+subop);
+    // TODO:
+    //  1) use "subop" as a function name ("sendAndReturn_<subop>")
+    //  2) check if "theContest.<function>" exists -- if it does, call it
+    //  3) else, check if '<function> exists locally -- if it does, call it
+    var subopName = "sendAndReturn_"+subop;
+    var retData = {};
+    if (theContest && theContest[subopName]) {
+        retData = theContest[subopName](data, sand);
+    } else if (sendAndReturn_functions[subopName]) {
+        retData = sendAndReturn_functions[subopName](data, sand);
+    }
+//    var retData = {data1:"Hello", data2:"world"};
     retData.INTERNAL_fnc_id = data.INTERNAL_fnc_id;
     fnc(retData);
+};
+
+var sendAndReturn_functions = {
+    sendAndReturn_queryRuns: function(data, sand) {
+        console.log("= = = = contest.queryRuns -- YEA!");
+        return {data1:"contest.queryRuns"};
+    }
 };

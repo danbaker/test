@@ -36,7 +36,7 @@ var process = function(json, stream, sand) {
             break;
         case "sendAndReturn":
             log("mainHandler.process op=sendAndReturn subop="+json.subop+" by player "+json.pn+" -- passing along to contest");
-            contest.sendAndReturn(data, sand, function(retn) {
+            contest.sendAndReturn(json.subop, data, sand, function(retn) {
                 log("mainHandler.process -- back from contest. passing data back to client");
                 packet.sendJson({op:json.op, subop:json.subop, data:retn}, sand.getStream());
             });
