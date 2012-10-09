@@ -1,5 +1,6 @@
 // mainHandler.js
 //  MAIN APP: handle packets of data sent from child-apps
+//  Note: this runs in the main app (not the child shovel-app)
 
 var logMsg = require('./log').log;
 var packet = require('./packet');
@@ -7,7 +8,7 @@ var contest;                                    // set by calling "startContest"
 
 var lastJSON = {};
 var log = function(msg) {
-//    logMsg("mainHandler -- Player:"+lastJSON.pn+" op:"+lastJSON.op+" --- "+msg);
+    logMsg("mainHandler -- Player:"+lastJSON.pn+" op:"+lastJSON.op+" --- "+msg);
 };
 
 var sand1;
@@ -32,6 +33,13 @@ var process = function(json, stream, sand) {
                 sand1.signalGameOver();
                 sand2.signalGameOver();
             }
+            break;
+        case "sendAndReturn":
+            log("mainHandler.process op=sendAndReturn subop="+json.subop+" by player "+json.pn+" -- passing along to contest");
+            contest.sendAndReturn(data, sand, function(retn) {
+                log("mainHandler.process -- back from contest. passing data back to client");
+                packet.sendJson({op:json.op, subop:json.subop, data:retn}, sand.getStream());
+            });
             break;
         default:
             log("ERROR: unknown op("+json.op+")");

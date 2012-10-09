@@ -8,7 +8,7 @@ var Sandbox = require('./sand2/sandbox');
 var mainHandler = require('./sand2/mainHandler');
 var logMsg = require('./sand2/log').log;
 var log = function(msg) {
-//    logMsg("CONTEST.T"+turnN+": "+msg);
+    logMsg("CONTEST.T"+turnN+": "+msg);
 };
 
 var contestDoc = undefined;         // the doc from contests being run right now
@@ -113,7 +113,7 @@ var startPlayer = function(pIndex, fnc) {
             userjs = contestDoc.defaultCode;
         }
         // build the entire JavaScript to run for this player/bot
-        var js = "";
+        var js = "console.log('code running');";
         js += makeSetPlayerCall(pIndex);
         // server calls the "contestAPI.runNextTurn" function when it is time to run a turn
         js += userjs;
@@ -166,6 +166,7 @@ exports.runContest = function() {
 //    if (fnc) fnc("contest running...");               // @TODO: do this after calling this function
 };
 
+// one of the bots (sand) is submitting data (json) for their turn
 exports.submitTurn = function(json, sand, sandOther) {
     if (!isOver) {
         var replay = undefined;
@@ -204,4 +205,14 @@ exports.submitTurn = function(json, sand, sandOther) {
         }
     }
     return isOver;
+};
+
+// one of the bots is sending info (data) and wants a response (sent back via fnc)
+// usually, this is used for the bot to get previous runs info from the database
+exports.sendAndReturn = function(data, sand, fnc) {
+    log("contest.sendAndReturn -- process request and return data");
+    console.log("in contest.sendAndReturn");
+    var retData = {data1:"Hello", data2:"world"};
+    retData.INTERNAL_fnc_id = data.INTERNAL_fnc_id;
+    fnc(retData);
 };

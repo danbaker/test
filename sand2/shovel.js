@@ -24,7 +24,7 @@ var trace = function(msg) {
     log(msg);
 };
 var log = function(msg) {
-//    logX("!!!Shovel."+playerN+"."+lastJson.op+": "+msg);
+    logX("!!!Shovel."+playerN+"."+lastJson.op+": "+msg);
 };
 
 trace("loaded shovel.js");
@@ -45,6 +45,21 @@ var processPacket = function(pkt) {
                 if (contestAPI && contestAPI.runNextTurn) {
                     log("calling contestAPI.runNextTurn ...");
                     contestAPI.runNextTurn();
+                }
+                break;
+            case "sendAndReturn":
+                // Note: data has returned from server (started from client. sent to server. returned from server to this client.)
+                log("sendAndReturn (A) CAME BACK FROM SERVER");
+                if (contestAPI && contestAPI.functionMap) {
+                    log("sendAndReturn (B)");
+                    var fncMap = contestAPI.functionMap;
+                    var data = pkt.json.data;
+                    var fncId = data.INTERNAL_fnc_id;
+                    if (fncMap && fncMap[fncId]) {
+                        log("sendAndReturn (C) --calling the return function within the users-bot code");
+                        fncMap[fncId](data);
+                        fncMap[fncId] = undefined;
+                    }
                 }
                 break;
             case "setPlayer":

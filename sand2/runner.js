@@ -16,6 +16,8 @@ console = {};
     var logDoc = require('./log').logDoc;
     var playerN = "P0";                                     // "P1" or "P2"å
     var pinfo = undefined;                                  // { contest_id, bot_id, user_id, run_id, pn }
+    var fncMap = {};
+    var fncMapId = 1;
 
     // client code calls this to set their own player# (NOTE: can only call this ONCE)
     contestAPI.setPlayer = function(pinfoX) {
@@ -29,6 +31,21 @@ console = {};
     contestAPI.submitTurn = function(json) {
         //log("runner.submitTurn for "+pinfo.pn);
         packet.sendJson({op:"submitTurn", pn:playerN, data:json});
+    };
+    contestAPI.functionMap = fncMap;
+    contestAPI.queryRuns = function(json, fnc) {
+        console.log("queryRun - from client, sending to server");
+        json.INTERNAL_fnc_id = fncMapId;
+        fncMap[fncMapId] = fnc;
+        fncMapId++;
+        packet.sendJson({op:"sendAndReturn", subop:"queryRuns", pn:playerN, data:json});
+    };
+    contestAPI.sendAndReturn = function(json, fnc) {
+        console.log("sendAndReturn - from client, sending to server");
+        json.INTERNAL_fnc_id = fncMapId;
+        fncMap[fncMapId] = fnc;
+        fncMapId++;
+        packet.sendJson({op:"sendAndReturn", subop:"queryRuns", pn:playerN, data:json});
     };
     // client calls this to log
     console.log = function(msg) {

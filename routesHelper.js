@@ -16,9 +16,12 @@ exports.getParamAsObject = function(req, name) {
     if (!name) {
         console.log("ERROR: Did you forget to pass in the req object to getParam");
     }
-    if (req.params) { param = req.params[name]; }
-    else if (req.query) { param = req.query[name]; }
-    else if (req.body) { param = req.body[name]; }
+//    console.log("req.params["+name+"] = %j", req.params[name]);
+//    console.log("req.query["+name+"] = %j", req.query[name]);
+//    console.log("req.body["+name+"] = %j", req.body[name]);
+    if (req.params && req.params[name]) { param = req.params[name]; }
+    else if (req.query && req.query[name]) { param = req.query[name]; }
+    else if (req.body && req.body[name]) { param = req.body[name]; }
 
     if (typeof param == "object") return param;
     return exports.parseToObject(param);
@@ -36,7 +39,7 @@ exports.parseToObject = function(str) {
             obj = JSON.parse(str);
         }
     } catch (e) {
-        console.log("parseToObject("+str+") ERROR: %j", e);
+        console.log("Exception: parseToObject("+str+") ERROR: %j", e);
         return undefined;
     }
     return obj;

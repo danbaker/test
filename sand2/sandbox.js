@@ -21,7 +21,7 @@ var log = function(msg, pn) {
     logX("sandbox."+pn+": "+msg);
 };
 var trace = function(msg, pn) {
-//    logX("sandbox."+pn+": "+msg);
+    logX("sandbox."+pn+": "+msg);
 };
 
 
@@ -51,6 +51,7 @@ function Sandbox(options) {
     this.run = function(pn, jscode, fnc) {
         playerN = pn;
         trace("Sandbox.run -- starting " + playerN);
+        console.log("sandbox.run -- code:"+jscode);
         var stdoutTxt = '';
         child = spawn( this.options.node, [this.options.shovel] );
         var fnStdout = function(data) {

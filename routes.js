@@ -363,7 +363,7 @@ module.exports = function(app){
                 var doc = helper.getParamAsObject(req, "doc");                  // doc is suppose to be an object
                 console.log("typeof(doc)="+(typeof doc)+" doc:%j", doc);
                 if (!doc || typeof doc !== "object") {
-                    sendJson(res, {response:false, message:"POST bot failed.  missing doc, or not an object"});
+                    sendJson(res, {response:false, message:"POST bot failed.  missing doc, or not an object."});
                 } else {
                     // Note: doc is a STRING at this point
                     doc.contest_id = helper.getParam(req, "id");        // force the contest_id in the doc
