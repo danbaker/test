@@ -360,7 +360,7 @@ module.exports = function(app){
     app.post('/apis/:version/contests/:id/bots', function(req, res) {
         if (!showCollectionHelp(req, res, "POST", "bots")) {
             if (helper.isLoggedIn(req)) {
-                var doc = helper.getParamAsObject(req, "doc");                  // doc is suppose to be an object
+                var doc = helper.getParamAsObject(req, "doc");
                 console.log("typeof(doc)="+(typeof doc)+" doc:%j", doc);
                 if (!doc || typeof doc !== "object") {
                     sendJson(res, {response:false, message:"POST bot failed.  missing doc, or not an object."});

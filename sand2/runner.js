@@ -27,6 +27,11 @@ console = {};
             playerN = pinfo.pn;
         }
     };
+    // client code calls this to indicate they have finished preparing, and are ready to have the contest start
+    contestAPI.submitReadyToStart = function() {
+        //log("runner.submitReadyToStart");
+        packet.sendJson({op:"submitReadyToStart", pn:playerN});
+    };
     // client code calls this to submit their turn data
     contestAPI.submitTurn = function(json) {
         //log("runner.submitTurn for "+pinfo.pn);

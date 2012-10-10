@@ -39,9 +39,14 @@ var processPacket = function(pkt) {
         trace("processPacket.  op="+pkt.json.op+" playerN="+playerN);
         // got a json object
         switch(pkt.json.op) {
+            case "prepareToStart":
+                // server sends this message before the contest starts, allowing the bot to prepare
+                log("calling contestAPI.prepareToStart ...");
+                if (contestAPI && contestAPI.prepareToStart) {
+                    contestAPI.prepareToStart();
+                }
+                break;
             case "runNextTurn":
-                log("time to run the next turn ...");
-                log("@TODO: HOW do we call/tell the client-code to run?");
                 if (contestAPI && contestAPI.runNextTurn) {
                     log("calling contestAPI.runNextTurn ...");
                     contestAPI.runNextTurn();

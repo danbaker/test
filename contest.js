@@ -119,12 +119,18 @@ var startPlayer = function(pIndex, fncPlayerReady) {
             js +=       "contestAPI.submitTurn({pick:rps});";
             js += "};";
         }
+        // Note: IF they don't provide a "prepare" function, give them one that instantly states "I'm ready to start"
+        if (userjs.indexOf("prepareToStart") < 0) {
+            js += "contestAPI.prepareToStart = function() {";
+            js +=       "contestAPI.submitReadyToStart();";
+            js += "};";
+        }
         s.run( pn, js, function( output ) {
             // this sanbox ended.  is done running code.
             sandboxesDone++;
-            console.log("sandbox ended.  #="+sandboxesDone);
+            log("sandbox ended.  #="+sandboxesDone);
             if (sandboxesDone >= 2) {
-                console.log("BOTH DONE");
+                log("both sandboxes done ... shutting down the contest");
                 finishContest();
             }
         });
@@ -212,7 +218,7 @@ exports.submitTurn = function(json, sand, sandOther) {
 // usually, this is used for the bot to get previous runs info from the database
 exports.sendAndReturn = function(subop, data, sand, fnc) {
     log("contest.sendAndReturn -- process request and return data -- subop="+subop);
-    console.log("= = = = = in contest.sendAndReturn -- subop="+subop);
+//    console.log("= = = = = in contest.sendAndReturn -- subop="+subop);
     // TODO:
     //  1) use "subop" as a function name ("sendAndReturn_<subop>")
     //  2) check if "theContest.<function>" exists -- if it does, call it
@@ -230,8 +236,9 @@ exports.sendAndReturn = function(subop, data, sand, fnc) {
 };
 
 var sendAndReturn_functions = {
+    // Note: the contest should provide function: "sendAndReturn_queryRuns()"
     sendAndReturn_queryRuns: function(data, sand) {
-        console.log("= = = = contest.queryRuns -- YEA!");
+        console.log("= = = = contest.queryRuns -- need to create a function in your contest called: sendAndReturn_queryRuns");
         return {data1:"contest.queryRuns"};
     }
 };

@@ -21,13 +21,17 @@ log("mainHanlder.js loaded");
 // stream = stdin for the client (way to send data back to client)
 var process = function(json, stream, sand) {
     log(". . . process");
-    console.log("mainHandle.sand=%j", sand);
-    console.log("sand1=%j  equal="+(sand==sand1), sand1);
-    console.log("sand2=%j  equal="+(sand==sand2), sand2);
     lastJSON = json;
     var data = json.data;
     var sandOther = (sand === sand1? sand2 : sand1);
     switch(json.op) {
+        case "submitReadyToStart":
+            log(". . . in mainHandler.submitReadyToStart by player "+json.pn);
+            sand.isReadyToStart = true;
+            if (sandOther.isReadyToStart) {
+                startContestTurnsNow();
+            }
+            break;
         case "submitTurn":
             log(". . . in mainHandler.process op=submitTurn by player "+json.pn+"=="+sand.getPlayerN()+" nextPlayer="+sandOther.getPlayerN());
             var isOver = contest.submitTurn(data, sand, sandOther);
@@ -59,16 +63,20 @@ var setSandboxes = function(s1,s2,contestObj) {
     contest = contestObj;
 };
 
-// START the contest (with player1 starting)
+// START the contest (allow both bots to "prepare for contest to start"
 var startContest = function(bots_id) {
     // give a brief pause ... so all apps can startup and be ready to run
     setTimeout(function() {
         log("= = = = = = = startContest = = = = = = =");
-        packet.sendJson({op:"prepareForContest", me:bots_id[0], opponent:bots_id[1]}, sand1.getStream());
-        packet.sendJson({op:"prepareForContest", me:bots_id[1], opponent:bots_id[0]}, sand2.getStream());
+        packet.sendJson({op:"prepareToStart", me:bots_id[0], opponent:bots_id[1]}, sand1.getStream());
+        packet.sendJson({op:"prepareToStart", me:bots_id[1], opponent:bots_id[0]}, sand2.getStream());
         // @TODO: do NOT send "runNextTurn" here ... wait till get a message back stating both bots are "prepared"
-        packet.sendJson({op:"runNextTurn"}, sand1.getStream());
     }, 1000);
+};
+
+var startContestTurnsNow = function() {
+    log("startContestTurnsNow");
+    packet.sendJson({op:"runNextTurn"}, sand1.getStream());
 };
 
 exports.process = process;
