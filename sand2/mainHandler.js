@@ -5,11 +5,12 @@
 var logMsg = require('./log').log;
 var packet = require('./packet');
 var contest;                                    // set by calling "startContest"
+var bots_id;
 
 var lastJSON = {};
 var log = function(msg) {
 //    logMsg("mainHandler -- Player:"+lastJSON.pn+" op:"+lastJSON.op+" --- "+msg);
-//    console.log("mainHandler -- Player:"+lastJSON.pn+" op:"+lastJSON.op+" --- "+msg);
+    console.log("mainHandler -- Player:"+lastJSON.pn+" op:"+lastJSON.op+" --- "+msg);
 };
 
 var sand1;
@@ -25,6 +26,13 @@ var process = function(json, stream, sand) {
     var data = json.data;
     var sandOther = (sand === sand1? sand2 : sand1);
     switch(json.op) {
+        case "upAndRunning":
+            log(". . . upAndRunning by player "+json.pn);
+            sand.isUpAndRunning = true;
+            if (sandOther.isUpAndRunning) {
+                upAndRunning();
+            }
+            break;
         case "submitReadyToStart":
             log(". . . in mainHandler.submitReadyToStart by player "+json.pn);
             sand.isReadyToStart = true;
@@ -63,19 +71,29 @@ var setSandboxes = function(s1,s2,contestObj) {
     contest = contestObj;
 };
 
-// START the contest (allow both bots to "prepare for contest to start"
-var startContest = function(bots_id) {
-    // give a brief pause ... so all apps can startup and be ready to run
+var upAndRunning = function() {
     setTimeout(function() {
-        log("= = = = = = = startContest = = = = = = =");
+        log("= = = = = = = upAndRunning = = = = = = =");
         packet.sendJson({op:"prepareToStart", me:bots_id[0], opponent:bots_id[1]}, sand1.getStream());
         packet.sendJson({op:"prepareToStart", me:bots_id[1], opponent:bots_id[0]}, sand2.getStream());
-        // @TODO: do NOT send "runNextTurn" here ... wait till get a message back stating both bots are "prepared"
     }, 1000);
 };
 
+// START the contest (allow both bots to "prepare for contest to start"
+var startContest = function(bots_idX) {
+    log("= = = = = = = startContest = = = = = = =");
+    bots_id = bots_idX;
+//    // give a brief pause ... so all apps can startup and be ready to run
+//    // @TODO: wait till "setPlayer" is sent before doing the following
+//    setTimeout(function() {
+//        log("= = = = = = = startContest = = = = = = =");
+//        packet.sendJson({op:"prepareToStart", me:bots_id[0], opponent:bots_id[1]}, sand1.getStream());
+//        packet.sendJson({op:"prepareToStart", me:bots_id[1], opponent:bots_id[0]}, sand2.getStream());
+//    }, 1000);
+};
+
 var startContestTurnsNow = function() {
-    log("startContestTurnsNow");
+    log("= = = = = = = startContestTurnsNow = = = = = = =");
     packet.sendJson({op:"runNextTurn"}, sand1.getStream());
 };
 

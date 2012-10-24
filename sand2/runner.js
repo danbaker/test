@@ -25,6 +25,8 @@ console = {};
         if (pinfoX && !pinfo) {
             pinfo = pinfoX;
             playerN = pinfo.pn;
+            // inform server that "setPlayer" was called -- meaning this bot is "up and running"
+            packet.sendJson({op:"upAndRunning", pn:playerN});
         }
     };
     // client code calls this to indicate they have finished preparing, and are ready to have the contest start

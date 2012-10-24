@@ -17,10 +17,7 @@ var run_id = "0";                   // run_id for current running contest
 var sand1;                          // sandbox for P1
 var sand2;
 var turnN;                          // which turn# running
-var maxTurns = 7;                   // max turns each player gets (1 turn === each player submit)
 var isOver = false;                 // true means: contest is over
-var p1_win = 0;
-var p2_win = 0;
 var sandboxesDone = 0;              // total sanboxes that have finished/ended/done
 var theContest;                     // a runs the known contest interface (see contest_rps)
 var replays = [];                   // the array of all data needed to replay this run
@@ -169,6 +166,7 @@ var checkIfBothReady = function() {
     if (sand1 && sand2) {
         mainHandler.setSandboxes(sand1, sand2, require('./contest'));
         theContest.reset(sand1, sand2);
+        // NOTE: don't do this here ... wait until
         mainHandler.startContest(runDoc.bots_id);
     }
 };
@@ -219,7 +217,6 @@ exports.submitTurn = function(json, sand, sandOther) {
 exports.sendAndReturn = function(subop, data, sand, fnc) {
     log("contest.sendAndReturn -- process request and return data -- subop="+subop);
 //    console.log("= = = = = in contest.sendAndReturn -- subop="+subop);
-    // TODO:
     //  1) use "subop" as a function name ("sendAndReturn_<subop>")
     //  2) check if "theContest.<function>" exists -- if it does, call it
     //  3) else, check if '<function> exists locally -- if it does, call it
@@ -230,7 +227,6 @@ exports.sendAndReturn = function(subop, data, sand, fnc) {
     } else if (sendAndReturn_functions[subopName]) {
         retData = sendAndReturn_functions[subopName](data, sand);
     }
-//    var retData = {data1:"Hello", data2:"world"};
     retData.INTERNAL_fnc_id = data.INTERNAL_fnc_id;
     fnc(retData);
 };
