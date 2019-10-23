@@ -2,7 +2,7 @@
     "name": "node-example",
     "version": "0.0.1",
     "dependencies": {
-        "express": "2.5.x",
+        "express": "4.17.x",
         "pg": "*",
         "mongodb": "0.9.x",
         "node_hash": "*"
