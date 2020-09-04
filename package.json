@@ -4,7 +4,7 @@
     "dependencies": {
         "express": "2.5.x",
         "pg": "*",
-        "mongodb": "0.9.x",
+        "mongodb": "3.6.x",
         "node_hash": "*"
     },
     "engines": {
